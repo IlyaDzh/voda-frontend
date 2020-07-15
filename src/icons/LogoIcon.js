@@ -65,7 +65,7 @@ const LogoIcon = () => (
                 y2="66.2128"
                 gradientUnits="userSpaceOnUse"
             >
-                <stop stop-color="#27A293" />
+                <stop stopColor="#27A293" />
                 <stop offset="1" stopColor="#177D77" stopOpacity="0.08" />
             </linearGradient>
         </defs>

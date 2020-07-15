@@ -15,7 +15,8 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 
-import { ExploreFilesIcon, KibanaDashboardsIcon } from "@/icons";
+import { Button } from "@/components";
+import { LogoIcon, ExploreFilesIcon, KibanaDashboardsIcon } from "@/icons";
 
 const drawerWidth = 280;
 
@@ -43,10 +44,6 @@ const useStyles = makeStyles(theme => ({
     },
     drawerPaper: {
         width: drawerWidth
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3)
     }
 }));
 
@@ -59,8 +56,19 @@ const Menu = () => {
         setMobileOpen(!mobileOpen);
     };
 
+    const handleLogin = () => {
+        console.log("login");
+    };
+
+    const handleRegister = () => {
+        console.log("register");
+    };
+
     const drawer = (
         <div>
+            <div>
+                <LogoIcon />
+            </div>
             <List>
                 <ListItem key="explore" button>
                     <ListItemIcon>
@@ -75,6 +83,12 @@ const Menu = () => {
                     <ListItemText primary="Kibana Dashboards" />
                 </ListItem>
             </List>
+            <Button color="secondary" size="large" onClick={handleLogin} fullWidth>
+                Log In
+            </Button>
+            <Button color="primary" size="large" onClick={handleRegister} fullWidth>
+                Register
+            </Button>
         </div>
     );
 
