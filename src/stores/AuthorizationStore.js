@@ -2,6 +2,31 @@ import { observable, action } from "mobx";
 
 export class AuthorizationStore {
     @observable
+    loginForm = {
+        wallet: "",
+        password: ""
+    };
+
+    @observable
+    registerForm = {
+        wallet: "",
+        password: ""
+    };
+
+    @observable
+    loginFormErrors = {
+        wallet: undefined,
+        password: undefined
+    };
+
+    @observable
+    registerFormErrors = {
+        wallet: undefined,
+        password: undefined,
+        repeat_password: undefined
+    };
+
+    @observable
     isAuth = false;
 
     @observable
@@ -31,7 +56,14 @@ export class AuthorizationStore {
 
     @action
     doLogin = () => {
-        console.log("login");
+        if (
+            this.loginForm.wallet === "123456" &&
+            this.loginForm.password === "123456"
+        ) {
+            this.isAuth = true;
+            this.openLoginModal = false;
+        } else {
+        }
     };
 
     @action
@@ -45,6 +77,16 @@ export class AuthorizationStore {
         this.userStore.user = undefined;
         localStorage.removeItem("accessToken");
         sessionStorage.removeItem("accessToken");
+    };
+
+    @action
+    setLoginFormValue = (key, value) => {
+        this.loginForm[key] = value;
+    };
+
+    @action
+    setRegisterFormValue = (key, value) => {
+        this.loginForm[key] = value;
     };
 
     @action

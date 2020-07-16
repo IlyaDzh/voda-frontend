@@ -59,7 +59,11 @@ const useStyles = makeStyles(theme => ({
 export const LoginDialog = ({
     openLoginModal,
     setOpenLoginModal,
-    setOpenRegisterModal
+    setOpenRegisterModal,
+    loginForm,
+    loginFormErrors,
+    setLoginFormValue,
+    doLogin
 }) => {
     const classes = useStyles();
     const theme = useTheme();
@@ -101,6 +105,12 @@ export const LoginDialog = ({
                     className={classes.dialogInput}
                     placeholder="Wallet ID"
                     variant="outlined"
+                    value={loginForm.wallet}
+                    onChange={event =>
+                        setLoginFormValue("wallet", event.target.value)
+                    }
+                    error={Boolean(loginFormErrors.wallet)}
+                    helperText={loginFormErrors.wallet}
                     fullWidth
                 />
                 <TextField
@@ -108,6 +118,12 @@ export const LoginDialog = ({
                     placeholder="Password"
                     type="password"
                     variant="outlined"
+                    value={loginForm.password}
+                    onChange={event =>
+                        setLoginFormValue("password", event.target.value)
+                    }
+                    error={Boolean(loginFormErrors.password)}
+                    helperText={loginFormErrors.password}
                     fullWidth
                 />
             </DialogContent>
@@ -116,7 +132,7 @@ export const LoginDialog = ({
                     className={classes.dialogLoginButton}
                     color="secondary"
                     size="large"
-                    onClick={handleClose}
+                    onClick={doLogin}
                     fullWidth
                     autoFocus
                 >
@@ -138,7 +154,11 @@ export const LoginDialog = ({
 const mapMoxToProps = ({ authorization }) => ({
     openLoginModal: authorization.openLoginModal,
     setOpenLoginModal: authorization.setOpenLoginModal,
-    setOpenRegisterModal: authorization.setOpenRegisterModal
+    setOpenRegisterModal: authorization.setOpenRegisterModal,
+    loginForm: authorization.loginForm,
+    loginFormErrors: authorization.loginFormErrors,
+    setLoginFormValue: authorization.setLoginFormValue,
+    doLogin: authorization.doLogin
 });
 
 export default inject(mapMoxToProps)(observer(LoginDialog));
