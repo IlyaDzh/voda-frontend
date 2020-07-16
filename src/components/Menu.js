@@ -1,66 +1,52 @@
-import React, { useState } from "react";
+import React from "react";
 import { inject, observer } from "mobx-react";
-import {
-    AppBar,
-    Drawer,
-    IconButton,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Toolbar,
-    Typography,
-    Hidden,
-    makeStyles,
-    useTheme
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import { Drawer, Typography, Hidden, makeStyles, useTheme } from "@material-ui/core";
 
-import { Button } from "@/components";
-import { LogoIcon, ExploreFilesIcon, KibanaDashboardsIcon } from "@/icons";
-
-const drawerWidth = 280;
+import { MenuList, Button } from "@/components";
+import { LogoIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        display: "flex"
-    },
     drawer: {
         [theme.breakpoints.up("sm")]: {
-            width: drawerWidth,
+            width: "280px",
             flexShrink: 0
         }
     },
-    appBar: {
-        [theme.breakpoints.up("sm")]: {
-            width: `calc(100% - ${drawerWidth}px)`,
-            marginLeft: drawerWidth
-        }
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up("sm")]: {
-            display: "none"
-        }
-    },
     drawerPaper: {
-        width: drawerWidth
+        width: "280px",
+        background: theme.palette.primary.main,
+        boxShadow: "5px 0px 10px rgba(0, 0, 0, 0.25)"
     },
-    toolbar: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3)
+    logoWrapper: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "134px"
+    },
+    userTypeWrapper: {
+        padding: "0 32px"
+    },
+    userType: {
+        color: "#fff",
+        lineHeight: "37px"
+    },
+    entryActions: {
+        padding: "0 32px",
+        "& button:first-child": {
+            marginBottom: "16px"
+        }
     }
 }));
 
-const Menu = ({ isAuth, typeUser, setOpenLoginModal, setOpenRegisterModal }) => {
+const Menu = ({
+    isAuth,
+    setOpenLoginModal,
+    setOpenRegisterModal,
+    mobileOpen,
+    toggleMobileOpen
+}) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [mobileOpen, setMobileOpen] = useState(false);
-
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
 
     const handleLogin = () => {
         setOpenLoginModal(true);
@@ -71,105 +57,76 @@ const Menu = ({ isAuth, typeUser, setOpenLoginModal, setOpenRegisterModal }) => 
     };
 
     const drawer = (
-        <div>
-            <div>
+        <>
+            <div className={classes.logoWrapper}>
                 <LogoIcon />
             </div>
-            <List>
-                <ListItem key="explore" button>
-                    <ListItemIcon>
-                        <ExploreFilesIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Explore files" />
-                </ListItem>
-                <ListItem key="kibana-dashboards" button>
-                    <ListItemIcon>
-                        <KibanaDashboardsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Kibana Dashboards" />
-                </ListItem>
-            </List>
-            {!isAuth && (
-                <>
-                    <Button
-                        color="secondary"
-                        size="large"
-                        onClick={handleLogin}
-                        fullWidth
-                    >
-                        Log In
-                    </Button>
-                    <Button
-                        color="primary"
-                        size="large"
-                        onClick={handleRegister}
-                        fullWidth
-                    >
-                        Register
-                    </Button>
-                </>
-            )}
-        </div>
+            <div className={classes.userTypeWrapper}>
+                <Typography classes={{ root: classes.userType }} variant="h2">
+                    Data mart client
+                </Typography>
+            </div>
+            <MenuList />
+            <div className={classes.entryActions}>
+                {!isAuth && (
+                    <>
+                        <Button
+                            color="secondary"
+                            size="large"
+                            onClick={handleLogin}
+                            fullWidth
+                        >
+                            Log In
+                        </Button>
+                        <Button size="large" onClick={handleRegister} fullWidth>
+                            Register
+                        </Button>
+                    </>
+                )}
+            </div>
+        </>
     );
 
     return (
-        <div className={classes.root}>
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        className={classes.menuButton}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Responsive drawer
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <nav className={classes.drawer} aria-label="mailbox folders">
-                <Hidden implementation="css" smUp>
-                    <Drawer
-                        variant="temporary"
-                        anchor={theme.direction === "rtl" ? "right" : "left"}
-                        open={mobileOpen}
-                        onClose={handleDrawerToggle}
-                        classes={{
-                            paper: classes.drawerPaper
-                        }}
-                        ModalProps={{
-                            keepMounted: true
-                        }}
-                    >
-                        {drawer}
-                    </Drawer>
-                </Hidden>
-                <Hidden implementation="css" xsDown>
-                    <Drawer
-                        classes={{
-                            paper: classes.drawerPaper
-                        }}
-                        variant="permanent"
-                        open
-                    >
-                        {drawer}
-                    </Drawer>
-                </Hidden>
-            </nav>
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                Content
-            </main>
-        </div>
+        <nav className={classes.drawer}>
+            <Hidden implementation="css" smUp>
+                <Drawer
+                    variant="temporary"
+                    anchor={theme.direction === "rtl" ? "right" : "left"}
+                    open={mobileOpen}
+                    onClose={toggleMobileOpen}
+                    classes={{
+                        paper: classes.drawerPaper
+                    }}
+                    ModalProps={{
+                        keepMounted: true
+                    }}
+                >
+                    {drawer}
+                </Drawer>
+            </Hidden>
+            <Hidden implementation="css" xsDown>
+                <Drawer
+                    classes={{
+                        paper: classes.drawerPaper
+                    }}
+                    variant="permanent"
+                    open
+                >
+                    {drawer}
+                </Drawer>
+            </Hidden>
+        </nav>
     );
 };
 
-const mapMoxToProps = ({ authorization }) => ({
+const mapMoxToProps = ({ authorization, drawer }) => ({
+    isAuth: authorization.isAuth,
     setOpenLoginModal: authorization.setOpenLoginModal,
-    setOpenRegisterModal: authorization.setOpenRegisterModal
+    setOpenRegisterModal: authorization.setOpenRegisterModal,
+    mobileOpen: drawer.mobileOpen,
+    setMobileOpen: drawer.setMobileOpen,
+    toggleMobileOpen: drawer.toggleMobileOpen
 });
 
 export default inject(mapMoxToProps)(observer(Menu));

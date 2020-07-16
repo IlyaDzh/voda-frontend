@@ -10,6 +10,9 @@ export default createMuiTheme({
         },
         text: {
             primary: "#071c2f"
+        },
+        background: {
+            main: "#eef6fb"
         }
     },
     typography: {

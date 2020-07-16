@@ -1,7 +1,7 @@
 import React from "react";
 import { Button as BaseButton, makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     btn: {
         textTransform: "unset",
         height: "30px",
@@ -20,12 +20,14 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "16px",
         lineHeight: "30px"
     },
-    outlinedPrimary: {
-
+    outlined: {
+        background: "transperent"
     },
-    outlinedSecondary: {
-        
-    }
+    containedPrimary: {
+        border: "1px solid #deeff7"
+    },
+    outlinedPrimary: {},
+    outlinedSecondary: {}
 }));
 
 const Button = props => {
@@ -38,6 +40,8 @@ const Button = props => {
                 root: classes.btn,
                 sizeSmall: classes.btnSmall,
                 sizeLarge: classes.btnLarge,
+                containedPrimary: classes.containedPrimary,
+                outlined: classes.outlined,
                 outlinedPrimary: classes.outlinedPrimary,
                 outlinedSecondary: classes.outlinedSecondary
             }}
