@@ -24,7 +24,7 @@ const _App = ({ isAuth, typeUser }) => (
 
 const mapMoxToProps = ({ authorization }) => ({
     isAuth: authorization.isAuth,
-    typeUser: authorization.typeUser
+    typeUser: authorization.userStore.typeUser
 });
 
 export const App = inject(mapMoxToProps)(observer(_App));

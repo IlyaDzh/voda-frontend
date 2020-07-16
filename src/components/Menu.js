@@ -45,10 +45,15 @@ const useStyles = makeStyles(theme => ({
     },
     drawerPaper: {
         width: drawerWidth
+    },
+    toolbar: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3)
     }
 }));
 
-const Menu = ({ setOpenLoginModal, setOpenRegisterModal }) => {
+const Menu = ({ isAuth, typeUser, setOpenLoginModal, setOpenRegisterModal }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -84,12 +89,26 @@ const Menu = ({ setOpenLoginModal, setOpenRegisterModal }) => {
                     <ListItemText primary="Kibana Dashboards" />
                 </ListItem>
             </List>
-            <Button color="secondary" size="large" onClick={handleLogin} fullWidth>
-                Log In
-            </Button>
-            <Button color="primary" size="large" onClick={handleRegister} fullWidth>
-                Register
-            </Button>
+            {!isAuth && (
+                <>
+                    <Button
+                        color="secondary"
+                        size="large"
+                        onClick={handleLogin}
+                        fullWidth
+                    >
+                        Log In
+                    </Button>
+                    <Button
+                        color="primary"
+                        size="large"
+                        onClick={handleRegister}
+                        fullWidth
+                    >
+                        Register
+                    </Button>
+                </>
+            )}
         </div>
     );
 
@@ -140,6 +159,10 @@ const Menu = ({ setOpenLoginModal, setOpenRegisterModal }) => {
                     </Drawer>
                 </Hidden>
             </nav>
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+                Content
+            </main>
         </div>
     );
 };
