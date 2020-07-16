@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { inject, observer } from "mobx-react";
 import {
     AppBar,
     Drawer,
@@ -47,7 +48,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Menu = () => {
+const Menu = ({ setOpenLoginModal, setOpenRegisterModal }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -57,11 +58,11 @@ const Menu = () => {
     };
 
     const handleLogin = () => {
-        console.log("login");
+        setOpenLoginModal(true);
     };
 
     const handleRegister = () => {
-        console.log("register");
+        setOpenRegisterModal(true);
     };
 
     const drawer = (
@@ -143,4 +144,9 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+const mapMoxToProps = ({ authorization }) => ({
+    setOpenLoginModal: authorization.setOpenLoginModal,
+    setOpenRegisterModal: authorization.setOpenRegisterModal
+});
+
+export default inject(mapMoxToProps)(observer(Menu));

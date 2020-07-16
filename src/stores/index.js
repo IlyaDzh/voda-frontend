@@ -1,5 +1,7 @@
 import { AuthorizationStore } from "./AuthorizationStore";
+import { UserStore } from "./UserStore";
 
-const authorization = new AuthorizationStore();
+const user = new UserStore();
+const authorization = new AuthorizationStore(user);
 
-export const store = { authorization };
+export const store = { user, authorization };

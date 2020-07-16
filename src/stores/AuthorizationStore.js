@@ -10,6 +10,12 @@ export class AuthorizationStore {
     @observable
     isAuth = false;
 
+    @observable
+    openLoginModal = false;
+
+    @observable
+    openRegisterModal = false;
+
     @action
     fetchUser = () => {
         console.log("start fetching");
@@ -21,5 +27,15 @@ export class AuthorizationStore {
             this.isAuth = true;
             console.log("stop fetching");
         }, 500);
+    };
+
+    @action
+    setOpenLoginModal = openLoginModal => {
+        this.openLoginModal = openLoginModal;
+    };
+
+    @action
+    setOpenRegisterModal = openRegisterModal => {
+        this.openRegisterModal = openRegisterModal;
     };
 }

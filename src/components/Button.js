@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     btnLarge: {
         height: "42px",
         fontSize: "16px",
-        lineHeight: "25px"
+        lineHeight: "30px"
     },
     outlinedPrimary: {
 

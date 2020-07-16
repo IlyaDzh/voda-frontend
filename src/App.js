@@ -2,25 +2,25 @@ import React from "react";
 import { inject, observer } from "mobx-react";
 
 import { UnregRoutes, PurchaserRoutes, SellerRoutes } from "@/routes";
-import { Menu, Header } from "@/components";
+import { Menu, Header, LoginDialog, RegisterDialog } from "@/components";
 
-const _App = ({ isAuth, typeUser }) => {
-    return (
-        <div className="App">
-            <Menu isAuth={isAuth} type={typeUser} />
-            <Header isAuth={isAuth} />
-            {isAuth ? (
-                typeUser === "purchaser" ? (
-                    <PurchaserRoutes />
-                ) : (
-                    <SellerRoutes />
-                )
+const _App = ({ isAuth, typeUser }) => (
+    <div className="App">
+        <Menu isAuth={isAuth} type={typeUser} />
+        <Header isAuth={isAuth} />
+        {isAuth ? (
+            typeUser === "purchaser" ? (
+                <PurchaserRoutes />
             ) : (
-                <UnregRoutes />
-            )}
-        </div>
-    );
-};
+                <SellerRoutes />
+            )
+        ) : (
+            <UnregRoutes />
+        )}
+        <LoginDialog />
+        <RegisterDialog />
+    </div>
+);
 
 const mapMoxToProps = ({ authorization }) => ({
     isAuth: authorization.isAuth,

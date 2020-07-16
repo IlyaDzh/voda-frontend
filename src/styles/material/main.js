@@ -9,12 +9,16 @@ export default createMuiTheme({
             main: "#17e3b2"
         },
         text: {
-            primary: "#7a7a81"
+            primary: "#071c2f"
         }
     },
     typography: {
         h1: {
             fontSize: "30px"
+        },
+        h2: {
+            fontSize: "24px",
+            fontWeight: 400
         },
         fontFamily: "Overpass"
     }
