@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 import { Drawer, Typography, Hidden, makeStyles, useTheme } from "@material-ui/core";
 
 import { MenuList, Button } from "@/components";
-import { LogoIcon } from "@/icons";
+import logo from "@/icons/logo.png";
 
 const useStyles = makeStyles(theme => ({
     drawer: {
@@ -59,7 +59,7 @@ const Menu = ({
     const drawer = (
         <>
             <div className={classes.logoWrapper}>
-                <LogoIcon />
+                <img src={logo} alt="Voda logo" />
             </div>
             <div className={classes.userTypeWrapper}>
                 <Typography classes={{ root: classes.userType }} variant="h2">

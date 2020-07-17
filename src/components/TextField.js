@@ -3,13 +3,19 @@ import { TextField as BaseTextField, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     textField: {
-        height: "42px"
+        height: "42px",
+        "& .MuiOutlinedInput-root": {
+            borderRadius: "5px",
+            "& input": {
+                padding: "14px 14px 11px 14px"
+            },
+            "&:hover fieldset": {
+                borderColor: "#1885EA"
+            }
+        }
     },
     textFieldInput: {
         padding: "14px 14px 11px 14px"
-    },
-    outlinedInput: {
-        height: "42px"
     }
 }));
 
@@ -20,9 +26,7 @@ const TextField = props => {
     return (
         <BaseTextField
             InputProps={{ classes: { input: classes.textFieldInput } }}
-            classes={{
-                root: classes.textField
-            }}
+            classes={{ root: classes.textField }}
             {...rest}
         />
     );

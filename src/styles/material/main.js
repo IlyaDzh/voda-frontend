@@ -9,7 +9,8 @@ export default createMuiTheme({
             main: "#17e3b2"
         },
         text: {
-            primary: "#071c2f"
+            primary: "#071c2f",
+            secondary: "#484d51"
         },
         background: {
             main: "#eef6fb"
@@ -22,6 +23,9 @@ export default createMuiTheme({
         h2: {
             fontSize: "24px",
             fontWeight: 400
+        },
+        subtitle1: {
+            fontWeight: "bold"
         },
         fontFamily: "Overpass"
     }

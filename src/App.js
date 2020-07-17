@@ -10,11 +10,18 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         height: "100%"
     },
-    toolbar: theme.mixins.toolbar,
+    toolbar: {
+        [theme.breakpoints.down("xs")]: {
+            minHeight: "56px"
+        }
+    },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
-        background: theme.palette.background.main
+        padding: "32px 64px",
+        background: theme.palette.background.main,
+        [theme.breakpoints.down("sm")]: {
+            padding: "32px",
+        }
     }
 }));
 
