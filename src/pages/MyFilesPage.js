@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Profile = () => {
+const MyFilesPage = () => {
     return (
         <div>
-            Profile
+            MyFiles
         </div>
     )
 }
 
-export default Profile
+export default MyFilesPage

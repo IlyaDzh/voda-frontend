@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import { Drawer, Typography, Hidden, makeStyles, useTheme } from "@material-ui/core";
 
@@ -58,9 +59,9 @@ const Menu = ({
 
     const drawer = (
         <>
-            <div className={classes.logoWrapper}>
+            <Link to="/" className={classes.logoWrapper}>
                 <img src={logo} alt="Voda logo" />
-            </div>
+            </Link>
             <div className={classes.userTypeWrapper}>
                 <Typography classes={{ root: classes.userType }} variant="h2">
                     Data mart client

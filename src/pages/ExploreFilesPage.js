@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 
 import { SearchBar, ExplorerList } from "@/components";
 
-const Explore = () => (
+const ExploreFilesPage = () => (
     <div>
         <SearchBar />
         <Grid container spacing={3}>
@@ -12,4 +12,4 @@ const Explore = () => (
     </div>
 );
 
-export default Explore;
+export default ExploreFilesPage;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DataPurchases = () => {
+const DataPurchasesPage = () => {
     return (
         <div>
             DataPurchases
@@ -8,4 +8,4 @@ const DataPurchases = () => {
     )
 }
 
-export default DataPurchases
+export default DataPurchasesPage

@@ -1,12 +1,12 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { Explore, Dashboard, ErrorPage } from "@/pages";
+import { ExploreFilesPage, DashboardPage, ErrorPage } from "@/pages";
 
 const UnregRoutes = () => (
     <Switch>
-        <Route exact path={["/", "/explore"]} component={Explore} />
-        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path={["/", "/explore"]} component={ExploreFilesPage} />
+        <Route exact path="/dashboard" component={DashboardPage} />
         <Route component={ErrorPage} />
     </Switch>
 );

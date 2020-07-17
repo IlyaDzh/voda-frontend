@@ -18,9 +18,8 @@ const useStyles = makeStyles(theme => ({
     content: {
         flexGrow: 1,
         padding: "32px 64px",
-        background: theme.palette.background.main,
         [theme.breakpoints.down("sm")]: {
-            padding: "32px",
+            padding: "32px"
         }
     }
 }));

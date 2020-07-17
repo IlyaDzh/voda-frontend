@@ -8,5 +8,5 @@ export { default as RegisterDialog } from "./RegisterDialog";
 export { default as SearchBar } from "./Search/SearchBar";
 export { default as SearchInput } from "./Search/SearchInput";
 export { default as FilterItem } from "./Search/FilterItem";
-export { default as FileCard } from "./Explorer/FileCard";
-export { default as ExplorerList } from "./Explorer/ExplorerList";
+export { default as FileCard } from "./ExploreFiles/FileCard";
+export { default as ExplorerList } from "./ExploreFiles/FilesList";

@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const FileCard = () => {
+const FileCard = ({ card, onBuy }) => {
     const classes = useStyles();
 
     return (
@@ -39,28 +39,33 @@ const FileCard = () => {
             <Card className={classes.fileCard} elevation={3}>
                 <CardContent className={classes.fileCardContent}>
                     <Typography className={classes.fileCardTitle} variant="h2">
-                        Lorem Ipsum Dolor
+                        {card.title}
                     </Typography>
                     <div className={classes.fileCardInfo}>
                         <Typography variant="subtitle1" color="textSecondary">
-                            PRISE:{" "}
+                            PRICE:{" "}
                             <Typography color="textSecondary" display="inline">
-                                0.87656286 PROM
+                                {card.price} PROM
                             </Typography>
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
                             MIME TYPE:{" "}
                             <Typography color="textSecondary" display="inline">
-                                image/png
+                                {card.type}
                             </Typography>
                         </Typography>
                         <Typography className={classes.infoHashtags}>
-                            #Lorem #Ipsum #Dolor #Consectetur
+                            {card.hashtags.map(hashtag => `#${hashtag} `)}
                         </Typography>
                     </div>
                 </CardContent>
                 <CardActions className={classes.fileCardActions}>
-                    <Button color="secondary" fullWidth disableElevation>
+                    <Button
+                        color="secondary"
+                        onClick={() => onBuy(card.title)}
+                        fullWidth
+                        disableElevation
+                    >
                         Purchase
                     </Button>
                 </CardActions>

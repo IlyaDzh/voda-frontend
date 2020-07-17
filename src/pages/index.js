@@ -1,8 +1,8 @@
-export { default as Dashboard } from "./Dashboard";
-export { default as Explore } from "./Explore";
-export { default as DataPurchases } from "./DataPurchases";
-export { default as DataOwners } from "./DataOwners";
-export { default as DataSales } from "./DataSales";
-export { default as Files } from "./Files";
-export { default as Profile } from "./Profile";
+export { default as DashboardPage } from "./DashboardPage";
+export { default as ExploreFilesPage } from "./ExploreFilesPage";
+export { default as DataPurchasesPage } from "./DataPurchasesPage";
+export { default as DataOwnersPage } from "./DataOwnersPage";
+export { default as DataSalesPage } from "./DataSalesPage";
+export { default as MyFilesPage } from "./MyFilesPage";
+export { default as ProfilePage } from "./ProfilePage";
 export { default as ErrorPage } from "./ErrorPage";

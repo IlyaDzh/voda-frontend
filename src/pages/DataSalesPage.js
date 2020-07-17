@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DataSales = () => {
+const DataSalesPage = () => {
     return (
         <div>
             DataSales
@@ -8,4 +8,4 @@ const DataSales = () => {
     )
 }
 
-export default DataSales
+export default DataSalesPage

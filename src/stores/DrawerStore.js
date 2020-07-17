@@ -4,9 +4,6 @@ export class DrawerStore {
     @observable
     mobileOpen = false;
 
-    @observable
-    drawerWidth = 280;
-
     @action
     setMobileOpen = mobileOpen => {
         this.mobileOpen = mobileOpen;

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import {
     List,
     ListItem,
@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 const MenuList = () => {
     const classes = useStyles();
+    const { pathname } = useLocation();
 
     return (
         <List classes={{ root: classes.list }}>
@@ -38,6 +39,7 @@ const MenuList = () => {
                 key="explore"
                 classes={{ root: classes.listItem }}
                 component={NavLink}
+                isActive={() => ["/", "/explore"].includes(pathname)}
                 to="/explore"
                 activeClassName="Mui-selected"
                 button

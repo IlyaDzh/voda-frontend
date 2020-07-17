@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DataOwners = () => {
+const DataOwnersPage = () => {
     return (
         <div>
             DataOwners
@@ -8,4 +8,4 @@ const DataOwners = () => {
     )
 }
 
-export default DataOwners
+export default DataOwnersPage
