@@ -13,7 +13,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button, TextField } from "@/components";
+import { Button, TextField, ReCaptcha } from "@/components";
 import { CloseIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -34,6 +34,9 @@ const useStyles = makeStyles(theme => ({
     },
     dialogTitle: {
         textTransform: "uppercase"
+    },
+    dialogContent: {
+        paddingBottom: "32px"
     },
     dialogInput: {
         marginBottom: "16px",
@@ -63,6 +66,7 @@ export const LoginDialog = ({
     loginForm,
     loginFormErrors,
     setLoginFormValue,
+    setCaptchaToken,
     doLogin
 }) => {
     const classes = useStyles();
@@ -100,32 +104,35 @@ export const LoginDialog = ({
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <DialogContent>
-                <TextField
-                    className={classes.dialogInput}
-                    placeholder="Wallet ID"
-                    variant="outlined"
-                    value={loginForm.wallet}
-                    onChange={event =>
-                        setLoginFormValue("wallet", event.target.value)
-                    }
-                    error={Boolean(loginFormErrors.wallet)}
-                    helperText={loginFormErrors.wallet}
-                    fullWidth
-                />
-                <TextField
-                    className={classes.dialogInput}
-                    placeholder="Password"
-                    type="password"
-                    variant="outlined"
-                    value={loginForm.password}
-                    onChange={event =>
-                        setLoginFormValue("password", event.target.value)
-                    }
-                    error={Boolean(loginFormErrors.password)}
-                    helperText={loginFormErrors.password}
-                    fullWidth
-                />
+            <DialogContent classes={{ root: classes.dialogContent }}>
+                <div>
+                    <TextField
+                        className={classes.dialogInput}
+                        placeholder="Wallet ID"
+                        variant="outlined"
+                        value={loginForm.wallet}
+                        onChange={event =>
+                            setLoginFormValue("wallet", event.target.value)
+                        }
+                        error={Boolean(loginFormErrors.wallet)}
+                        helperText={loginFormErrors.wallet}
+                        fullWidth
+                    />
+                    <TextField
+                        className={classes.dialogInput}
+                        placeholder="Password"
+                        type="password"
+                        variant="outlined"
+                        value={loginForm.password}
+                        onChange={event =>
+                            setLoginFormValue("password", event.target.value)
+                        }
+                        error={Boolean(loginFormErrors.password)}
+                        helperText={loginFormErrors.password}
+                        fullWidth
+                    />
+                </div>
+                <ReCaptcha onChange={setCaptchaToken} />
             </DialogContent>
             <DialogActions classes={{ root: classes.dialogActions }}>
                 <Button
@@ -158,6 +165,7 @@ const mapMoxToProps = ({ authorization }) => ({
     loginForm: authorization.loginForm,
     loginFormErrors: authorization.loginFormErrors,
     setLoginFormValue: authorization.setLoginFormValue,
+    setCaptchaToken: authorization.setCaptchaToken,
     doLogin: authorization.doLogin
 });
 

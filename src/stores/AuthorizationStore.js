@@ -14,6 +14,9 @@ export class AuthorizationStore {
     };
 
     @observable
+    captchaToken = null;
+
+    @observable
     loginFormErrors = {
         wallet: undefined,
         password: undefined
@@ -55,6 +58,10 @@ export class AuthorizationStore {
 
     @action
     doLogin = () => {
+        if (!this.captchaToken) {
+            return;
+        }
+
         if (
             this.loginForm.wallet === "seller" &&
             this.loginForm.password === "123"
@@ -86,6 +93,10 @@ export class AuthorizationStore {
 
     @action
     doRegister = () => {
+        if (!this.captchaToken) {
+            return;
+        }
+
         console.log("register");
     };
 
@@ -94,6 +105,12 @@ export class AuthorizationStore {
         this.isAuth = false;
         this.userStore.user = undefined;
         localStorage.removeItem("accessToken");
+    };
+
+    @action
+    setCaptchaToken = captchaToken => {
+        this.captchaToken = captchaToken;
+        console.log(captchaToken);
     };
 
     @action

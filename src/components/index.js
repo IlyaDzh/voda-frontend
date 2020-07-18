@@ -6,6 +6,7 @@ export { default as Button } from "./Button";
 export { default as TextField } from "./TextField";
 export { default as LoginDialog } from "./LoginDialog";
 export { default as RegisterDialog } from "./RegisterDialog";
+export { default as ReCaptcha } from "./ReCaptcha";
 export { default as SearchBar } from "./Search/SearchBar";
 export { default as SearchInput } from "./Search/SearchInput";
 export { default as FilterItem } from "./Search/FilterItem";

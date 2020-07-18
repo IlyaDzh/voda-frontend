@@ -16,12 +16,13 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button, TextField } from "@/components";
+import { Button, TextField, ReCaptcha } from "@/components";
 import { CloseIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
     dialogPaper: {
         maxWidth: "350px",
+        maxHeight: "unset",
         [theme.breakpoints.down("xs")]: {
             maxWidth: "unset"
         }
@@ -47,6 +48,9 @@ const useStyles = makeStyles(theme => ({
         "&:last-child": {
             marginLeft: 0
         }
+    },
+    dialogContent: {
+        paddingBottom: "32px"
     },
     dialogInput: {
         marginBottom: "16px",
@@ -92,6 +96,10 @@ export const RegisterDialog = ({
         setRadioValue(event.target.value);
     };
 
+    const onChange = value => {
+        console.log("Captcha value:", value);
+    };
+
     return (
         <Dialog
             classes={{ paper: classes.dialogPaper }}
@@ -114,7 +122,7 @@ export const RegisterDialog = ({
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent classes={{ root: classes.dialogContent }}>
                 <RadioGroup
                     classes={{ root: classes.dialogRadioGroup }}
                     aria-label="gender"
@@ -136,26 +144,29 @@ export const RegisterDialog = ({
                         label="Seller"
                     />
                 </RadioGroup>
-                <TextField
-                    className={classes.dialogInput}
-                    placeholder="Wallet ID"
-                    variant="outlined"
-                    fullWidth
-                />
-                <TextField
-                    className={classes.dialogInput}
-                    placeholder="Password"
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                />
-                <TextField
-                    className={classes.dialogInput}
-                    placeholder="Repeat password"
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                />
+                <div>
+                    <TextField
+                        className={classes.dialogInput}
+                        placeholder="Wallet ID"
+                        variant="outlined"
+                        fullWidth
+                    />
+                    <TextField
+                        className={classes.dialogInput}
+                        placeholder="Password"
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                    />
+                    <TextField
+                        className={classes.dialogInput}
+                        placeholder="Repeat password"
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </div>
+                <ReCaptcha onChange={onChange} />
             </DialogContent>
             <DialogActions classes={{ root: classes.dialogActions }}>
                 <Button
