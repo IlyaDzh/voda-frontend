@@ -41,8 +41,10 @@ const useStyles = makeStyles(theme => ({
 
 const Menu = ({
     isAuth,
+    user,
     setOpenLoginModal,
     setOpenRegisterModal,
+    doLogout,
     mobileOpen,
     toggleMobileOpen
 }) => {
@@ -63,13 +65,15 @@ const Menu = ({
                 <img src={logo} alt="Voda logo" />
             </Link>
             <div className={classes.userTypeWrapper}>
-                <Typography classes={{ root: classes.userType }} variant="h2">
-                    Data mart client
+                <Typography classes={{ root: classes.userType }} variant="h3">
+                    {user && user.type === "seller"
+                        ? "Data validator client"
+                        : "Data mart client"}
                 </Typography>
             </div>
-            <MenuList />
+            <MenuList typeUser={user && user.type} />
             <div className={classes.entryActions}>
-                {!isAuth && (
+                {!isAuth ? (
                     <>
                         <Button
                             color="secondary"
@@ -83,6 +87,15 @@ const Menu = ({
                             Register
                         </Button>
                     </>
+                ) : (
+                    <Button
+                        color="secondary"
+                        size="large"
+                        onClick={doLogout}
+                        fullWidth
+                    >
+                        Sign Out
+                    </Button>
                 )}
             </div>
         </>
@@ -123,8 +136,10 @@ const Menu = ({
 
 const mapMoxToProps = ({ authorization, drawer }) => ({
     isAuth: authorization.isAuth,
+    user: authorization.userStore.user,
     setOpenLoginModal: authorization.setOpenLoginModal,
     setOpenRegisterModal: authorization.setOpenRegisterModal,
+    doLogout: authorization.doLogout,
     mobileOpen: drawer.mobileOpen,
     setMobileOpen: drawer.setMobileOpen,
     toggleMobileOpen: drawer.toggleMobileOpen

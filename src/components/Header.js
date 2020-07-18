@@ -1,14 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-import {
-    AppBar,
-    IconButton,
-    Toolbar,
-    Typography,
-    Hidden,
-    makeStyles
-} from "@material-ui/core";
+import { AppBar, IconButton, Toolbar, Hidden, makeStyles } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+
+import logo from "@/icons/logo.png";
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -22,6 +18,19 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up("sm")]: {
             display: "none"
         }
+    },
+    toolbar: {
+        justifyContent: "space-between",
+        minHeight: "70px"
+    },
+    logoWrapper: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "50px",
+        "& img": {
+            height: "100%"
+        }
     }
 }));
 
@@ -31,7 +40,7 @@ const _Header = ({ toggleMobileOpen }) => {
     return (
         <Hidden smUp>
             <AppBar position="absolute" className={classes.appBar}>
-                <Toolbar>
+                <Toolbar classes={{ root: classes.toolbar }}>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -41,9 +50,9 @@ const _Header = ({ toggleMobileOpen }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Responsive drawer
-                    </Typography>
+                    <Link to="/" className={classes.logoWrapper}>
+                        <img src={logo} alt="Voda logo" />
+                    </Link>
                 </Toolbar>
             </AppBar>
         </Hidden>

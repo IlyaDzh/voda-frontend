@@ -11,7 +11,7 @@ import {
 
 const PurchaserRoutes = () => (
     <Switch>
-        <Route exact path={["/", "/data"]} component={DataPurchasesPage} />
+        <Route exact path={["/", "/purchases"]} component={DataPurchasesPage} />
         <Route exact path="/explore" component={ExploreFilesPage} />
         <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/dashboard" component={DashboardPage} />

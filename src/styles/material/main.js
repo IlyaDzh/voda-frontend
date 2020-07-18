@@ -21,6 +21,9 @@ export default createMuiTheme({
             fontSize: "24px",
             fontWeight: 400
         },
+        h3: {
+            fontSize: "23px"
+        },
         subtitle1: {
             fontWeight: "bold"
         },

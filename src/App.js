@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     },
     toolbar: {
         [theme.breakpoints.down("xs")]: {
-            minHeight: "56px"
+            minHeight: "70px"
         }
     },
     content: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const _App = ({ isAuth, typeUser }) => {
+const _App = ({ isAuth, user }) => {
     const classes = useStyles();
 
     return (
@@ -34,7 +34,7 @@ const _App = ({ isAuth, typeUser }) => {
             <main className={classes.content}>
                 <div className={classes.toolbar} />
                 {isAuth ? (
-                    typeUser === "purchaser" ? (
+                    user.type === "purchaser" ? (
                         <PurchaserRoutes />
                     ) : (
                         <SellerRoutes />
@@ -51,7 +51,7 @@ const _App = ({ isAuth, typeUser }) => {
 
 const mapMoxToProps = ({ authorization }) => ({
     isAuth: authorization.isAuth,
-    typeUser: authorization.userStore.typeUser
+    user: authorization.userStore.user
 });
 
 export const App = inject(mapMoxToProps)(observer(_App));

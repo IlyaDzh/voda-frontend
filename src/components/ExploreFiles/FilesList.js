@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { inject, observer } from "mobx-react";
 import { Grid, makeStyles } from "@material-ui/core";
 
@@ -14,11 +14,13 @@ const useStyles = makeStyles(() => ({
 
 const ExplorerList = ({ exploreFiles, fetchExploreFiles, buyFile, resetFiles }) => {
     const classes = useStyles();
+    const fetchExploreFilesFunc = useCallback(fetchExploreFiles, []);
+    const resetFilesFunc = useCallback(resetFiles, []);
 
     useEffect(() => {
-        fetchExploreFiles();
-        return () => resetFiles();
-    }, []);
+        fetchExploreFilesFunc();
+        return () => resetFilesFunc();
+    }, [fetchExploreFilesFunc, resetFilesFunc]);
 
     return (
         <>

@@ -1,75 +1,110 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { List, makeStyles } from "@material-ui/core";
+
+import { MenuItem } from "@/components";
+import { SELLER_MENU_LIST, PURCHASER_MENU_LIST, UNREG_MENU_LIST } from "@/utils";
 import {
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Typography,
-    makeStyles
-} from "@material-ui/core";
+    ExploreFilesIcon,
+    KibanaDashboardsIcon,
+    DataPurchasesIcon,
+    ProfileIcon,
+    DataOwnersIcon,
+    DataSalesIcon,
+    MyFilesIcon
+} from "@/icons";
 
-import { ExploreFilesIcon, KibanaDashboardsIcon } from "@/icons";
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     list: {
         padding: "24px 0"
-    },
-    listItem: {
-        padding: "8px 32px",
-        "&.Mui-selected": {
-            backgroundColor: "rgba(0, 0, 0, 0.2)"
-        }
-    },
-    listItemIcon: {
-        minWidth: "44px"
-    },
-    listItemText: {
-        color: "#fff"
     }
 }));
 
-const MenuList = () => {
+const MenuList = ({ typeUser }) => {
     const classes = useStyles();
-    const { pathname } = useLocation();
+
+    const menuItems =
+        typeUser === "purchaser"
+            ? PURCHASER_MENU_LIST
+            : typeUser === "seller"
+            ? SELLER_MENU_LIST
+            : UNREG_MENU_LIST;
 
     return (
         <List classes={{ root: classes.list }}>
-            <ListItem
-                key="explore"
-                classes={{ root: classes.listItem }}
-                component={NavLink}
-                isActive={() => ["/", "/explore"].includes(pathname)}
-                to="/explore"
-                activeClassName="Mui-selected"
-                button
-            >
-                <ListItemIcon classes={{ root: classes.listItemIcon }}>
-                    <ExploreFilesIcon />
-                </ListItemIcon>
-                <ListItemText>
-                    <Typography classes={{ root: classes.listItemText }}>
-                        Explore files
-                    </Typography>
-                </ListItemText>
-            </ListItem>
-            <ListItem
-                key="kibana-dashboards"
-                classes={{ root: classes.listItem }}
-                component={NavLink}
-                to="/dashboard"
-                activeClassName="Mui-selected"
-                button
-            >
-                <ListItemIcon classes={{ root: classes.listItemIcon }}>
-                    <KibanaDashboardsIcon />
-                </ListItemIcon>
-                <ListItemText>
-                    <Typography classes={{ root: classes.listItemText }}>
-                        Kibana Dashboardss
-                    </Typography>
-                </ListItemText>
-            </ListItem>
+            {menuItems.map(item => {
+                switch (item) {
+                    case "explore-files":
+                        return (
+                            <MenuItem
+                                key={item}
+                                to="/explore"
+                                activeRoutes={
+                                    typeUser !== "purchaser" && ["/", "/explore"]
+                                }
+                                icon={<ExploreFilesIcon />}
+                                text="Explore files"
+                            />
+                        );
+                    case "kibana-dashboards":
+                        return (
+                            <MenuItem
+                                key={item}
+                                to="/dashboard"
+                                icon={<KibanaDashboardsIcon />}
+                                text="Kibana Dashboards"
+                            />
+                        );
+                    case "data-purchases":
+                        return (
+                            <MenuItem
+                                key={item}
+                                to="/purchases"
+                                activeRoutes={["/", "/purchases"]}
+                                icon={<DataPurchasesIcon />}
+                                text="Data purchases"
+                            />
+                        );
+                    case "profile":
+                        return (
+                            <MenuItem
+                                key={item}
+                                to="/profile"
+                                icon={<ProfileIcon />}
+                                text="Profile"
+                            />
+                        );
+                    case "data-owners":
+                        return (
+                            <MenuItem
+                                key={item}
+                                to="/owners"
+                                activeRoutes={["/", "/owners"]}
+                                icon={<DataOwnersIcon />}
+                                text="Data owners"
+                            />
+                        );
+                    case "data-sales":
+                        return (
+                            <MenuItem
+                                key={item}
+                                to="/sales"
+                                icon={<DataSalesIcon />}
+                                text="Data sales"
+                            />
+                        );
+                    case "my-files":
+                        return (
+                            <MenuItem
+                                key={item}
+                                to="/files"
+                                icon={<MyFilesIcon />}
+                                text="My files"
+                            />
+                        );
+                    default:
+                        return null;
+                }
+            })}
         </List>
     );
 };

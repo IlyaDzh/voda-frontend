@@ -1,5 +1,6 @@
 export { default as Menu } from "./Menu/Menu";
 export { default as MenuList } from "./Menu/MenuList";
+export { default as MenuItem } from "./Menu/MenuItem";
 export { default as Header } from "./Header";
 export { default as Button } from "./Button";
 export { default as TextField } from "./TextField";

@@ -1,4 +1,9 @@
 export { default as ExploreFilesIcon } from "./ExploreFilesIcon";
 export { default as KibanaDashboardsIcon } from "./KibanaDashboardsIcon";
+export { default as DataPurchasesIcon } from "./DataPurchasesIcon";
+export { default as ProfileIcon } from "./ProfileIcon";
+export { default as DataOwnersIcon } from "./DataOwnersIcon";
+export { default as DataSalesIcon } from "./DataSalesIcon";
+export { default as MyFilesIcon } from "./MyFilesIcon";
 export { default as CloseIcon } from "./CloseIcon";
 export { default as SearchIcon } from "./SearchIcon";

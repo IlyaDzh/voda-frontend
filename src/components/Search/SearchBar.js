@@ -1,14 +1,11 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 
 import { SearchInput, FilterItem } from "@/components";
 
 const useStyles = makeStyles(() => ({
     searchWrapper: {},
     searchFiltersWrapper: {
-        display: "flex",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
         marginBottom: "32px"
     }
 }));
@@ -19,16 +16,18 @@ const SearchBar = () => {
     return (
         <div className={classes.searchWrapper}>
             <SearchInput />
-            <div className={classes.searchFiltersWrapper}>
+            <Grid className={classes.searchFiltersWrapper} container spacing={1}>
                 {[
                     "Filter by name",
                     "Filter by price",
                     "Filter by date",
-                    "Filter by type"
+                    "Filter by type",
+                    "Filter by category",
+                    "Filter by genre"
                 ].map(filter => (
                     <FilterItem key={filter} filter={filter} />
                 ))}
-            </div>
+            </Grid>
         </div>
     );
 };

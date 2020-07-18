@@ -43,26 +43,44 @@ export class AuthorizationStore {
 
     @action
     fetchUser = () => {
-        console.log("start fetching");
         setTimeout(() => {
             this.userStore.user = {
                 id: "123456",
-                name: "Ilya"
+                name: "Ilya",
+                type: "seller"
             };
             this.isAuth = true;
-            console.log("stop fetching");
         }, 500);
     };
 
     @action
     doLogin = () => {
         if (
-            this.loginForm.wallet === "123456" &&
-            this.loginForm.password === "123456"
+            this.loginForm.wallet === "seller" &&
+            this.loginForm.password === "123"
         ) {
             this.isAuth = true;
+            this.userStore.user = {
+                id: "123456",
+                name: "Ilya",
+                type: "seller"
+            };
             this.openLoginModal = false;
-        } else {
+            localStorage.setItem("accessToken", "123");
+            this.resetLoginForm();
+        } else if (
+            this.loginForm.wallet === "purchaser" &&
+            this.loginForm.password === "123"
+        ) {
+            this.isAuth = true;
+            this.userStore.user = {
+                id: "123456",
+                name: "Ilya",
+                type: "purchaser"
+            };
+            this.openLoginModal = false;
+            localStorage.setItem("accessToken", "123");
+            this.resetLoginForm();
         }
     };
 
@@ -76,7 +94,6 @@ export class AuthorizationStore {
         this.isAuth = false;
         this.userStore.user = undefined;
         localStorage.removeItem("accessToken");
-        sessionStorage.removeItem("accessToken");
     };
 
     @action
@@ -97,5 +114,13 @@ export class AuthorizationStore {
     @action
     setOpenRegisterModal = openRegisterModal => {
         this.openRegisterModal = openRegisterModal;
+    };
+
+    @action
+    resetLoginForm = () => {
+        this.loginForm = {
+            wallet: "",
+            password: ""
+        };
     };
 }
