@@ -7,3 +7,4 @@ export { default as DataSalesIcon } from "./DataSalesIcon";
 export { default as MyFilesIcon } from "./MyFilesIcon";
 export { default as CloseIcon } from "./CloseIcon";
 export { default as SearchIcon } from "./SearchIcon";
+export { default as WalletIcon } from "./WalletIcon";
