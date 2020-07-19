@@ -30,6 +30,9 @@ export default createMuiTheme({
         body2: {
             fontSize: "16px"
         },
+        caption: {
+            color: "#484d51"
+        },
         fontFamily: "Overpass"
     }
 });

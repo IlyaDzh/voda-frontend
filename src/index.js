@@ -23,7 +23,7 @@ ReactDOM.render(
 );
 
 if (localStorage.getItem("accessToken")) {
-    store.authorization.fetchUser();
+    store.user.fetchUser();
 }
 
 serviceWorker.unregister();

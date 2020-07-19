@@ -1,12 +1,15 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import { MyWallet } from "@/components";
+import { MyWallet, AccountBalance } from "@/components";
 
 const ProfilePage = () => {
     return (
         <div>
             <MyWallet />
+            <AccountBalance />
+            <AccountBalance />
+            <AccountBalance />
             {/* <Grid container spacing={3}>
                 Balance
             </Grid> */}

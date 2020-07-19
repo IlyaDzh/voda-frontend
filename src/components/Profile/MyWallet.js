@@ -7,7 +7,8 @@ const useStyles = makeStyles(() => ({
     walletWrapper: {
         display: "flex",
         alignItems: "center",
-        padding: "19px 24px"
+        padding: "19px 24px",
+        marginBottom: "32px"
     },
     walletIcon: {
         marginRight: "16px"

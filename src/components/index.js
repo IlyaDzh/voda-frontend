@@ -17,3 +17,4 @@ export { default as FileCard } from "./ExploreFiles/FileCard";
 export { default as ExplorerList } from "./ExploreFiles/FilesList";
 
 export { default as MyWallet } from "./Profile/MyWallet";
+export { default as AccountBalance } from "./Profile/AccountBalance";
