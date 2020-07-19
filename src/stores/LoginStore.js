@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
 
-export class AuthorizationStore {
+export class LoginStore {
     @observable
     loginForm = {
         wallet: "",
@@ -8,35 +8,13 @@ export class AuthorizationStore {
     };
 
     @observable
-    registerForm = {
-        wallet: "",
-        password: ""
-    };
+    loginSubmissionError = undefined;
 
     @observable
     captchaToken = null;
 
     @observable
-    loginFormErrors = {
-        wallet: undefined,
-        password: undefined
-    };
-
-    @observable
-    registerFormErrors = {
-        wallet: undefined,
-        password: undefined,
-        repeat_password: undefined
-    };
-
-    @observable
-    isAuth = false;
-
-    @observable
     openLoginModal = false;
-
-    @observable
-    openRegisterModal = false;
 
     userStore = undefined;
 
@@ -45,28 +23,18 @@ export class AuthorizationStore {
     }
 
     @action
-    fetchUser = () => {
-        setTimeout(() => {
-            this.userStore.user = {
-                id: "123456",
-                name: "Ilya",
-                type: "seller"
-            };
-            this.isAuth = true;
-        }, 500);
-    };
-
-    @action
     doLogin = () => {
         if (!this.captchaToken) {
             return;
         }
 
+        this.loginSubmissionError = undefined;
+
         if (
             this.loginForm.wallet === "seller" &&
             this.loginForm.password === "123"
         ) {
-            this.isAuth = true;
+            this.userStore.isAuth = true;
             this.userStore.user = {
                 id: "123456",
                 name: "Ilya",
@@ -79,7 +47,7 @@ export class AuthorizationStore {
             this.loginForm.wallet === "purchaser" &&
             this.loginForm.password === "123"
         ) {
-            this.isAuth = true;
+            this.userStore.isAuth = true;
             this.userStore.user = {
                 id: "123456",
                 name: "Ilya",
@@ -88,21 +56,18 @@ export class AuthorizationStore {
             this.openLoginModal = false;
             localStorage.setItem("accessToken", "123");
             this.resetLoginForm();
+        } else {
+            this.loginSubmissionError = {
+                response: {
+                    status: 401
+                }
+            };
         }
-    };
-
-    @action
-    doRegister = () => {
-        if (!this.captchaToken) {
-            return;
-        }
-
-        console.log("register");
     };
 
     @action
     doLogout = () => {
-        this.isAuth = false;
+        this.userStore.isAuth = false;
         this.userStore.user = undefined;
         localStorage.removeItem("accessToken");
     };
@@ -110,7 +75,6 @@ export class AuthorizationStore {
     @action
     setCaptchaToken = captchaToken => {
         this.captchaToken = captchaToken;
-        console.log(captchaToken);
     };
 
     @action
@@ -119,18 +83,8 @@ export class AuthorizationStore {
     };
 
     @action
-    setRegisterFormValue = (key, value) => {
-        this.loginForm[key] = value;
-    };
-
-    @action
     setOpenLoginModal = openLoginModal => {
         this.openLoginModal = openLoginModal;
-    };
-
-    @action
-    setOpenRegisterModal = openRegisterModal => {
-        this.openRegisterModal = openRegisterModal;
     };
 
     @action

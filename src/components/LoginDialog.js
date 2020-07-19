@@ -44,6 +44,10 @@ const useStyles = makeStyles(theme => ({
             marginBottom: "40px"
         }
     },
+    submissionErrorTitle: {
+        color: "red",
+        marginBottom: "10px"
+    },
     dialogActions: {
         flexDirection: "column",
         paddingRight: "24px",
@@ -64,7 +68,7 @@ export const LoginDialog = ({
     setOpenLoginModal,
     setOpenRegisterModal,
     loginForm,
-    loginFormErrors,
+    loginSubmissionError,
     setLoginFormValue,
     setCaptchaToken,
     doLogin
@@ -80,6 +84,16 @@ export const LoginDialog = ({
     const handleOpenRegister = () => {
         setOpenLoginModal(false);
         setOpenRegisterModal(true);
+    };
+
+    const getLabelFromSubmissionError = error => {
+        if (error.response) {
+            if (error.response.status === 401) {
+                return "Unknown combination of wallet address and password";
+            }
+            return `Unknown error occurred when tried to log in. Server responded with ${error.response.status} status`;
+        }
+        return "No response from server";
     };
 
     return (
@@ -114,8 +128,6 @@ export const LoginDialog = ({
                         onChange={event =>
                             setLoginFormValue("wallet", event.target.value)
                         }
-                        error={Boolean(loginFormErrors.wallet)}
-                        helperText={loginFormErrors.wallet}
                         fullWidth
                     />
                     <TextField
@@ -127,14 +139,21 @@ export const LoginDialog = ({
                         onChange={event =>
                             setLoginFormValue("password", event.target.value)
                         }
-                        error={Boolean(loginFormErrors.password)}
-                        helperText={loginFormErrors.password}
                         fullWidth
                     />
                 </div>
                 <ReCaptcha onChange={setCaptchaToken} />
             </DialogContent>
-            <DialogActions classes={{ root: classes.dialogActions }}>
+            <DialogActions classes={{ root: classes.dialogActions }} disableSpacing>
+                {loginSubmissionError && (
+                    <Typography
+                        variant="body2"
+                        className={classes.submissionErrorTitle}
+                        align="center"
+                    >
+                        {getLabelFromSubmissionError(loginSubmissionError)}
+                    </Typography>
+                )}
                 <Button
                     className={classes.dialogLoginButton}
                     color="secondary"
@@ -158,15 +177,15 @@ export const LoginDialog = ({
     );
 };
 
-const mapMoxToProps = ({ authorization }) => ({
-    openLoginModal: authorization.openLoginModal,
-    setOpenLoginModal: authorization.setOpenLoginModal,
-    setOpenRegisterModal: authorization.setOpenRegisterModal,
-    loginForm: authorization.loginForm,
-    loginFormErrors: authorization.loginFormErrors,
-    setLoginFormValue: authorization.setLoginFormValue,
-    setCaptchaToken: authorization.setCaptchaToken,
-    doLogin: authorization.doLogin
+const mapMoxToProps = ({ login, register }) => ({
+    openLoginModal: login.openLoginModal,
+    loginForm: login.loginForm,
+    loginSubmissionError: login.loginSubmissionError,
+    setLoginFormValue: login.setLoginFormValue,
+    setCaptchaToken: login.setCaptchaToken,
+    doLogin: login.doLogin,
+    setOpenLoginModal: login.setOpenLoginModal,
+    setOpenRegisterModal: register.setOpenRegisterModal
 });
 
 export default inject(mapMoxToProps)(observer(LoginDialog));

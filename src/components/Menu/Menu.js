@@ -134,12 +134,12 @@ const Menu = ({
     );
 };
 
-const mapMoxToProps = ({ authorization, drawer }) => ({
-    isAuth: authorization.isAuth,
-    user: authorization.userStore.user,
-    setOpenLoginModal: authorization.setOpenLoginModal,
-    setOpenRegisterModal: authorization.setOpenRegisterModal,
-    doLogout: authorization.doLogout,
+const mapMoxToProps = ({ user, login, register, drawer }) => ({
+    isAuth: user.isAuth,
+    user: user.user,
+    setOpenLoginModal: login.setOpenLoginModal,
+    setOpenRegisterModal: register.setOpenRegisterModal,
+    doLogout: login.doLogout,
     mobileOpen: drawer.mobileOpen,
     setMobileOpen: drawer.setMobileOpen,
     toggleMobileOpen: drawer.toggleMobileOpen

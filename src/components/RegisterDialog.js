@@ -76,7 +76,12 @@ const useStyles = makeStyles(theme => ({
 export const RegisterDialog = ({
     openRegisterModal,
     setOpenRegisterModal,
-    setOpenLoginModal
+    setOpenLoginModal,
+    registerForm,
+    registerFormErrors,
+    setRegisterFormValue,
+    setCaptchaToken,
+    doRegister
 }) => {
     const classes = useStyles();
     const theme = useTheme();
@@ -94,10 +99,6 @@ export const RegisterDialog = ({
 
     const handleChangeRadio = event => {
         setRadioValue(event.target.value);
-    };
-
-    const onChange = value => {
-        console.log("Captcha value:", value);
     };
 
     return (
@@ -149,6 +150,12 @@ export const RegisterDialog = ({
                         className={classes.dialogInput}
                         placeholder="Wallet ID"
                         variant="outlined"
+                        value={registerForm.wallet}
+                        onChange={event =>
+                            setRegisterFormValue("wallet", event.target.value)
+                        }
+                        error={Boolean(registerFormErrors.wallet)}
+                        helperText={registerFormErrors.wallet}
                         fullWidth
                     />
                     <TextField
@@ -156,6 +163,12 @@ export const RegisterDialog = ({
                         placeholder="Password"
                         type="password"
                         variant="outlined"
+                        value={registerForm.password}
+                        onChange={event =>
+                            setRegisterFormValue("password", event.target.value)
+                        }
+                        error={Boolean(registerFormErrors.password)}
+                        helperText={registerFormErrors.password}
                         fullWidth
                     />
                     <TextField
@@ -163,17 +176,26 @@ export const RegisterDialog = ({
                         placeholder="Repeat password"
                         type="password"
                         variant="outlined"
+                        value={registerForm.repeat_password}
+                        onChange={event =>
+                            setRegisterFormValue(
+                                "repeat_password",
+                                event.target.value
+                            )
+                        }
+                        error={Boolean(registerFormErrors.repeat_password)}
+                        helperText={registerFormErrors.repeat_password}
                         fullWidth
                     />
                 </div>
-                <ReCaptcha onChange={onChange} />
+                <ReCaptcha onChange={setCaptchaToken} />
             </DialogContent>
-            <DialogActions classes={{ root: classes.dialogActions }}>
+            <DialogActions classes={{ root: classes.dialogActions }} disableSpacing>
                 <Button
                     className={classes.dialogRegisterButton}
                     color="secondary"
                     size="large"
-                    onClick={handleClose}
+                    onClick={doRegister}
                     fullWidth
                     autoFocus
                 >
@@ -192,10 +214,15 @@ export const RegisterDialog = ({
     );
 };
 
-const mapMoxToProps = ({ authorization }) => ({
-    openRegisterModal: authorization.openRegisterModal,
-    setOpenRegisterModal: authorization.setOpenRegisterModal,
-    setOpenLoginModal: authorization.setOpenLoginModal
+const mapMoxToProps = ({ register, login }) => ({
+    openRegisterModal: register.openRegisterModal,
+    registerForm: register.registerForm,
+    registerFormErrors: register.registerFormErrors,
+    setRegisterFormValue: register.setRegisterFormValue,
+    setCaptchaToken: register.setCaptchaToken,
+    doRegister: register.doRegister,
+    setOpenRegisterModal: register.setOpenRegisterModal,
+    setOpenLoginModal: login.setOpenLoginModal
 });
 
 export default inject(mapMoxToProps)(observer(RegisterDialog));

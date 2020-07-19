@@ -27,6 +27,9 @@ export default createMuiTheme({
         subtitle1: {
             fontWeight: "bold"
         },
+        body2: {
+            fontSize: "16px"
+        },
         fontFamily: "Overpass"
     }
 });

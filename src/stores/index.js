@@ -1,11 +1,13 @@
 import { DrawerStore } from "./DrawerStore";
-import { AuthorizationStore } from "./AuthorizationStore";
 import { UserStore } from "./UserStore";
+import { LoginStore } from "./LoginStore";
+import { RegisterStore } from "./RegisterStore";
 import { FilesStore } from "./FilesStore";
 
 const drawer = new DrawerStore();
 const user = new UserStore();
-const authorization = new AuthorizationStore(user);
+const login = new LoginStore(user);
+const register = new RegisterStore(user);
 const files = new FilesStore();
 
-export const store = { drawer, user, authorization, files };
+export const store = { drawer, user, login, register, files };
