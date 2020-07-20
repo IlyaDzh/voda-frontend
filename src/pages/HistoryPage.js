@@ -1,11 +1,11 @@
 import React from 'react'
 
-const MyFilesPage = () => {
+const HistoryPage = () => {
     return (
         <div>
-            MyFiles
+            History
         </div>
     )
 }
 
-export default MyFilesPage
+export default HistoryPage

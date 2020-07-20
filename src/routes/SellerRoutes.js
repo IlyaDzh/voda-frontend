@@ -1,20 +1,13 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import {
-    DataOwnersPage,
-    DataSalesPage,
-    ProfilePage,
-    MyFilesPage,
-    ErrorPage
-} from "@/pages";
+import { DashboardPage, DigitalGoodsPage, HistoryPage, ErrorPage } from "@/pages";
 
 const SellerRoutes = () => (
     <Switch>
-        <Route exact path={["/", "/owners"]} component={DataOwnersPage} />
-        <Route exact path="/sales" component={DataSalesPage} />
-        <Route exact path="/profile" component={ProfilePage} />
-        <Route exact path="/files" component={MyFilesPage} />
+        <Route exact path={["/", "/dashboard"]} component={DashboardPage} />
+        <Route exact path="/digital-goods" component={DigitalGoodsPage} />
+        <Route exact path="/history" component={HistoryPage} />
         <Route component={ErrorPage} />
     </Switch>
 );

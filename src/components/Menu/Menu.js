@@ -36,6 +36,22 @@ const useStyles = makeStyles(theme => ({
         "& button:first-child": {
             marginBottom: "16px"
         }
+    },
+    bottomMenu: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: "32px"
+    },
+    policy: {
+        marginBottom: "8px",
+        color: "#fff"
+    },
+    copyright: {
+        fontSize: "10px",
+        fontWeight: 300,
+        color: "#fff"
     }
 }));
 
@@ -97,6 +113,14 @@ const Menu = ({
                         Sign Out
                     </Button>
                 )}
+            </div>
+            <div className={classes.bottomMenu}>
+                <Typography classes={{ root: classes.policy }}>
+                    Privacy Policy
+                </Typography>
+                <Typography classes={{ root: classes.copyright }}>
+                    Copyright VODA team (c) 2020
+                </Typography>
             </div>
         </>
     );

@@ -5,7 +5,7 @@ import {
     DataPurchasesPage,
     ExploreFilesPage,
     ProfilePage,
-    DashboardPage,
+    KibanaDashboardsPage,
     ErrorPage
 } from "@/pages";
 
@@ -14,7 +14,7 @@ const PurchaserRoutes = () => (
         <Route exact path={["/", "/purchases"]} component={DataPurchasesPage} />
         <Route exact path="/explore" component={ExploreFilesPage} />
         <Route exact path="/profile" component={ProfilePage} />
-        <Route exact path="/dashboard" component={DashboardPage} />
+        <Route exact path="/dashboard" component={KibanaDashboardsPage} />
         <Route component={ErrorPage} />
     </Switch>
 );

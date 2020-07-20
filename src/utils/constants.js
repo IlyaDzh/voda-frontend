@@ -7,4 +7,4 @@ export const PURCHASER_MENU_LIST = [
     "kibana-dashboards"
 ];
 
-export const SELLER_MENU_LIST = ["data-owners", "data-sales", "profile", "my-files"];
+export const SELLER_MENU_LIST = ["dashboard", "digital-goods", "sales-history"];

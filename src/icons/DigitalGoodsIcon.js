@@ -1,6 +1,6 @@
 import React from "react";
 
-const DataSalesIcon = () => (
+const DigitalGoodsIcon = () => (
     <svg
         width="30"
         height="30"
@@ -24,4 +24,4 @@ const DataSalesIcon = () => (
     </svg>
 );
 
-export default DataSalesIcon;
+export default DigitalGoodsIcon;

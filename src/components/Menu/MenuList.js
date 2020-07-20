@@ -8,9 +8,9 @@ import {
     KibanaDashboardsIcon,
     DataPurchasesIcon,
     ProfileIcon,
-    DataOwnersIcon,
-    DataSalesIcon,
-    MyFilesIcon
+    DashboardIcon,
+    DigitalGoodsIcon,
+    HistoryIcon
 } from "@/icons";
 
 const useStyles = makeStyles(() => ({
@@ -73,32 +73,32 @@ const MenuList = ({ typeUser }) => {
                                 text="Profile"
                             />
                         );
-                    case "data-owners":
+                    case "dashboard":
                         return (
                             <MenuItem
                                 key={item}
-                                to="/owners"
-                                activeRoutes={["/", "/owners"]}
-                                icon={<DataOwnersIcon />}
-                                text="Data owners"
+                                to="/dashboard"
+                                activeRoutes={["/", "/dashboard"]}
+                                icon={<DashboardIcon />}
+                                text="Dashboard"
                             />
                         );
-                    case "data-sales":
+                    case "digital-goods":
                         return (
                             <MenuItem
                                 key={item}
-                                to="/sales"
-                                icon={<DataSalesIcon />}
-                                text="Data sales"
+                                to="/digital-goods"
+                                icon={<DigitalGoodsIcon />}
+                                text="Digital Goods"
                             />
                         );
-                    case "my-files":
+                    case "sales-history":
                         return (
                             <MenuItem
                                 key={item}
-                                to="/files"
-                                icon={<MyFilesIcon />}
-                                text="My files"
+                                to="/history"
+                                icon={<HistoryIcon />}
+                                text="Sales History"
                             />
                         );
                     default:

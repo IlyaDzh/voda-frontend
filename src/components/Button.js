@@ -20,14 +20,13 @@ const useStyles = makeStyles(theme => ({
         fontSize: "16px",
         lineHeight: "30px"
     },
-    outlined: {
-        background: "transperent"
-    },
     containedPrimary: {
         border: "1px solid #deeff7"
     },
     outlinedPrimary: {},
-    outlinedSecondary: {}
+    outlinedSecondary: {
+        color: theme.palette.secondary.main
+    }
 }));
 
 const Button = props => {

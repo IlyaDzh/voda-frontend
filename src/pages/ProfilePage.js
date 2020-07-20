@@ -1,18 +1,14 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
 
-import { MyWallet, AccountBalance } from "@/components";
+import { MyBalance, AccountBalance } from "@/components";
 
 const ProfilePage = () => {
     return (
         <div>
-            <MyWallet />
-            <AccountBalance />
-            <AccountBalance />
-            <AccountBalance />
-            {/* <Grid container spacing={3}>
-                Balance
-            </Grid> */}
+            <MyBalance />
+            <AccountBalance title="Account Balance" number="15.2000" />
+            <AccountBalance title="Account Balance" number="15.2000" />
+            <AccountBalance title="Account Balance" number="15.2000" />
         </div>
     );
 };

@@ -7,8 +7,7 @@ const useStyles = makeStyles(() => ({
     walletWrapper: {
         display: "flex",
         alignItems: "center",
-        padding: "19px 24px",
-        marginBottom: "32px"
+        padding: "19px 24px"
     },
     walletIcon: {
         marginRight: "16px"
@@ -28,9 +27,8 @@ const MyWallet = () => {
                 <WalletIcon />
             </div>
             <Typography classes={{ root: classes.walletTitle }} variant="h2">
-                My Wallet
+                My Balance
             </Typography>
-
         </Paper>
     );
 };
