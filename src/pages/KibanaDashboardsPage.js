@@ -3,7 +3,7 @@ import React from 'react'
 const KibanaDashboardsPage = () => {
     return (
         <div>
-            Dashboard
+            Kibana Dashboards
         </div>
     )
 }

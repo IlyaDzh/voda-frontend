@@ -3,7 +3,6 @@ import { TextField as BaseTextField, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     textField: {
-        height: "42px",
         "& .MuiOutlinedInput-root": {
             borderRadius: "5px",
             "& input": {

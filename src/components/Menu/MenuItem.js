@@ -8,11 +8,14 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     listItem: {
         padding: "8px 32px",
         "&.Mui-selected": {
             backgroundColor: "rgba(0, 0, 0, 0.2)"
+        },
+        [theme.breakpoints.down("xs")]: {
+            padding: "8px 24px"
         }
     },
     listItemIcon: {

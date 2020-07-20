@@ -6,17 +6,30 @@ import { Button } from "@/components";
 const useStyles = makeStyles(theme => ({
     balanceItem: {
         display: "flex",
-        padding: "24px 32px 24px 24px"
+        padding: "24px 32px 24px 24px",
+        [theme.breakpoints.down("sm")]: {
+            display: "block",
+            padding: "24px"
+        }
     },
     balanceName: {
         marginRight: "24px",
-        minWidth: "140px"
+        minWidth: "140px",
+        [theme.breakpoints.down("sm")]: {
+            display: "flex",
+            justifyContent: "space-between",
+            marginRight: 0,
+            marginBottom: "24px"
+        }
     },
     balanceActions: {
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
-        width: "100%"
+        width: "100%",
+        [theme.breakpoints.down("xs")]: {
+            display: "block"
+        }
     },
     balanceTitle: {
         fontWeight: "bold",
@@ -25,7 +38,11 @@ const useStyles = makeStyles(theme => ({
     },
     balanceNumber: {
         display: "block",
-        lineHeight: "9px"
+        lineHeight: "9px",
+        [theme.breakpoints.down("sm")]: {
+            fontSize: "16px",
+            lineHeight: "21px"
+        }
     },
     disabledField: {
         background: theme.palette.background.main,
@@ -34,11 +51,17 @@ const useStyles = makeStyles(theme => ({
         marginRight: "16px",
         maxWidth: "178px",
         width: "100%",
-        height: "24px"
+        height: "24px",
+        [theme.breakpoints.down("sm")]: {
+            maxWidth: "calc(100% - 24px)"
+        },
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: "16px"
+        }
     },
     unlockBtn: {
         marginRight: "16px",
-        width: "90px"
+        minWidth: "90px"
     },
     questionBtn: {
         minWidth: "30px",

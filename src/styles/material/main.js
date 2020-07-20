@@ -18,7 +18,8 @@ export default createMuiTheme({
     },
     typography: {
         h1: {
-            fontSize: "30px"
+            fontSize: "40px",
+            fontWeight: 700
         },
         h2: {
             fontSize: "24px",

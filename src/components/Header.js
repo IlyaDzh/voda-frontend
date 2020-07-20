@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
     },
     toolbar: {
         justifyContent: "space-between",
-        minHeight: "70px"
+        minHeight: "60px",
+        padding: "0 24px"
     },
     logoWrapper: {
         display: "flex",
@@ -30,6 +31,9 @@ const useStyles = makeStyles(theme => ({
         height: "50px",
         "& img": {
             height: "100%"
+        },
+        [theme.breakpoints.down("xs")]: {
+            height: "30px"
         }
     }
 }));

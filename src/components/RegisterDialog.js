@@ -58,6 +58,9 @@ const useStyles = makeStyles(theme => ({
             marginBottom: "40px"
         }
     },
+    dialogInputError: {
+        marginBottom: 0
+    },
     dialogActions: {
         flexDirection: "column",
         paddingRight: "24px",
@@ -147,7 +150,12 @@ export const RegisterDialog = ({
                 </RadioGroup>
                 <div>
                     <TextField
-                        className={classes.dialogInput}
+                        className={[
+                            classes.dialogInput,
+                            Boolean(registerFormErrors.wallet)
+                                ? classes.dialogInputError
+                                : undefined
+                        ].join(" ")}
                         placeholder="Wallet ID"
                         variant="outlined"
                         value={registerForm.wallet}
@@ -159,7 +167,12 @@ export const RegisterDialog = ({
                         fullWidth
                     />
                     <TextField
-                        className={classes.dialogInput}
+                        className={[
+                            classes.dialogInput,
+                            Boolean(registerFormErrors.password)
+                                ? classes.dialogInputError
+                                : undefined
+                        ].join(" ")}
                         placeholder="Password"
                         type="password"
                         variant="outlined"
@@ -172,7 +185,12 @@ export const RegisterDialog = ({
                         fullWidth
                     />
                     <TextField
-                        className={classes.dialogInput}
+                        className={[
+                            classes.dialogInput,
+                            Boolean(registerFormErrors.repeat_password)
+                                ? classes.dialogInputError
+                                : undefined
+                        ].join(" ")}
                         placeholder="Repeat password"
                         type="password"
                         variant="outlined"

@@ -14,9 +14,15 @@ const useStyles = makeStyles(theme => ({
         }
     },
     drawerPaper: {
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
         width: "280px",
         background: theme.palette.primary.main,
-        boxShadow: "5px 0px 10px rgba(0, 0, 0, 0.25)"
+        boxShadow: "5px 0px 10px rgba(0, 0, 0, 0.25)",
+        [theme.breakpoints.down("xs")]: {
+            width: "230px"
+        }
     },
     logoWrapper: {
         display: "flex",
@@ -25,23 +31,28 @@ const useStyles = makeStyles(theme => ({
         height: "134px"
     },
     userTypeWrapper: {
-        padding: "0 32px"
+        padding: "0 32px",
+        [theme.breakpoints.down("xs")]: {
+            padding: "24px 24px 0"
+        }
     },
     userType: {
         color: "#fff",
-        lineHeight: "37px"
+        lineHeight: "37px",
+        [theme.breakpoints.down("xs")]: {
+            fontSize: "16px"
+        }
     },
     entryActions: {
         padding: "0 32px",
         "& button:first-child": {
             marginBottom: "16px"
+        },
+        [theme.breakpoints.down("xs")]: {
+            padding: "0 24px"
         }
     },
     bottomMenu: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
         padding: "32px"
     },
     policy: {
@@ -77,42 +88,83 @@ const Menu = ({
 
     const drawer = (
         <>
-            <Link to="/" className={classes.logoWrapper}>
-                <img src={logo} alt="Voda logo" />
-            </Link>
-            <div className={classes.userTypeWrapper}>
-                <Typography classes={{ root: classes.userType }} variant="h3">
-                    {user && user.type === "seller"
-                        ? "Data validator client"
-                        : "Data mart client"}
-                </Typography>
-            </div>
-            <MenuList typeUser={user && user.type} />
-            <div className={classes.entryActions}>
-                {!isAuth ? (
-                    <>
-                        <Button
-                            color="secondary"
-                            size="large"
-                            onClick={handleLogin}
-                            fullWidth
-                        >
-                            Log In
-                        </Button>
-                        <Button size="large" onClick={handleRegister} fullWidth>
-                            Register
-                        </Button>
-                    </>
-                ) : (
-                    <Button
-                        color="secondary"
-                        size="large"
-                        onClick={doLogout}
-                        fullWidth
-                    >
-                        Sign Out
-                    </Button>
-                )}
+            <div>
+                <Hidden xsDown>
+                    <Link to="/" className={classes.logoWrapper}>
+                        <img src={logo} alt="Voda logo" />
+                    </Link>
+                </Hidden>
+                <div className={classes.userTypeWrapper}>
+                    <Typography classes={{ root: classes.userType }} variant="h3">
+                        {user && user.type === "seller"
+                            ? "Data validator client"
+                            : "Data mart client"}
+                    </Typography>
+                </div>
+                <MenuList typeUser={user && user.type} />
+                <div className={classes.entryActions}>
+                    {!isAuth ? (
+                        <>
+                            <Hidden xsDown>
+                                <Button
+                                    color="secondary"
+                                    size="large"
+                                    onClick={handleLogin}
+                                    fullWidth
+                                >
+                                    Log In
+                                </Button>
+                                <Button
+                                    size="large"
+                                    onClick={handleRegister}
+                                    fullWidth
+                                >
+                                    Register
+                                </Button>
+                            </Hidden>
+                            <Hidden smUp>
+                                <Button
+                                    color="secondary"
+                                    onClick={handleLogin}
+                                    disableElevation
+                                    fullWidth
+                                >
+                                    Log In
+                                </Button>
+                                <Button
+                                    onClick={handleRegister}
+                                    disableElevation
+                                    fullWidth
+                                >
+                                    Register
+                                </Button>
+                            </Hidden>
+                        </>
+                    ) : (
+                        <>
+                            <Hidden xsDown>
+                                <Button
+                                    color="secondary"
+                                    size="large"
+                                    onClick={doLogout}
+                                    fullWidth
+                                >
+                                    Sign Out
+                                </Button>
+                            </Hidden>
+                            <Hidden smUp>
+                                <Button
+                                    color="secondary"
+                                    onClick={doLogout}
+                                    disableElevation
+                                    fullWidth
+                                >
+                                    Sign Out
+                                </Button>
+                            </Hidden>
+                        </>
+                    )}
+                </div>
             </div>
             <div className={classes.bottomMenu}>
                 <Typography classes={{ root: classes.policy }}>

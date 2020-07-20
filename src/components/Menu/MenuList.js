@@ -49,7 +49,7 @@ const MenuList = ({ typeUser }) => {
                         return (
                             <MenuItem
                                 key={item}
-                                to="/dashboard"
+                                to="/kibana-dashboards"
                                 icon={<KibanaDashboardsIcon />}
                                 text="Kibana Dashboards"
                             />

@@ -18,3 +18,6 @@ export { default as ExplorerList } from "./ExploreFiles/FilesList";
 
 export { default as MyBalance } from "./MyBalance";
 export { default as AccountBalance } from "./AccountBalance";
+
+export { default as DashboardHeader } from "./Dashboard/DashboardHeader";
+export { default as DashboardTransactions } from "./Dashboard/DashboardTransactions";

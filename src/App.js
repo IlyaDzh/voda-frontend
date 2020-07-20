@@ -18,8 +18,12 @@ const useStyles = makeStyles(theme => ({
     content: {
         flexGrow: 1,
         padding: "32px 64px",
+        overflowX: "hidden",
         [theme.breakpoints.down("sm")]: {
             padding: "32px"
+        },
+        [theme.breakpoints.down("xs")]: {
+            padding: "24px"
         }
     }
 }));

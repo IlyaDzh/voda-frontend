@@ -1,9 +1,9 @@
 import React from "react";
 
-const WalletIcon = () => (
+const WalletIcon = ({ isMobile }) => (
     <svg
-        width="50"
-        height="50"
+        width={isMobile ? "34" : "50"}
+        height={isMobile ? "30" : "50"}
         viewBox="0 0 50 50"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
