@@ -5,6 +5,9 @@ import { SearchInput, FilterItem } from "@/components";
 
 const useStyles = makeStyles(() => ({
     searchWrapper: {},
+    searchInputWrapper: {
+        marginBottom: "32px"
+    },
     searchFiltersWrapper: {
         marginBottom: "32px"
     }
@@ -15,7 +18,9 @@ const SearchBar = () => {
 
     return (
         <div className={classes.searchWrapper}>
-            <SearchInput />
+            <div className={classes.searchInputWrapper}>
+                <SearchInput />
+            </div>
             <Grid className={classes.searchFiltersWrapper} container spacing={1}>
                 {[
                     "Filter by name",
@@ -24,8 +29,10 @@ const SearchBar = () => {
                     "Filter by type",
                     "Filter by category",
                     "Filter by genre"
-                ].map(filter => (
-                    <FilterItem key={filter} filter={filter} />
+                ].map((filter, i) => (
+                    <Grid key={i} item xs={4} sm={4} md={4} lg={2}>
+                        <FilterItem filter={filter} />
+                    </Grid>
                 ))}
             </Grid>
         </div>

@@ -8,3 +8,5 @@ export { default as HistoryIcon } from "./HistoryIcon";
 export { default as CloseIcon } from "./CloseIcon";
 export { default as SearchIcon } from "./SearchIcon";
 export { default as WalletIcon } from "./WalletIcon";
+export { default as FilterIcon } from "./FilterIcon";
+export { default as EyeIcon } from "./EyeIcon";

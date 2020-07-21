@@ -4,11 +4,6 @@ import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
 import { Button } from "@/components";
 
 const useStyles = makeStyles(theme => ({
-    transactionsTitle: {
-        [theme.breakpoints.down("sm")]: {
-            fontSize: "24px"
-        }
-    },
     tableHeader: {
         display: "flex",
         padding: "10px 16px",
@@ -19,21 +14,31 @@ const useStyles = makeStyles(theme => ({
         "& p": {
             fontSize: "16px",
             fontWeight: "bold",
-            width: "15%",
+            width: "14%",
             "&:first-child": {
-                width: "55%",
+                width: "30%",
                 [theme.breakpoints.down("sm")]: {
-                    width: "25%"
+                    width: "20%"
+                }
+            },
+            "&:last-child": {
+                width: "30%",
+                [theme.breakpoints.down("sm")]: {
+                    width: "20%"
                 }
             },
             [theme.breakpoints.down("sm")]: {
-                width: "25%",
+                width: "20%",
                 fontSize: "12px"
+            },
+            [theme.breakpoints.down("xs")]: {
+                width: "25%"
             }
         }
     },
     tableItem: {
         display: "flex",
+        alignItems: "center",
         padding: "10px 16px",
         marginBottom: "4px",
         [theme.breakpoints.down("xs")]: {
@@ -41,26 +46,39 @@ const useStyles = makeStyles(theme => ({
         },
         "& p": {
             fontSize: "12px",
-            width: "15%",
+            width: "14%",
             "&:first-child": {
-                width: "55%",
+                color: theme.palette.primary.main,
+                cursor: "pointer",
+                textDecoration: "underline",
+                width: "30%",
                 textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
                 overflow: "hidden",
                 [theme.breakpoints.down("sm")]: {
-                    width: "25%"
+                    width: "20%"
+                }
+            },
+            "&:last-child": {
+                color: theme.palette.primary.main,
+                cursor: "pointer",
+                textDecoration: "underline",
+                width: "30%",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                [theme.breakpoints.down("sm")]: {
+                    width: "20%"
                 }
             },
             [theme.breakpoints.down("sm")]: {
-                width: "25%",
+                width: "20%",
                 fontSize: "10px"
+            },
+            [theme.breakpoints.down("xs")]: {
+                width: "25%"
             }
         }
-    },
-    errorColor: {
-        color: "#eb5757"
-    },
-    successColor: {
-        color: "#17e3b2"
     },
     loadMoreBtn: {
         display: "block",
@@ -74,83 +92,98 @@ const useStyles = makeStyles(theme => ({
 const ROWS = [
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Lock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Lock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Lock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Lock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
     {
         txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
+        purchased: "2020-06-24",
+        value: "0.12345678",
+        uploaded: "2020-06-24",
+        fileID:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     }
 ];
 
-const DashboardTransactions = () => {
+const HistoryTable = () => {
     const classes = useStyles();
 
     return (
         <>
             <Grid item xs={12}>
-                <Typography
-                    classes={{ root: classes.transactionsTitle }}
-                    variant="h1"
-                >
-                    Transcations
-                </Typography>
                 <div className={classes.tableHeader}>
                     <Typography>Txn ID</Typography>
-                    <Typography>Time</Typography>
-                    <Typography>Type</Typography>
+                    <Typography>Purchased</Typography>
                     <Typography>Value</Typography>
+                    <Typography>Uploaded</Typography>
+                    <Typography>File ID</Typography>
                 </div>
                 {ROWS.map((item, i) => (
                     <Paper
@@ -159,18 +192,10 @@ const DashboardTransactions = () => {
                         elevation={3}
                     >
                         <Typography>{item.txnID}</Typography>
-                        <Typography>{item.time}</Typography>
-                        <Typography
-                            classes={{
-                                root:
-                                    item.type === "Lock"
-                                        ? classes.errorColor
-                                        : classes.successColor
-                            }}
-                        >
-                            {item.type}
-                        </Typography>
+                        <Typography>{item.purchased}</Typography>
                         <Typography>{item.value}</Typography>
+                        <Typography>{item.uploaded}</Typography>
+                        <Typography>{item.fileID}</Typography>
                     </Paper>
                 ))}
             </Grid>
@@ -202,4 +227,4 @@ const DashboardTransactions = () => {
     );
 };
 
-export default DashboardTransactions;
+export default HistoryTable;

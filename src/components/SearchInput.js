@@ -9,7 +9,6 @@ const useStyles = makeStyles(theme => ({
         background: "#fff",
         boxShadow: "2px 2px 6px rgba(0, 0, 0, 0.1)",
         borderRadius: "5px",
-        marginBottom: "32px",
         maxWidth: "451px",
         [theme.breakpoints.down("xs")]: {
             maxWidth: "unset"
@@ -25,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SearchInput = () => {
+const SearchInput = ({ isMobile }) => {
     const classes = useStyles();
 
     return (
@@ -33,6 +32,7 @@ const SearchInput = () => {
             className={classes.searchInput}
             placeholder="Search"
             variant="outlined"
+            size={isMobile ? "small" : undefined}
             InputProps={{
                 startAdornment: (
                     <InputAdornment

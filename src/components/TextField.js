@@ -13,19 +13,27 @@ const useStyles = makeStyles(() => ({
             }
         }
     },
-    textFieldInput: {
-        padding: "14px 14px 11px 14px"
+    textFieldSmall: {
+        "& .MuiOutlinedInput-root": {
+            "& input": {
+                padding: "7px 14px 6px 14px"
+            }
+        }
     }
 }));
 
 const TextField = props => {
     const classes = useStyles();
-    const { ...rest } = props;
+    const { size, ...rest } = props;
 
     return (
         <BaseTextField
-            InputProps={{ classes: { input: classes.textFieldInput } }}
-            classes={{ root: classes.textField }}
+            classes={{
+                root: [
+                    classes.textField,
+                    size === "small" ? classes.textFieldSmall : undefined
+                ].join(" ")
+            }}
             {...rest}
         />
     );
