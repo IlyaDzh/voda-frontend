@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const RegisterDialog = ({
+const RegisterDialog = ({
     openRegisterModal,
     setOpenRegisterModal,
     setOpenLoginModal,

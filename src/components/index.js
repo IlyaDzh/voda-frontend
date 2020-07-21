@@ -10,6 +10,8 @@ export { default as FilterItem } from "./FilterItem";
 export { default as LoginDialog } from "./Dialogs/LoginDialog";
 export { default as RegisterDialog } from "./Dialogs/RegisterDialog";
 export { default as FileUploadDialog } from "./Dialogs/FileUploadDialog";
+export { default as CardInfoDialog } from "./Dialogs/CardInfoDialog";
+export { default as TransactionInfoDialog } from "./Dialogs/TransactionInfoDialog";
 
 export { default as Menu } from "./Menu/Menu";
 export { default as MenuList } from "./Menu/MenuList";

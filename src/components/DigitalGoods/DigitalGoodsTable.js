@@ -1,4 +1,5 @@
 import React from "react";
+import { inject, observer } from "mobx-react";
 import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
 
 import { Button } from "@/components";
@@ -157,7 +158,7 @@ const ROWS = [
     }
 ];
 
-const DigitalGoodsTable = () => {
+const DigitalGoodsTable = ({ setOpenGoodsInfoModal }) => {
     const classes = useStyles();
 
     return (
@@ -182,6 +183,7 @@ const DigitalGoodsTable = () => {
                         <Typography>{item.price}</Typography>
                         <Button
                             className={classes.tableItemDetails}
+                            onClick={() => setOpenGoodsInfoModal(true, item)}
                             color="secondary"
                             size="small"
                             disableElevation
@@ -222,4 +224,8 @@ const DigitalGoodsTable = () => {
     );
 };
 
-export default DigitalGoodsTable;
+const mapMoxToProps = ({ digitalGoods }) => ({
+    setOpenGoodsInfoModal: digitalGoods.setOpenGoodsInfoModal
+});
+
+export default inject(mapMoxToProps)(observer(DigitalGoodsTable));

@@ -97,7 +97,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const FileUploadDialog = ({
+const FileUploadDialog = ({
     openFileUploadModal,
     setOpenFileUploadModal,
     uploadForm,

@@ -1,4 +1,5 @@
 import React from "react";
+import { inject, observer } from "mobx-react";
 import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
 
 import { Button } from "@/components";
@@ -172,7 +173,7 @@ const ROWS = [
     }
 ];
 
-const HistoryTable = () => {
+const HistoryTable = ({ setOpenTxnInfoModal }) => {
     const classes = useStyles();
 
     return (
@@ -191,11 +192,15 @@ const HistoryTable = () => {
                         classes={{ root: classes.tableItem }}
                         elevation={3}
                     >
-                        <Typography>{item.txnID}</Typography>
+                        <Typography onClick={() => setOpenTxnInfoModal(true, item)}>
+                            {item.txnID}
+                        </Typography>
                         <Typography>{item.purchased}</Typography>
                         <Typography>{item.value}</Typography>
                         <Typography>{item.uploaded}</Typography>
-                        <Typography>{item.fileID}</Typography>
+                        <Typography onClick={() => setOpenTxnInfoModal(true, item)}>
+                            {item.fileID}
+                        </Typography>
                     </Paper>
                 ))}
             </Grid>
@@ -227,4 +232,8 @@ const HistoryTable = () => {
     );
 };
 
-export default HistoryTable;
+const mapMoxToProps = ({ salesHistory }) => ({
+    setOpenTxnInfoModal: salesHistory.setOpenTxnInfoModal
+});
+
+export default inject(mapMoxToProps)(observer(HistoryTable));
