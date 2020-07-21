@@ -19,6 +19,12 @@ const useStyles = makeStyles(() => ({
                 padding: "7px 14px 6px 14px"
             }
         }
+    },
+    textFieldSelect: {
+        padding: "12px 32px 11px 14px"
+    },
+    inputLabel: {
+        transform: "translate(14px, 15px) scale(1)"
     }
 }));
 
@@ -33,6 +39,12 @@ const TextField = props => {
                     classes.textField,
                     size === "small" ? classes.textFieldSmall : undefined
                 ].join(" ")
+            }}
+            InputLabelProps={{
+                classes: { root: classes.inputLabel }
+            }}
+            SelectProps={{
+                classes: { root: classes.textFieldSelect }
             }}
             {...rest}
         />

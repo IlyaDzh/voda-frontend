@@ -3,7 +3,13 @@ import { inject, observer } from "mobx-react";
 import { makeStyles } from "@material-ui/core";
 
 import { UnregRoutes, PurchaserRoutes, SellerRoutes } from "@/routes";
-import { Menu, Header, LoginDialog, RegisterDialog } from "@/components";
+import {
+    Menu,
+    Header,
+    LoginDialog,
+    RegisterDialog,
+    FileUploadDialog
+} from "@/components";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -48,6 +54,7 @@ const _App = ({ isAuth, user }) => {
                 )}
                 <LoginDialog />
                 <RegisterDialog />
+                <FileUploadDialog />
             </main>
         </div>
     );

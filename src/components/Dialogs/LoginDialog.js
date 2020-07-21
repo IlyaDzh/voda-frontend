@@ -8,8 +8,7 @@ import {
     Typography,
     IconButton,
     Link,
-    useMediaQuery,
-    useTheme,
+    Hidden,
     makeStyles
 } from "@material-ui/core";
 
@@ -74,8 +73,6 @@ export const LoginDialog = ({
     doLogin
 }) => {
     const classes = useStyles();
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down("xs"));
 
     const handleClose = () => {
         setOpenLoginModal(false);
@@ -99,7 +96,6 @@ export const LoginDialog = ({
     return (
         <Dialog
             classes={{ paper: classes.dialogPaper }}
-            fullScreen={fullScreen}
             open={openLoginModal}
             onClose={handleClose}
         >
@@ -154,16 +150,30 @@ export const LoginDialog = ({
                         {getLabelFromSubmissionError(loginSubmissionError)}
                     </Typography>
                 )}
-                <Button
-                    className={classes.dialogLoginButton}
-                    color="secondary"
-                    size="large"
-                    onClick={doLogin}
-                    fullWidth
-                    autoFocus
-                >
-                    Log in
-                </Button>
+                <Hidden xsDown>
+                    <Button
+                        className={classes.dialogLoginButton}
+                        color="secondary"
+                        size="large"
+                        onClick={doLogin}
+                        fullWidth
+                        autoFocus
+                    >
+                        Log in
+                    </Button>
+                </Hidden>
+                <Hidden smUp>
+                    <Button
+                        className={classes.dialogLoginButton}
+                        color="secondary"
+                        onClick={doLogin}
+                        disableElevation
+                        fullWidth
+                        autoFocus
+                    >
+                        Log in
+                    </Button>
+                </Hidden>
                 <Link
                     classes={{ root: classes.dialogToRegisterButton }}
                     component="button"

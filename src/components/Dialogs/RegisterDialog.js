@@ -11,8 +11,7 @@ import {
     FormControlLabel,
     Radio,
     Link,
-    useMediaQuery,
-    useTheme,
+    Hidden,
     makeStyles
 } from "@material-ui/core";
 
@@ -87,8 +86,6 @@ export const RegisterDialog = ({
     doRegister
 }) => {
     const classes = useStyles();
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down("xs"));
     const [radioValue, setRadioValue] = useState("purchaser");
 
     const handleClose = () => {
@@ -107,7 +104,6 @@ export const RegisterDialog = ({
     return (
         <Dialog
             classes={{ paper: classes.dialogPaper }}
-            fullScreen={fullScreen}
             open={openRegisterModal}
             onClose={handleClose}
         >
@@ -209,16 +205,30 @@ export const RegisterDialog = ({
                 <ReCaptcha onChange={setCaptchaToken} />
             </DialogContent>
             <DialogActions classes={{ root: classes.dialogActions }} disableSpacing>
-                <Button
-                    className={classes.dialogRegisterButton}
-                    color="secondary"
-                    size="large"
-                    onClick={doRegister}
-                    fullWidth
-                    autoFocus
-                >
-                    Register
-                </Button>
+                <Hidden xsDown>
+                    <Button
+                        className={classes.dialogRegisterButton}
+                        color="secondary"
+                        size="large"
+                        onClick={doRegister}
+                        fullWidth
+                        autoFocus
+                    >
+                        Register
+                    </Button>
+                </Hidden>
+                <Hidden smUp>
+                    <Button
+                        className={classes.dialogRegisterButton}
+                        color="secondary"
+                        onClick={doRegister}
+                        disableElevation
+                        fullWidth
+                        autoFocus
+                    >
+                        Register
+                    </Button>
+                </Hidden>
                 <Link
                     classes={{ root: classes.dialogToLoginButton }}
                     component="button"
