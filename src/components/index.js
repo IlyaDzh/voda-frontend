@@ -1,6 +1,7 @@
 export { default as Button } from "./Button";
 export { default as TextField } from "./TextField";
 export { default as Header } from "./Header";
+export { default as Backdrop } from "./Backdrop";
 export { default as ReCaptcha } from "./ReCaptcha";
 export { default as MyBalance } from "./MyBalance";
 export { default as AccountBalance } from "./AccountBalance";

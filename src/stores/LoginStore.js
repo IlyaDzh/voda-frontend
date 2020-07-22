@@ -35,6 +35,8 @@ export class LoginStore {
             this.loginForm.password === "123"
         ) {
             this.userStore.isAuth = true;
+            this.userStore.logoutWithForm = false;
+            this.userStore.authWithForm = true;
             this.userStore.user = {
                 id: "123456",
                 name: "Ilya",
@@ -48,6 +50,8 @@ export class LoginStore {
             this.loginForm.password === "123"
         ) {
             this.userStore.isAuth = true;
+            this.userStore.logoutWithForm = false;
+            this.userStore.authWithForm = true;
             this.userStore.user = {
                 id: "123456",
                 name: "Ilya",
@@ -68,6 +72,8 @@ export class LoginStore {
     @action
     doLogout = () => {
         this.userStore.isAuth = false;
+        this.userStore.logoutWithForm = true;
+        this.userStore.authWithForm = false;
         this.userStore.user = undefined;
         localStorage.removeItem("accessToken");
     };

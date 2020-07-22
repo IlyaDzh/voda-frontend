@@ -1,14 +1,14 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import { DashboardPage, DigitalGoodsPage, HistoryPage, ErrorPage } from "@/pages";
 
-const SellerRoutes = () => (
+const SellerRoutes = ({ redirect }) => (
     <Switch>
         <Route exact path={["/", "/dashboard"]} component={DashboardPage} />
         <Route exact path="/digital-goods" component={DigitalGoodsPage} />
         <Route exact path="/history" component={HistoryPage} />
-        <Route component={ErrorPage} />
+        <Route render={() => (redirect ? <Redirect to="/" /> : ErrorPage)} />
     </Switch>
 );
 

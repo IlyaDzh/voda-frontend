@@ -6,6 +6,7 @@ import { UnregRoutes, PurchaserRoutes, SellerRoutes } from "@/routes";
 import {
     Menu,
     Header,
+    Backdrop,
     LoginDialog,
     RegisterDialog,
     FileUploadDialog,
@@ -36,36 +37,45 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const _App = ({ isAuth, user }) => {
+const _App = ({ isAuth, pending, authWithForm, logoutWithForm, user }) => {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <Header />
             <Menu />
+
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                {isAuth ? (
-                    user.type === "purchaser" ? (
-                        <PurchaserRoutes />
+                {!pending ? (
+                    isAuth ? (
+                        user.type === "purchaser" ? (
+                            <PurchaserRoutes redirect={authWithForm} />
+                        ) : (
+                            <SellerRoutes redirect={authWithForm} />
+                        )
                     ) : (
-                        <SellerRoutes />
+                        <UnregRoutes redirect={logoutWithForm} />
                     )
                 ) : (
-                    <UnregRoutes />
+                    <Backdrop />
                 )}
-                <LoginDialog />
-                <RegisterDialog />
-                <FileUploadDialog />
-                <CardInfoDialog />
-                <TransactionInfoDialog />
             </main>
+
+            <LoginDialog />
+            <RegisterDialog />
+            <FileUploadDialog />
+            <CardInfoDialog />
+            <TransactionInfoDialog />
         </div>
     );
 };
 
 const mapMoxToProps = ({ user }) => ({
     isAuth: user.isAuth,
+    pending: user.pending,
+    authWithForm: user.authWithForm,
+    logoutWithForm: user.logoutWithForm,
     user: user.user
 });
 
