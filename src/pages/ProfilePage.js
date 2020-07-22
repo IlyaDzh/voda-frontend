@@ -1,15 +1,19 @@
 import React from "react";
+import { Grid } from "@material-ui/core";
 
-import { MyBalance, AccountBalance } from "@/components";
+import { MyBalance, AccountBalancesBlock, AccountPassword } from "@/components";
 
 const ProfilePage = () => {
     return (
-        <div>
-            <MyBalance />
-            <AccountBalance title="Account Balance" number="15.2000" />
-            <AccountBalance title="Account Balance" number="15.2000" />
-            <AccountBalance title="Account Balance" number="15.2000" />
-        </div>
+        <Grid container spacing={3}>
+            <Grid item xs={12}>
+                <MyBalance />
+            </Grid>
+            <AccountBalancesBlock />
+            <Grid item xs={12}>
+                <AccountPassword />
+            </Grid>
+        </Grid>
     );
 };
 

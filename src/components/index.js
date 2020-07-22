@@ -6,24 +6,21 @@ export { default as MyBalance } from "./MyBalance";
 export { default as AccountBalance } from "./AccountBalance";
 export { default as SearchInput } from "./SearchInput";
 export { default as FilterItem } from "./FilterItem";
-
 export { default as LoginDialog } from "./Dialogs/LoginDialog";
 export { default as RegisterDialog } from "./Dialogs/RegisterDialog";
 export { default as FileUploadDialog } from "./Dialogs/FileUploadDialog";
 export { default as CardInfoDialog } from "./Dialogs/CardInfoDialog";
 export { default as TransactionInfoDialog } from "./Dialogs/TransactionInfoDialog";
-
 export { default as Menu } from "./Menu/Menu";
 export { default as MenuList } from "./Menu/MenuList";
 export { default as MenuItem } from "./Menu/MenuItem";
-
 export { default as SearchBar } from "./ExploreFiles/SearchBar";
 export { default as FileCard } from "./ExploreFiles/FileCard";
 export { default as FilesList } from "./ExploreFiles/FilesList";
-
 export { default as DashboardTransactions } from "./Dashboard/DashboardTransactions";
-
 export { default as DigitalGoodsTable } from "./DigitalGoods/DigitalGoodsTable";
 export { default as UploadFileBlock } from "./DigitalGoods/UploadFileBlock";
-
 export { default as HistoryTable } from "./History/HistoryTable";
+export { default as DataPurchasesTable } from "./DataPurchases/DataPurchasesTable";
+export { default as AccountBalancesBlock } from "./Profile/AccountBalancesBlock";
+export { default as AccountPassword } from "./Profile/AccountPassword";

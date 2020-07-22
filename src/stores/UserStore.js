@@ -13,7 +13,7 @@ export class UserStore {
             this.user = {
                 id: "123456",
                 name: "Ilya",
-                type: "seller"
+                type: "purchaser"
             };
             this.isAuth = true;
         }, 500);

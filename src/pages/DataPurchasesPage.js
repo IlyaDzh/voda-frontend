@@ -1,11 +1,15 @@
-import React from 'react'
+import React from "react";
+import { Grid } from "@material-ui/core";
 
-const DataPurchasesPage = () => {
-    return (
-        <div>
-            DataPurchases
-        </div>
-    )
-}
+import { MyBalance, DataPurchasesTable } from "@/components";
 
-export default DataPurchasesPage
+const DataPurchasesPage = () => (
+    <Grid container spacing={3}>
+        <Grid item xs={12}>
+            <MyBalance />
+        </Grid>
+        <DataPurchasesTable />
+    </Grid>
+);
+
+export default DataPurchasesPage;

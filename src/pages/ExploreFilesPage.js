@@ -1,7 +1,8 @@
 import React from "react";
+import { inject, observer } from "mobx-react";
 import { Grid, Hidden, makeStyles } from "@material-ui/core";
 
-import { Button, SearchInput, FilesList, FilterItem } from "@/components";
+import { Button, MyBalance, SearchInput, FilesList, FilterItem } from "@/components";
 import { FilterIcon } from "@/icons";
 
 const useStyles = makeStyles(() => ({
@@ -14,11 +15,18 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const ExploreFilesPage = () => {
+const ExploreFilesPage = ({ isAuth }) => {
     const classes = useStyles();
 
     return (
         <Grid container spacing={3}>
+            {isAuth && (
+                <Hidden mdUp>
+                    <Grid item xs={12}>
+                        <MyBalance />
+                    </Grid>
+                </Hidden>
+            )}
             <Hidden smDown>
                 <Grid item xs={12}>
                     <SearchInput />
@@ -59,4 +67,8 @@ const ExploreFilesPage = () => {
     );
 };
 
-export default ExploreFilesPage;
+const mapMoxToProps = ({ user }) => ({
+    isAuth: user.isAuth
+});
+
+export default inject(mapMoxToProps)(observer(ExploreFilesPage));
