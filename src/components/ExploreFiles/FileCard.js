@@ -5,13 +5,16 @@ import {
     CardContent,
     CardActions,
     Typography,
+    IconButton,
     makeStyles
 } from "@material-ui/core";
 
 import { Button } from "@/components";
+import { ArrowIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
     fileCard: {
+        position: "relative",
         padding: "24px"
     },
     fileCardContent: {
@@ -28,16 +31,28 @@ const useStyles = makeStyles(theme => ({
     },
     infoHashtags: {
         color: theme.palette.primary.main
+    },
+    openDetailsBtn: {
+        position: "absolute",
+        right: 0,
+        top: 0,
+        margin: "8px"
     }
 }));
 
-const FileCard = ({ card, onBuy }) => {
+const FileCard = ({ card, buyFile, openDetails }) => {
     const classes = useStyles();
 
     return (
         <Grid item xs={12} sm={6} md={4}>
             <Card className={classes.fileCard} elevation={3}>
                 <CardContent className={classes.fileCardContent}>
+                    <IconButton
+                        className={classes.openDetailsBtn}
+                        onClick={() => openDetails(true, card)}
+                    >
+                        <ArrowIcon />
+                    </IconButton>
                     <Typography className={classes.fileCardTitle} variant="h2">
                         {card.title}
                     </Typography>
@@ -62,7 +77,7 @@ const FileCard = ({ card, onBuy }) => {
                 <CardActions className={classes.fileCardActions}>
                     <Button
                         color="secondary"
-                        onClick={() => onBuy(card.title)}
+                        onClick={() => buyFile(card.title)}
                         fullWidth
                         disableElevation
                     >

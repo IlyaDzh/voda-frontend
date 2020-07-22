@@ -19,7 +19,7 @@ export { default as MenuItem } from "./Menu/MenuItem";
 
 export { default as SearchBar } from "./ExploreFiles/SearchBar";
 export { default as FileCard } from "./ExploreFiles/FileCard";
-export { default as ExplorerList } from "./ExploreFiles/FilesList";
+export { default as FilesList } from "./ExploreFiles/FilesList";
 
 export { default as DashboardTransactions } from "./Dashboard/DashboardTransactions";
 

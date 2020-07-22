@@ -224,8 +224,8 @@ const DigitalGoodsTable = ({ setOpenGoodsInfoModal }) => {
     );
 };
 
-const mapMoxToProps = ({ digitalGoods }) => ({
-    setOpenGoodsInfoModal: digitalGoods.setOpenGoodsInfoModal
+const mapMoxToProps = ({ infoModals }) => ({
+    setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });
 
 export default inject(mapMoxToProps)(observer(DigitalGoodsTable));

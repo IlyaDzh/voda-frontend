@@ -96,10 +96,10 @@ const TransactionInfoDialog = ({
     );
 };
 
-const mapMoxToProps = ({ salesHistory }) => ({
-    currentTxnInfo: salesHistory.currentTxnInfo,
-    openTxnInfoModal: salesHistory.openTxnInfoModal,
-    setOpenTxnInfoModal: salesHistory.setOpenTxnInfoModal
+const mapMoxToProps = ({ infoModals }) => ({
+    currentTxnInfo: infoModals.currentTxnInfo,
+    openTxnInfoModal: infoModals.openTxnInfoModal,
+    setOpenTxnInfoModal: infoModals.setOpenTxnInfoModal
 });
 
 export default inject(mapMoxToProps)(observer(TransactionInfoDialog));

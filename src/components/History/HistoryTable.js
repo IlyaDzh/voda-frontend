@@ -173,7 +173,7 @@ const ROWS = [
     }
 ];
 
-const HistoryTable = ({ setOpenTxnInfoModal }) => {
+const HistoryTable = ({ setOpenTxnInfoModal, setOpenGoodsInfoModal }) => {
     const classes = useStyles();
 
     return (
@@ -198,7 +198,9 @@ const HistoryTable = ({ setOpenTxnInfoModal }) => {
                         <Typography>{item.purchased}</Typography>
                         <Typography>{item.value}</Typography>
                         <Typography>{item.uploaded}</Typography>
-                        <Typography onClick={() => setOpenTxnInfoModal(true, item)}>
+                        <Typography
+                            onClick={() => setOpenGoodsInfoModal(true, item)}
+                        >
                             {item.fileID}
                         </Typography>
                     </Paper>
@@ -232,8 +234,9 @@ const HistoryTable = ({ setOpenTxnInfoModal }) => {
     );
 };
 
-const mapMoxToProps = ({ salesHistory }) => ({
-    setOpenTxnInfoModal: salesHistory.setOpenTxnInfoModal
+const mapMoxToProps = ({ infoModals }) => ({
+    setOpenTxnInfoModal: infoModals.setOpenTxnInfoModal,
+    setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });
 
 export default inject(mapMoxToProps)(observer(HistoryTable));

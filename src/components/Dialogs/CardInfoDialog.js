@@ -65,7 +65,8 @@ const CardInfoDialog = ({
                 disableTypography
             >
                 <Typography classes={{ root: classes.dialogTitle }} variant="h2">
-                    {currentGoodsInfo && currentGoodsInfo.ID}
+                    {currentGoodsInfo &&
+                        (currentGoodsInfo.ID || currentGoodsInfo.title)}
                 </Typography>
                 <IconButton
                     aria-label="close"
@@ -91,7 +92,7 @@ const CardInfoDialog = ({
                 <Typography variant="subtitle1" color="textSecondary">
                     TYPE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        Picture/png
+                        image/png
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
@@ -117,10 +118,10 @@ const CardInfoDialog = ({
     );
 };
 
-const mapMoxToProps = ({ digitalGoods }) => ({
-    currentGoodsInfo: digitalGoods.currentGoodsInfo,
-    openGoodsInfoModal: digitalGoods.openGoodsInfoModal,
-    setOpenGoodsInfoModal: digitalGoods.setOpenGoodsInfoModal
+const mapMoxToProps = ({ infoModals }) => ({
+    currentGoodsInfo: infoModals.currentGoodsInfo,
+    openGoodsInfoModal: infoModals.openGoodsInfoModal,
+    setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });
 
 export default inject(mapMoxToProps)(observer(CardInfoDialog));

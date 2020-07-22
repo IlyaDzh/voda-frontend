@@ -92,9 +92,7 @@ const AccountBalance = ({ title, number, unclockNumber, className }) => {
                 </Typography>
             </div>
             <div className={classes.balanceActions}>
-                <div className={classes.disabledField}>
-                    {showBalance && <Typography>{unclockNumber}</Typography>}
-                </div>
+                <div className={classes.disabledField} />
                 <Button
                     className={classes.unlockBtn}
                     color="secondary"

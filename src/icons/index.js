@@ -10,3 +10,4 @@ export { default as SearchIcon } from "./SearchIcon";
 export { default as WalletIcon } from "./WalletIcon";
 export { default as FilterIcon } from "./FilterIcon";
 export { default as EyeIcon } from "./EyeIcon";
+export { default as ArrowIcon } from "./ArrowIcon";
