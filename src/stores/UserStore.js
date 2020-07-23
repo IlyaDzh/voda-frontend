@@ -21,9 +21,8 @@ export class UserStore {
         this.pending = true;
         setTimeout(() => {
             this.user = {
-                id: "123456",
-                name: "Ilya",
-                type: "purchaser"
+                address: "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312",
+                type: "seller"
             };
             this.isAuth = true;
             this.pending = false;

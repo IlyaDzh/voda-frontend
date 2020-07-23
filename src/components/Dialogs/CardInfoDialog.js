@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 
 import { Button } from "@/components";
+import { formatDate } from "@/utils";
 import { CloseIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -65,8 +66,7 @@ const CardInfoDialog = ({
                 disableTypography
             >
                 <Typography classes={{ root: classes.dialogTitle }} variant="h2">
-                    {currentGoodsInfo &&
-                        (currentGoodsInfo.ID || currentGoodsInfo.title)}
+                    {currentGoodsInfo && currentGoodsInfo.file.id}
                 </Typography>
                 <IconButton
                     aria-label="close"
@@ -80,28 +80,27 @@ const CardInfoDialog = ({
                 <Typography variant="subtitle1" color="textSecondary">
                     AVAILABLE UNTIL:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentGoodsInfo && currentGoodsInfo.availableUntil}
+                        {currentGoodsInfo &&
+                            formatDate(currentGoodsInfo.file.keepUntil)}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     PRICE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentGoodsInfo && currentGoodsInfo.price}
+                        {currentGoodsInfo && currentGoodsInfo.sum}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     TYPE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        image/png
+                        {currentGoodsInfo && currentGoodsInfo.file.mimeType}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     INFORMATION:{" "}
                     <Typography color="textSecondary" display="inline">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                        do eiusmod tempor incididunt ut labore et dolore magna
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        {currentGoodsInfo &&
+                            currentGoodsInfo.file.fileMetadata.briefDescription}
                     </Typography>
                 </Typography>
             </DialogContent>

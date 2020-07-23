@@ -9,6 +9,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 
+import { formatDate } from "@/utils";
 import { CloseIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -56,7 +57,7 @@ const TransactionInfoDialog = ({
                 disableTypography
             >
                 <Typography classes={{ root: classes.dialogTitle }} variant="h2">
-                    {currentTxnInfo && currentTxnInfo.txnID}
+                    {currentTxnInfo && currentTxnInfo.hash}
                 </Typography>
                 <IconButton
                     aria-label="close"
@@ -70,25 +71,25 @@ const TransactionInfoDialog = ({
                 <Typography variant="subtitle1" color="textSecondary">
                     VALUE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentTxnInfo && currentTxnInfo.value}
+                        {currentTxnInfo && currentTxnInfo.sum}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     DATE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentTxnInfo && currentTxnInfo.purchased}
+                        {currentTxnInfo && formatDate(currentTxnInfo.createdAt)}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     BUYER:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentTxnInfo && currentTxnInfo.buyer}
+                        {currentTxnInfo && currentTxnInfo.dataMart}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     FILE ID:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentTxnInfo && currentTxnInfo.fileID}
+                        {currentTxnInfo && currentTxnInfo.file.id}
                     </Typography>
                 </Typography>
             </DialogContent>

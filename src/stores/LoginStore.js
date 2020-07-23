@@ -31,15 +31,14 @@ export class LoginStore {
         this.loginSubmissionError = undefined;
 
         if (
-            this.loginForm.wallet === "seller" &&
+            this.loginForm.wallet === "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312" &&
             this.loginForm.password === "123"
         ) {
             this.userStore.isAuth = true;
             this.userStore.logoutWithForm = false;
             this.userStore.authWithForm = true;
             this.userStore.user = {
-                id: "123456",
-                name: "Ilya",
+                address: "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312",
                 type: "seller"
             };
             this.openLoginModal = false;
@@ -53,8 +52,7 @@ export class LoginStore {
             this.userStore.logoutWithForm = false;
             this.userStore.authWithForm = true;
             this.userStore.user = {
-                id: "123456",
-                name: "Ilya",
+                address: "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312",
                 type: "purchaser"
             };
             this.openLoginModal = false;

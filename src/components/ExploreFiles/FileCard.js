@@ -49,7 +49,8 @@ const FileCard = ({ card, buyFile, openDetails }) => {
                 <CardContent className={classes.fileCardContent}>
                     <IconButton
                         className={classes.openDetailsBtn}
-                        onClick={() => openDetails(true, card)}
+                        onClick={() => console.log("details")}
+                        // onClick={() => openDetails(true, card)}
                     >
                         <ArrowIcon />
                     </IconButton>

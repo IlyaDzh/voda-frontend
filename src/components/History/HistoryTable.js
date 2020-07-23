@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
 
-import { Button } from "@/components";
+import { Button, Loader } from "@/components";
+import { formatDate } from "@/utils";
 
 const useStyles = makeStyles(theme => ({
     tableHeader: {
@@ -90,91 +91,22 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ROWS = [
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        purchased: "2020-06-24",
-        value: "0.12345678",
-        uploaded: "2020-06-24",
-        fileID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    }
-];
-
-const HistoryTable = ({ setOpenTxnInfoModal, setOpenGoodsInfoModal }) => {
+const HistoryTable = ({
+    historyItems,
+    pending,
+    fetchSalesHistory,
+    resetHistory,
+    setOpenTxnInfoModal,
+    setOpenGoodsInfoModal
+}) => {
     const classes = useStyles();
+    const fetchSalesHistoryFunc = useCallback(fetchSalesHistory, []);
+    const resetHistoryFunc = useCallback(resetHistory, []);
+
+    useEffect(() => {
+        fetchSalesHistoryFunc();
+        return () => resetHistoryFunc();
+    }, [fetchSalesHistoryFunc, resetHistoryFunc]);
 
     return (
         <>
@@ -186,25 +118,33 @@ const HistoryTable = ({ setOpenTxnInfoModal, setOpenGoodsInfoModal }) => {
                     <Typography>Uploaded</Typography>
                     <Typography>File ID</Typography>
                 </div>
-                {ROWS.map((item, i) => (
-                    <Paper
-                        key={i}
-                        classes={{ root: classes.tableItem }}
-                        elevation={3}
-                    >
-                        <Typography onClick={() => setOpenTxnInfoModal(true, item)}>
-                            {item.txnID}
-                        </Typography>
-                        <Typography>{item.purchased}</Typography>
-                        <Typography>{item.value}</Typography>
-                        <Typography>{item.uploaded}</Typography>
-                        <Typography
-                            onClick={() => setOpenGoodsInfoModal(true, item)}
+                {pending ? (
+                    <Loader mt={25} mb={25} />
+                ) : (
+                    historyItems.map(item => (
+                        <Paper
+                            key={item.hash}
+                            classes={{ root: classes.tableItem }}
+                            elevation={3}
                         >
-                            {item.fileID}
-                        </Typography>
-                    </Paper>
-                ))}
+                            <Typography
+                                onClick={() => setOpenTxnInfoModal(true, item)}
+                            >
+                                {item.hash}
+                            </Typography>
+                            <Typography>{formatDate(item.createdAt)}</Typography>
+                            <Typography>{item.sum}</Typography>
+                            <Typography>
+                                {formatDate(item.file.createdAt)}
+                            </Typography>
+                            <Typography
+                                onClick={() => setOpenGoodsInfoModal(true, item)}
+                            >
+                                {item.file.id}
+                            </Typography>
+                        </Paper>
+                    ))
+                )}
             </Grid>
             <Grid item xs={12}>
                 <Hidden smDown>
@@ -234,7 +174,11 @@ const HistoryTable = ({ setOpenTxnInfoModal, setOpenGoodsInfoModal }) => {
     );
 };
 
-const mapMoxToProps = ({ infoModals }) => ({
+const mapMoxToProps = ({ salesHistory, infoModals }) => ({
+    historyItems: salesHistory.historyItems,
+    pending: salesHistory.pending,
+    fetchSalesHistory: salesHistory.fetchSalesHistory,
+    resetHistory: salesHistory.resetHistory,
     setOpenTxnInfoModal: infoModals.setOpenTxnInfoModal,
     setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });

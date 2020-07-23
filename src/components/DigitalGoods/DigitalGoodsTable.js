@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
 
-import { Button } from "@/components";
+import { Button, Loader } from "@/components";
+import { formatDate } from "@/utils";
 import { EyeIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -85,81 +86,21 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ROWS = [
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    },
-    {
-        ID:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-        uploaded: "2020-06-24",
-        availableUntil: "2020-06-24",
-        price: "0.12345678"
-    }
-];
-
-const DigitalGoodsTable = ({ setOpenGoodsInfoModal }) => {
+const DigitalGoodsTable = ({
+    uploadedItems,
+    pending,
+    fetchUploadedItems,
+    resetUploadedItems,
+    setOpenGoodsInfoModal
+}) => {
     const classes = useStyles();
+    const fetchUploadedItemsFunc = useCallback(fetchUploadedItems, []);
+    const resetUploadedItemsFunc = useCallback(resetUploadedItems, []);
+
+    useEffect(() => {
+        fetchUploadedItemsFunc();
+        return () => resetUploadedItemsFunc();
+    }, [fetchUploadedItemsFunc, resetUploadedItemsFunc]);
 
     return (
         <>
@@ -171,30 +112,38 @@ const DigitalGoodsTable = ({ setOpenGoodsInfoModal }) => {
                     <Typography>Price</Typography>
                     <Typography></Typography>
                 </div>
-                {ROWS.map((item, i) => (
-                    <Paper
-                        key={i}
-                        classes={{ root: classes.tableItem }}
-                        elevation={3}
-                    >
-                        <Typography>{item.ID}</Typography>
-                        <Typography>{item.uploaded}</Typography>
-                        <Typography>{item.availableUntil}</Typography>
-                        <Typography>{item.price}</Typography>
-                        <Button
-                            className={classes.tableItemDetails}
-                            onClick={() => setOpenGoodsInfoModal(true, item)}
-                            color="secondary"
-                            size="small"
-                            disableElevation
+                {pending ? (
+                    <Loader mt={25} mb={25} />
+                ) : (
+                    uploadedItems.map((item, i) => (
+                        <Paper
+                            key={i}
+                            classes={{ root: classes.tableItem }}
+                            elevation={3}
                         >
-                            <Hidden xsDown>Details</Hidden>
-                            <Hidden smUp>
-                                <EyeIcon />
-                            </Hidden>
-                        </Button>
-                    </Paper>
-                ))}
+                            <Typography>{item.file.id}</Typography>
+                            <Typography>
+                                {formatDate(item.file.createdAt)}
+                            </Typography>
+                            <Typography>
+                                {formatDate(item.file.keepUntil)}
+                            </Typography>
+                            <Typography>{item.sum}</Typography>
+                            <Button
+                                className={classes.tableItemDetails}
+                                onClick={() => setOpenGoodsInfoModal(true, item)}
+                                color="secondary"
+                                size="small"
+                                disableElevation
+                            >
+                                <Hidden xsDown>Details</Hidden>
+                                <Hidden smUp>
+                                    <EyeIcon />
+                                </Hidden>
+                            </Button>
+                        </Paper>
+                    ))
+                )}
             </Grid>
             <Grid item xs={12}>
                 <Hidden smDown>
@@ -224,7 +173,11 @@ const DigitalGoodsTable = ({ setOpenGoodsInfoModal }) => {
     );
 };
 
-const mapMoxToProps = ({ infoModals }) => ({
+const mapMoxToProps = ({ digitalGoods, infoModals }) => ({
+    uploadedItems: digitalGoods.uploadedItems,
+    pending: digitalGoods.pending,
+    fetchUploadedItems: digitalGoods.fetchUploadedItems,
+    resetUploadedItems: digitalGoods.resetUploadedItems,
     setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });
 

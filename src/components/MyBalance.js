@@ -1,6 +1,8 @@
 import React from "react";
+import { inject, observer } from "mobx-react";
 import { Paper, Typography, Hidden, makeStyles } from "@material-ui/core";
 
+import { Loader } from "@/components";
 import { WalletIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -24,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         marginRight: "16px"
     },
     walletTitle: {
-        fontSize: "22px",
+        fontSize: "24px",
         fontWeight: "bold",
         marginRight: "10px",
         [theme.breakpoints.down("md")]: {
@@ -65,13 +67,13 @@ const useStyles = makeStyles(theme => ({
     walletNumber: {
         fontSize: "22px",
         fontWeight: "bold",
-        [theme.breakpoints.down("sm")]: {
+        [theme.breakpoints.down("md")]: {
             fontSize: "16px"
         }
     }
 }));
 
-const MyWallet = () => {
+const MyWallet = ({ address, balance }) => {
     const classes = useStyles();
 
     return (
@@ -91,9 +93,7 @@ const MyWallet = () => {
             </div>
             <div className={classes.walletBody}>
                 <div className={classes.disabledField}>
-                    <Typography>
-                        0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4
-                    </Typography>
+                    <Typography>{address}</Typography>
                 </div>
                 <div className={classes.activeField}>
                     <Typography
@@ -101,7 +101,7 @@ const MyWallet = () => {
                         variant="h2"
                         color="textSecondary"
                     >
-                        15.200
+                        {balance || <Loader size={20} />}
                     </Typography>
                 </div>
             </div>
@@ -109,4 +109,10 @@ const MyWallet = () => {
     );
 };
 
-export default MyWallet;
+const mapMoxToProps = ({ user, userBalance }) => ({
+    address: user.user.address,
+    balance: userBalance.balance,
+    pending: userBalance.pending
+});
+
+export default inject(mapMoxToProps)(observer(MyWallet));
