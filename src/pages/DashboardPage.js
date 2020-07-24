@@ -9,18 +9,10 @@ const DashboardPage = () => (
             <MyBalance />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={6}>
-            <AccountBalance
-                title="Account Balance"
-                number="15.2000"
-                unclockNumber="15.2000"
-            />
+            <AccountBalance title="Account Balance" number="15.2000" />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={6}>
-            <AccountBalance
-                title="Wallet Balance"
-                number="65.1000"
-                unclockNumber="65.1000"
-            />
+            <AccountBalance title="Wallet Balance" number="65.1000" />
         </Grid>
         <Grid item xs={12}>
             <Typography variant="caption" color="primary">

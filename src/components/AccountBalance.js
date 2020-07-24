@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Paper, makeStyles, Typography } from "@material-ui/core";
+import { Paper, Tooltip, Typography, makeStyles } from "@material-ui/core";
 
 import { Button } from "@/components";
 
@@ -70,7 +70,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const AccountBalance = ({ title, number, unclockNumber, className }) => {
+const AccountBalance = ({ title, number, className }) => {
     const classes = useStyles();
     const [showBalance, setShowBalance] = useState(false);
 
@@ -101,14 +101,18 @@ const AccountBalance = ({ title, number, unclockNumber, className }) => {
                 >
                     {!showBalance ? "Unlock" : "Lock"}
                 </Button>
-                <Button
-                    className={classes.questionBtn}
-                    color="secondary"
-                    variant="outlined"
-                    disableElevation
-                >
-                    ?
-                </Button>
+                <Tooltip title="Unlock/Lock" enterTouchDelay={0} interactive>
+                    <span>
+                        <Button
+                            className={classes.questionBtn}
+                            color="secondary"
+                            variant="outlined"
+                            disableElevation
+                        >
+                            ?
+                        </Button>
+                    </span>
+                </Tooltip>
             </div>
         </Paper>
     );

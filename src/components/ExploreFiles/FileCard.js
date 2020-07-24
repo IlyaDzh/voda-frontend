@@ -49,29 +49,30 @@ const FileCard = ({ card, buyFile, openDetails }) => {
                 <CardContent className={classes.fileCardContent}>
                     <IconButton
                         className={classes.openDetailsBtn}
-                        onClick={() => console.log("details")}
-                        // onClick={() => openDetails(true, card)}
+                        onClick={() => openDetails(true, card)}
                     >
                         <ArrowIcon />
                     </IconButton>
                     <Typography className={classes.fileCardTitle} variant="h2">
-                        {card.title}
+                        {card.file.fileMetadata.title}
                     </Typography>
                     <div className={classes.fileCardInfo}>
                         <Typography variant="subtitle1" color="textSecondary">
                             PRICE:{" "}
                             <Typography color="textSecondary" display="inline">
-                                {card.price} PROM
+                                {card.file.price} PROM
                             </Typography>
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
                             MIME TYPE:{" "}
                             <Typography color="textSecondary" display="inline">
-                                {card.type}
+                                {card.file.mimeType}
                             </Typography>
                         </Typography>
                         <Typography className={classes.infoHashtags}>
-                            {card.hashtags.map(hashtag => `#${hashtag} `)}
+                            {card.file.fileMetadata.hashtags.map(
+                                hashtag => `#${hashtag} `
+                            )}
                         </Typography>
                     </div>
                 </CardContent>

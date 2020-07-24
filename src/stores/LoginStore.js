@@ -32,7 +32,7 @@ export class LoginStore {
 
         if (
             this.loginForm.wallet === "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312" &&
-            this.loginForm.password === "123"
+            this.loginForm.password === "seller123"
         ) {
             this.userStore.isAuth = true;
             this.userStore.logoutWithForm = false;
@@ -42,11 +42,11 @@ export class LoginStore {
                 type: "seller"
             };
             this.openLoginModal = false;
-            localStorage.setItem("accessToken", "123");
+            localStorage.setItem("accessToken", "seller123");
             this.resetLoginForm();
         } else if (
-            this.loginForm.wallet === "purchaser" &&
-            this.loginForm.password === "123"
+            this.loginForm.wallet === "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312" &&
+            this.loginForm.password === "purchaser123"
         ) {
             this.userStore.isAuth = true;
             this.userStore.logoutWithForm = false;
@@ -56,7 +56,7 @@ export class LoginStore {
                 type: "purchaser"
             };
             this.openLoginModal = false;
-            localStorage.setItem("accessToken", "123");
+            localStorage.setItem("accessToken", "purchaser123");
             this.resetLoginForm();
         } else {
             this.loginSubmissionError = {

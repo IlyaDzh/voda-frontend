@@ -5,6 +5,9 @@ export class InfoModalsStore {
     openGoodsInfoModal = false;
 
     @observable
+    goodsInfoModalWithEdit = false;
+
+    @observable
     openTxnInfoModal = false;
 
     @observable
@@ -14,10 +17,15 @@ export class InfoModalsStore {
     currentTxnInfo = undefined;
 
     @action
-    setOpenGoodsInfoModal = (openGoodsInfoModal, currentGoodsInfo) => {
+    setOpenGoodsInfoModal = (
+        openGoodsInfoModal,
+        currentGoodsInfo,
+        withEdit = false
+    ) => {
         this.openGoodsInfoModal = openGoodsInfoModal;
         if (currentGoodsInfo) {
             this.currentGoodsInfo = currentGoodsInfo;
+            this.goodsInfoModalWithEdit = withEdit;
         }
     };
 

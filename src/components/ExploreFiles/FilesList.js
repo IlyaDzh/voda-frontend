@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { inject, observer } from "mobx-react";
 import { Grid, Hidden, makeStyles } from "@material-ui/core";
 
-import { Button, FileCard } from "@/components";
+import { Button, FileCard, Loader } from "@/components";
 
 const useStyles = makeStyles(theme => ({
     loadMoreBtn: {
@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 const FilesList = ({
     exploreFiles,
+    pending,
     fetchExploreFiles,
     buyFile,
     resetFiles,
@@ -33,15 +34,17 @@ const FilesList = ({
 
     return (
         <>
-            {exploreFiles.map((card, i) => (
-                <FileCard
-                    key={i}
-                    card={card}
-                    buyFile={buyFile}
-                    openDetails={setOpenGoodsInfoModal}
-                />
-            ))}
+            {exploreFiles &&
+                exploreFiles.map((card, i) => (
+                    <FileCard
+                        key={i}
+                        card={card}
+                        buyFile={buyFile}
+                        openDetails={setOpenGoodsInfoModal}
+                    />
+                ))}
             <Grid item xs={12}>
+                {pending && <Loader mt={25} mb={25} />}
                 <Hidden smDown>
                     <Button
                         className={classes.loadMoreBtn}
@@ -71,6 +74,7 @@ const FilesList = ({
 
 const mapMoxToProps = ({ files, infoModals }) => ({
     exploreFiles: files.exploreFiles,
+    pending: files.pending,
     fetchExploreFiles: files.fetchExploreFiles,
     buyFile: files.buyFile,
     resetFiles: files.resetFiles,

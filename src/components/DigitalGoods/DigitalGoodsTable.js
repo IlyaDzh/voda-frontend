@@ -131,7 +131,9 @@ const DigitalGoodsTable = ({
                             <Typography>{item.sum}</Typography>
                             <Button
                                 className={classes.tableItemDetails}
-                                onClick={() => setOpenGoodsInfoModal(true, item)}
+                                onClick={() =>
+                                    setOpenGoodsInfoModal(true, item, true)
+                                }
                                 color="secondary"
                                 size="small"
                                 disableElevation

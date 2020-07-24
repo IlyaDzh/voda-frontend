@@ -22,7 +22,10 @@ export class UserStore {
         setTimeout(() => {
             this.user = {
                 address: "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312",
-                type: "seller"
+                type:
+                    localStorage.getItem("accessToken") === "seller123"
+                        ? "seller"
+                        : "purchaser"
             };
             this.isAuth = true;
             this.pending = false;

@@ -30,14 +30,14 @@ const useStyles = makeStyles(theme => ({
         padding: "24px 64px 8px 24px"
     },
     dialogContentWrapper: {
-        padding: "8px 24px"
+        padding: "8px 24px 24px"
     },
     dialogTitle: {
         wordBreak: "break-word"
     },
     dialogActionsWrapper: {
         display: "block",
-        padding: "16px 24px 24px"
+        padding: "0 24px 24px"
     },
     editBtn: {
         minWidth: "105px"
@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 const CardInfoDialog = ({
     currentGoodsInfo,
+    goodsInfoModalWithEdit,
     openGoodsInfoModal,
     setOpenGoodsInfoModal
 }) => {
@@ -104,21 +105,24 @@ const CardInfoDialog = ({
                     </Typography>
                 </Typography>
             </DialogContent>
-            <DialogActions classes={{ root: classes.dialogActionsWrapper }}>
-                <Button
-                    className={classes.editBtn}
-                    color="secondary"
-                    disableElevation
-                >
-                    Edit
-                </Button>
-            </DialogActions>
+            {goodsInfoModalWithEdit && (
+                <DialogActions classes={{ root: classes.dialogActionsWrapper }}>
+                    <Button
+                        className={classes.editBtn}
+                        color="secondary"
+                        disableElevation
+                    >
+                        Edit
+                    </Button>
+                </DialogActions>
+            )}
         </Dialog>
     );
 };
 
 const mapMoxToProps = ({ infoModals }) => ({
     currentGoodsInfo: infoModals.currentGoodsInfo,
+    goodsInfoModalWithEdit: infoModals.goodsInfoModalWithEdit,
     openGoodsInfoModal: infoModals.openGoodsInfoModal,
     setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });
