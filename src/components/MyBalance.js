@@ -111,8 +111,7 @@ const MyWallet = ({ address, balance }) => {
 
 const mapMoxToProps = ({ user, userBalance }) => ({
     address: user.user.address,
-    balance: userBalance.balance,
-    pending: userBalance.pending
+    balance: userBalance.balance
 });
 
 export default inject(mapMoxToProps)(observer(MyWallet));

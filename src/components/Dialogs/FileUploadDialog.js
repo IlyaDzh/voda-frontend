@@ -65,16 +65,6 @@ const useStyles = makeStyles(theme => ({
         marginTop: "8px",
         marginBottom: "24px"
     },
-    flexInputGroup: {
-        display: "flex",
-        marginBottom: "16px",
-        "& > div:not(:last-child)": {
-            marginRight: "16px"
-        },
-        "& > div": {
-            width: "50%"
-        }
-    },
     dialogInput: {
         marginBottom: "16px"
     },
@@ -205,70 +195,48 @@ const FileUploadDialog = ({
                     }
                     fullWidth
                 />
-                <div className={classes.flexInputGroup}>
-                    <div>
-                        <TextField
-                            select
-                            label="Extension"
-                            value={uploadForm.extension}
-                            onChange={event =>
-                                setUploadFormValue("extension", event.target.value)
-                            }
-                            variant="outlined"
-                            fullWidth
-                        >
-                            <MenuItem value="png">Png</MenuItem>
-                            <MenuItem value="jpg">Jpg</MenuItem>
-                        </TextField>
-                    </div>
-                    <div>
-                        <TextField
-                            select
-                            label="Type"
-                            value={uploadForm.type}
-                            onChange={event =>
-                                setUploadFormValue("type", event.target.value)
-                            }
-                            variant="outlined"
-                            fullWidth
-                        >
-                            <MenuItem value="image">Image</MenuItem>
-                            <MenuItem value="audio">Audio</MenuItem>
-                        </TextField>
-                    </div>
-                </div>
-                <div className={classes.flexInputGroup}>
-                    <div>
-                        <TextField
-                            select
-                            label="Category"
-                            value={uploadForm.category}
-                            onChange={event =>
-                                setUploadFormValue("category", event.target.value)
-                            }
-                            variant="outlined"
-                            fullWidth
-                        >
-                            <MenuItem value="category1">Category 1</MenuItem>
-                            <MenuItem value="category2">Category 2</MenuItem>
-                        </TextField>
-                    </div>
-                    <div>
-                        <TextField
-                            select
-                            label="Genre"
-                            value={uploadForm.genre}
-                            onChange={event =>
-                                setUploadFormValue("genre", event.target.value)
-                            }
-                            variant="outlined"
-                            fullWidth
-                        >
-                            <MenuItem value="genre1">Genre 1</MenuItem>
-                            <MenuItem value="genre2">Genre 2</MenuItem>
-                        </TextField>
-                    </div>
-                </div>
+                <TextField
+                    className={classes.dialogInput}
+                    label="Type"
+                    value={uploadForm.type}
+                    onChange={event =>
+                        setUploadFormValue("type", event.target.value)
+                    }
+                    variant="outlined"
+                    select
+                    fullWidth
+                >
+                    <MenuItem value="image">Image</MenuItem>
+                    <MenuItem value="audio">Audio</MenuItem>
+                </TextField>
+                <TextField
+                    className={classes.dialogInput}
+                    label="Category"
+                    value={uploadForm.category}
+                    onChange={event =>
+                        setUploadFormValue("category", event.target.value)
+                    }
+                    variant="outlined"
+                    select
+                    fullWidth
+                >
+                    <MenuItem value="category1">Category 1</MenuItem>
+                    <MenuItem value="category2">Category 2</MenuItem>
+                </TextField>
+                <TextField
+                    className={classes.dialogInput}
+                    label="Genre"
+                    value={uploadForm.genre}
+                    onChange={event =>
+                        setUploadFormValue("genre", event.target.value)
+                    }
+                    variant="outlined"
+                    select
+                    fullWidth
+                >
+                    <MenuItem value="genre1">Genre 1</MenuItem>
+                    <MenuItem value="genre2">Genre 2</MenuItem>
+                </TextField>
                 <TextField
                     className={classes.dialogInput}
                     placeholder="File info"
@@ -288,12 +256,14 @@ const FileUploadDialog = ({
                         className={classes.dialogAttachFileButton}
                         color="secondary"
                         variant="outlined"
+                        component="label"
                         size="large"
                         onClick={() => console.log("attach file")}
                         fullWidth
                         autoFocus
                     >
                         Attach File
+                        <input type="file" style={{ display: "none" }} />
                     </Button>
                     <Button
                         color="secondary"
@@ -309,11 +279,13 @@ const FileUploadDialog = ({
                         className={classes.dialogAttachFileButton}
                         color="secondary"
                         variant="outlined"
+                        component="label"
                         onClick={() => console.log("attach file")}
                         fullWidth
                         autoFocus
                     >
                         Attach File
+                        <input type="file" style={{ display: "none" }} />
                     </Button>
                     <Button
                         color="secondary"

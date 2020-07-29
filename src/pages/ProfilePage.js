@@ -1,20 +1,18 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import { MyBalance, AccountBalancesBlock, AccountPassword } from "@/components";
+import { MyBalance, AccountBalance, DashboardTransactions } from "@/components";
 
-const ProfilePage = () => {
-    return (
-        <Grid container spacing={3}>
-            <Grid item xs={12}>
-                <MyBalance />
-            </Grid>
-            <AccountBalancesBlock />
-            <Grid item xs={12}>
-                <AccountPassword />
-            </Grid>
+const ProfilePage = () => (
+    <Grid container spacing={3}>
+        <Grid item xs={12}>
+            <MyBalance />
         </Grid>
-    );
-};
+        <Grid item xs={12}>
+            <AccountBalance />
+        </Grid>
+        <DashboardTransactions />
+    </Grid>
+);
 
 export default ProfilePage;

@@ -8,6 +8,12 @@ export class UserBalanceStore {
     @observable
     pending = false;
 
+    @observable
+    openBalanceModal = false;
+
+    @observable
+    typeBalanceModal = undefined;
+
     userStore = undefined;
 
     constructor(userStore) {
@@ -28,6 +34,24 @@ export class UserBalanceStore {
                 this.balance = data.balance;
             })
             .finally(() => (this.pending = false));
+    };
+
+    @action
+    setOpenBalanceModal = (openBalanceModal, typeBalanceModal) => {
+        this.openBalanceModal = openBalanceModal;
+        if (typeBalanceModal) {
+            this.typeBalanceModal = typeBalanceModal;
+        }
+    };
+
+    @action
+    doDeposit = () => {
+        console.log("deposit");
+    };
+
+    @action
+    doWithdraw = () => {
+        console.log("withdraw");
     };
 
     @action

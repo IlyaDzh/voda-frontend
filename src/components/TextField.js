@@ -18,6 +18,13 @@ const useStyles = makeStyles(() => ({
             "& input": {
                 padding: "7px 14px 6px 14px"
             }
+        },
+        "& .MuiFilledInput-root": {
+            borderRadius: "5px",
+            "& input": {
+                padding: "7px 12px 4px",
+                height: "18px"
+            }
         }
     },
     textFieldSelect: {

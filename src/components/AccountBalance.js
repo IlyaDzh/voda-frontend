@@ -1,47 +1,40 @@
-import React, { useState } from "react";
-import { Paper, Tooltip, Typography, makeStyles } from "@material-ui/core";
+import React from "react";
+import { inject, observer } from "mobx-react";
+import { Paper, Typography, makeStyles } from "@material-ui/core";
 
-import { Button } from "@/components";
+import { Button, Loader } from "@/components";
 
 const useStyles = makeStyles(theme => ({
     balanceItem: {
         display: "flex",
+        justifyContent: "space-between",
         padding: "24px 32px 24px 24px",
-        [theme.breakpoints.down("sm")]: {
+        [theme.breakpoints.down("md")]: {
             display: "block",
             padding: "24px"
         }
     },
-    balanceName: {
-        marginRight: "24px",
-        minWidth: "140px",
+    balanceHeader: {
+        display: "flex",
+        alignItems: "center",
+        [theme.breakpoints.down("md")]: {
+            marginBottom: "16px"
+        },
         [theme.breakpoints.down("sm")]: {
-            display: "flex",
-            justifyContent: "space-between",
-            marginRight: 0,
-            marginBottom: "24px"
+            display: "block"
         }
     },
     balanceActions: {
         display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-end",
-        width: "100%",
-        [theme.breakpoints.down("xs")]: {
-            display: "block"
-        }
+        alignItems: "center"
     },
     balanceTitle: {
         fontWeight: "bold",
-        lineHeight: "17px",
-        marginBottom: "4px"
-    },
-    balanceNumber: {
-        display: "block",
-        lineHeight: "9px",
+        marginRight: "32px",
+        whiteSpace: "nowrap",
         [theme.breakpoints.down("sm")]: {
             fontSize: "16px",
-            lineHeight: "21px"
+            marginBottom: "24px"
         }
     },
     disabledField: {
@@ -49,9 +42,13 @@ const useStyles = makeStyles(theme => ({
         borderRadius: "5px",
         padding: "4px 12px 2px 12px",
         marginRight: "16px",
-        maxWidth: "178px",
+        minWidth: "250px",
         width: "100%",
         height: "24px",
+        [theme.breakpoints.down("md")]: {
+            minWidth: "unset",
+            marginRight: 0
+        },
         [theme.breakpoints.down("sm")]: {
             maxWidth: "calc(100% - 24px)"
         },
@@ -59,63 +56,67 @@ const useStyles = makeStyles(theme => ({
             marginBottom: "16px"
         }
     },
-    unlockBtn: {
-        marginRight: "16px",
-        minWidth: "90px"
+    depositBtn: {
+        minWidth: "125px",
+        marginRight: "24px",
+        [theme.breakpoints.down("sm")]: {
+            minWidth: "unset",
+            maxWidth: "125px",
+            width: "100%"
+        }
     },
-    questionBtn: {
-        minWidth: "30px",
-        fontSize: "18px",
-        padding: 0
+    withdrawBtn: {
+        minWidth: "125px",
+        [theme.breakpoints.down("sm")]: {
+            minWidth: "unset",
+            maxWidth: "125px",
+            width: "100%"
+        }
     }
 }));
 
-const AccountBalance = ({ title, number, className }) => {
+const AccountBalance = ({ balance, setOpenBalanceModal }) => {
     const classes = useStyles();
-    const [showBalance, setShowBalance] = useState(false);
 
     return (
-        <Paper
-            className={className}
-            classes={{ root: classes.balanceItem }}
-            elevation={3}
-        >
-            <div className={classes.balanceName}>
-                <Typography classes={{ root: classes.balanceTitle }}>
-                    {title}
+        <Paper classes={{ root: classes.balanceItem }} elevation={3}>
+            <div className={classes.balanceHeader}>
+                <Typography variant="h2" classes={{ root: classes.balanceTitle }}>
+                    Account Balance
                 </Typography>
-                <Typography
-                    variant="caption"
-                    classes={{ root: classes.balanceNumber }}
-                >
-                    {number}
-                </Typography>
+                <div className={classes.disabledField}>
+                    {balance ? (
+                        <Typography>{balance}</Typography>
+                    ) : (
+                        <Loader size={20} />
+                    )}
+                </div>
             </div>
             <div className={classes.balanceActions}>
-                <div className={classes.disabledField} />
                 <Button
-                    className={classes.unlockBtn}
+                    className={classes.depositBtn}
                     color="secondary"
-                    onClick={() => setShowBalance(!showBalance)}
+                    onClick={() => setOpenBalanceModal(true, "deposit")}
                     disableElevation
                 >
-                    {!showBalance ? "Unlock" : "Lock"}
+                    Deposit
                 </Button>
-                <Tooltip title="Unlock/Lock" enterTouchDelay={0} interactive>
-                    <span>
-                        <Button
-                            className={classes.questionBtn}
-                            color="secondary"
-                            variant="outlined"
-                            disableElevation
-                        >
-                            ?
-                        </Button>
-                    </span>
-                </Tooltip>
+                <Button
+                    className={classes.withdrawBtn}
+                    onClick={() => setOpenBalanceModal(true, "withdraw")}
+                    disableElevation
+                    error
+                >
+                    Withdraw
+                </Button>
             </div>
         </Paper>
     );
 };
 
-export default AccountBalance;
+const mapMoxToProps = ({ userBalance }) => ({
+    balance: userBalance.balance,
+    setOpenBalanceModal: userBalance.setOpenBalanceModal
+});
+
+export default inject(mapMoxToProps)(observer(AccountBalance));

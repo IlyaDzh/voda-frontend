@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     submissionErrorTitle: {
-        color: "red",
+        color: theme.palette.error.main,
         marginBottom: "10px"
     },
     dialogActions: {
