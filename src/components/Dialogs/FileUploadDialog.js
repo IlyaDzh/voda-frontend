@@ -92,7 +92,8 @@ const FileUploadDialog = ({
     setOpenFileUploadModal,
     uploadForm,
     setUploadFormValue,
-    doUpload
+    doUpload,
+    setAttachedFile
 }) => {
     const classes = useStyles();
 
@@ -263,7 +264,13 @@ const FileUploadDialog = ({
                         autoFocus
                     >
                         Attach File
-                        <input type="file" style={{ display: "none" }} />
+                        <input
+                            type="file"
+                            onChange={event =>
+                                setAttachedFile(event.target.files[0])
+                            }
+                            style={{ display: "none" }}
+                        />
                     </Button>
                     <Button
                         color="secondary"
@@ -306,7 +313,8 @@ const mapMoxToProps = ({ fileUpload }) => ({
     setOpenFileUploadModal: fileUpload.setOpenFileUploadModal,
     uploadForm: fileUpload.uploadForm,
     setUploadFormValue: fileUpload.setUploadFormValue,
-    doUpload: fileUpload.doUpload
+    doUpload: fileUpload.doUpload,
+    setAttachedFile: fileUpload.setAttachedFile
 });
 
 export default inject(mapMoxToProps)(observer(FileUploadDialog));
