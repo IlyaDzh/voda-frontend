@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField as BaseTextField, makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     textField: {
         "& .MuiOutlinedInput-root": {
             borderRadius: "5px",
@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
                 padding: "14px 14px 11px 14px"
             },
             "&:hover fieldset": {
-                borderColor: "#1885EA"
+                borderColor: theme.palette.primary.main
             }
         }
     },
@@ -21,6 +21,7 @@ const useStyles = makeStyles(() => ({
         },
         "& .MuiFilledInput-root": {
             borderRadius: "5px",
+            backgroundColor: theme.palette.background.main,
             "& input": {
                 padding: "7px 12px 4px",
                 height: "18px"

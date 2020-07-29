@@ -15,7 +15,7 @@ const PurchaserRoutes = ({ redirect }) => (
         <Route exact path="/explore" component={ExploreFilesPage} />
         <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/kibana-dashboards" component={KibanaDashboardsPage} />
-        <Route render={() => (redirect ? <Redirect to="/" /> : ErrorPage)} />
+        <Route render={() => (redirect ? <Redirect to="/" /> : <ErrorPage />)} />
     </Switch>
 );
 

@@ -8,7 +8,7 @@ const SellerRoutes = ({ redirect }) => (
         <Route exact path={["/", "/dashboard"]} component={DashboardPage} />
         <Route exact path="/digital-goods" component={DigitalGoodsPage} />
         <Route exact path="/history" component={HistoryPage} />
-        <Route render={() => (redirect ? <Redirect to="/" /> : ErrorPage)} />
+        <Route render={() => (redirect ? <Redirect to="/" /> : <ErrorPage />)} />
     </Switch>
 );
 
