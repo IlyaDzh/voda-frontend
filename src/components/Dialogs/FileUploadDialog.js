@@ -14,6 +14,8 @@ import {
 
 import { Button, TextField, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
+import { UPLOAD_SELECTOR_TYPE, UPLOAD_SELECTOR_CATEROGY  } from '@/utils';
+import { BabelFileResult } from '@babel/core';
 
 const useStyles = makeStyles(theme => ({
     dialogPaper: {
@@ -86,8 +88,8 @@ const useStyles = makeStyles(theme => ({
     dialogAttachFileButton: {
         marginRight: "24px",
         boxShadow: `
-            0px 3px 1px -2px rgba(0,0,0,0.2), 
-            0px 2px 2px 0px rgba(0,0,0,0.14), 
+            0px 3px 1px -2px rgba(0,0,0,0.2),
+            0px 2px 2px 0px rgba(0,0,0,0.14),
             0px 1px 5px 0px rgba(0,0,0,0.12)
         `,
         [theme.breakpoints.down("xs")]: {
@@ -234,8 +236,9 @@ const FileUploadDialog = ({
                     select
                     fullWidth
                 >
-                    <MenuItem value="image">Image</MenuItem>
-                    <MenuItem value="audio">Audio</MenuItem>
+                    {UPLOAD_SELECTOR_TYPE.map( type => {
+                        return <MenuItem value={type.name}>{type.name}</MenuItem>
+                    })}
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
@@ -248,8 +251,10 @@ const FileUploadDialog = ({
                     select
                     fullWidth
                 >
-                    <MenuItem value="category1">Category 1</MenuItem>
-                    <MenuItem value="category2">Category 2</MenuItem>
+                    {uploadForm.type && UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
+                        return <MenuItem value="category1">{category}</MenuItem>
+                    })}
+                    
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
