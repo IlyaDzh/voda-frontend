@@ -159,14 +159,27 @@ const FileUploadDialog = ({
                             Month
                         </Typography>
                         <TextField
-                            placeholder="Month"
-                            variant="outlined"
                             value={uploadForm.month}
                             onChange={event =>
                                 setUploadFormValue("month", event.target.value)
                             }
+                            variant="outlined"
+                            select
                             fullWidth
-                        />
+                        >
+                            <MenuItem value="01">January</MenuItem>
+                            <MenuItem value="02">February</MenuItem>
+                            <MenuItem value="03">March</MenuItem>
+                            <MenuItem value="04">April</MenuItem>
+                            <MenuItem value="05">May</MenuItem>
+                            <MenuItem value="06">June</MenuItem>
+                            <MenuItem value="07">July</MenuItem>
+                            <MenuItem value="08">August</MenuItem>
+                            <MenuItem value="09">September</MenuItem>
+                            <MenuItem value="10">October</MenuItem>
+                            <MenuItem value="11">November</MenuItem>
+                            <MenuItem value="12">December</MenuItem>
+                        </TextField>
                     </div>
                     <div>
                         <Typography classes={{ root: classes.inputCaption }}>
@@ -276,6 +289,7 @@ const FileUploadDialog = ({
                                 root: classes.uploadResultText,
                                 colorPrimary: classes.successUploadResultText
                             }}
+                            color="primary"
                             align="center"
                         >
                             {submissionResult.message}

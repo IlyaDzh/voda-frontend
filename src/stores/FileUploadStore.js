@@ -1,4 +1,5 @@
 import { observable, action } from "mobx";
+import { format } from "date-fns";
 import { axiosInstance } from "@/api/axios-instance";
 
 import {
@@ -10,20 +11,22 @@ import {
 
 const CHUNK_SIZE = 5242878;
 
+const INITIAL_UPLOAD_FORM = {
+    year: format(new Date(), "yyyy"),
+    month: format(new Date(), "MM"),
+    day: format(new Date(), "dd"),
+    price: "",
+    name: "",
+    extension: "",
+    type: "",
+    category: "",
+    genre: "",
+    info: ""
+};
+
 export class FileUploadStore {
     @observable
-    uploadForm = {
-        year: "",
-        month: "",
-        day: "",
-        price: "",
-        name: "",
-        extension: "",
-        type: "",
-        category: "",
-        genre: "",
-        info: ""
-    };
+    uploadForm = INITIAL_UPLOAD_FORM;
 
     @observable
     openFileUploadModal = false;
@@ -59,6 +62,8 @@ export class FileUploadStore {
             serviceNodeFileRecord.id
         );
 
+        this.resetUploadForm();
+
         this.pending = false;
 
         if (fileUploadingResponse.failed) {
@@ -90,19 +95,21 @@ export class FileUploadStore {
     @action
     setOpenFileUploadModal = openFileUploadModal => {
         this.openFileUploadModal = openFileUploadModal;
+        if (!openFileUploadModal) {
+            this.resetAll();
+        }
     };
 
     @action
     resetUploadForm = () => {
-        this.uploadForm = {
-            price: "",
-            name: "",
-            extension: "",
-            type: "",
-            category: "",
-            genre: "",
-            info: ""
-        };
+        this.uploadForm = INITIAL_UPLOAD_FORM;
+        this.attachedFile = undefined;
+    };
+
+    @action
+    resetAll = () => {
+        this.resetUploadForm();
+        this.submissionResult = undefined;
     };
 
     createLocalFile = async () => {
@@ -146,7 +153,9 @@ export class FileUploadStore {
             await axiosInstance.post(
                 `/api/v3/files/local/${localFileId}/to-service-node`,
                 {
-                    keepUntil: new Date("2020/08/30").toISOString(),
+                    keepUntil: new Date(
+                        `${this.uploadForm.year}/${this.uploadForm.month}/${this.uploadForm.day}`
+                    ).toISOString(),
                     name: this.uploadForm.name,
                     mimeType,
                     size: this.attachedFile.size,

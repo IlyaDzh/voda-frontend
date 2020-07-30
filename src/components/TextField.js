@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     textFieldSelect: {
-        padding: "12px 32px 11px 14px"
+        padding: "13px 32px 12px 14px"
     },
     inputLabel: {
         transform: "translate(14px, 15px) scale(1)"

@@ -126,7 +126,7 @@ const DigitalGoodsTable = ({
                             <Typography>
                                 {formatDate(item.file.keepUntil)}
                             </Typography>
-                            <Typography>{item.sum}</Typography>
+                            <Typography>{item.file.price}</Typography>
                             <Button
                                 className={classes.tableItemDetails}
                                 onClick={() =>

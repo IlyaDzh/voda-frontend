@@ -88,7 +88,7 @@ const CardInfoDialog = ({
                 <Typography variant="subtitle1" color="textSecondary">
                     PRICE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentGoodsInfo && currentGoodsInfo.sum}
+                        {currentGoodsInfo && currentGoodsInfo.file.price}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
@@ -101,7 +101,7 @@ const CardInfoDialog = ({
                     INFORMATION:{" "}
                     <Typography color="textSecondary" display="inline">
                         {currentGoodsInfo &&
-                            currentGoodsInfo.file.fileMetadata.briefDescription}
+                            currentGoodsInfo.file.fileMetadata.fullDescription}
                     </Typography>
                 </Typography>
             </DialogContent>
