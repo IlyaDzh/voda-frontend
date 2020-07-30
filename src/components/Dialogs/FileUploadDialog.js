@@ -103,6 +103,7 @@ const FileUploadDialog = ({
     openFileUploadModal,
     setOpenFileUploadModal,
     uploadForm,
+    uploadFormErrors,
     submissionResult,
     pending,
     setUploadFormValue,
@@ -151,6 +152,8 @@ const FileUploadDialog = ({
                             onChange={event =>
                                 setUploadFormValue("year", event.target.value)
                             }
+                            error={Boolean(uploadFormErrors.year)}
+                            helperText={uploadFormErrors.year}
                             fullWidth
                         />
                     </div>
@@ -192,6 +195,8 @@ const FileUploadDialog = ({
                             onChange={event =>
                                 setUploadFormValue("day", event.target.value)
                             }
+                            error={Boolean(uploadFormErrors.day)}
+                            helperText={uploadFormErrors.day}
                             fullWidth
                         />
                     </div>
@@ -211,6 +216,8 @@ const FileUploadDialog = ({
                     onChange={event =>
                         setUploadFormValue("price", event.target.value)
                     }
+                    error={Boolean(uploadFormErrors.price)}
+                    helperText={uploadFormErrors.price}
                     fullWidth
                 />
                 <TextField
@@ -221,6 +228,8 @@ const FileUploadDialog = ({
                     onChange={event =>
                         setUploadFormValue("name", event.target.value)
                     }
+                    error={Boolean(uploadFormErrors.name)}
+                    helperText={uploadFormErrors.name}
                     fullWidth
                 />
                 <TextField
@@ -273,6 +282,8 @@ const FileUploadDialog = ({
                     onChange={event =>
                         setUploadFormValue("info", event.target.value)
                     }
+                    error={Boolean(uploadFormErrors.info)}
+                    helperText={uploadFormErrors.info}
                     rows={3}
                     multiline
                     fullWidth
@@ -303,6 +314,15 @@ const FileUploadDialog = ({
                             {submissionResult.message}
                         </Typography>
                     ))
+                )}
+                {uploadFormErrors && (
+                    <Typography
+                        classes={{ root: classes.uploadResultText }}
+                        align="center"
+                        color="error"
+                    >
+                        {uploadFormErrors.attachedFile}
+                    </Typography>
                 )}
                 <div className={classes.dialogActionsButtons}>
                     <Hidden xsDown>
@@ -374,6 +394,7 @@ const mapMoxToProps = ({ fileUpload }) => ({
     openFileUploadModal: fileUpload.openFileUploadModal,
     setOpenFileUploadModal: fileUpload.setOpenFileUploadModal,
     uploadForm: fileUpload.uploadForm,
+    uploadFormErrors: fileUpload.uploadFormErrors,
     submissionResult: fileUpload.submissionResult,
     pending: fileUpload.pending,
     setUploadFormValue: fileUpload.setUploadFormValue,
