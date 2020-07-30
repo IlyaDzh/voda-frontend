@@ -1,8 +1,11 @@
-import { observable, action } from "mobx";
-import { format } from "date-fns";
-import { axiosInstance } from "@/api/axios-instance";
+import { observable, action, reaction } from "mobx";
+import { getYear, getMonth, getDate } from "date-fns";
 
+import { axiosInstance } from "@/api/axios-instance";
 import {
+    validateFileName,
+    validatePrice,
+    validateAttachedFile,
     convertToBase64,
     getFileExtensionFromName,
     removeBase64Header,
@@ -12,9 +15,9 @@ import {
 const CHUNK_SIZE = 5242878;
 
 const INITIAL_UPLOAD_FORM = {
-    year: format(new Date(), "yyyy"),
-    month: format(new Date(), "MM"),
-    day: format(new Date(), "dd"),
+    year: getYear(new Date()),
+    month: getMonth(new Date()) + 2,
+    day: getDate(new Date()),
     price: "",
     name: "",
     extension: "",
@@ -24,9 +27,21 @@ const INITIAL_UPLOAD_FORM = {
     info: ""
 };
 
+const INITIAL_UPLOAD_FORM_ERRORS = {
+    year: undefined,
+    day: undefined,
+    price: undefined,
+    name: undefined,
+    info: undefined,
+    attachedFile: undefined
+};
+
 export class FileUploadStore {
     @observable
     uploadForm = INITIAL_UPLOAD_FORM;
+
+    @observable
+    uploadFormErrors = INITIAL_UPLOAD_FORM_ERRORS;
 
     @observable
     openFileUploadModal = false;
@@ -44,41 +59,79 @@ export class FileUploadStore {
 
     constructor(userStore) {
         this.userStore = userStore;
+
+        reaction(
+            () => this.uploadForm.name,
+            name => (this.uploadFormErrors.name = validateFileName(name))
+        );
+
+        reaction(
+            () => this.uploadForm.price,
+            price => (this.uploadFormErrors.price = validatePrice(price))
+        );
     }
 
     @action
     doUpload = async () => {
-        this.pending = true;
-
-        const localFileRecord = await this.createLocalFile();
-
-        await this.uploadFileByChunks(localFileRecord.id);
-
-        const serviceNodeFileRecord = await this.uploadLocalFileToServiceNode(
-            localFileRecord.id
-        );
-
-        const fileUploadingResponse = await this.checkIfLocalFileUploadToDds(
-            serviceNodeFileRecord.id
-        );
-
-        this.resetUploadForm();
-
-        this.pending = false;
-
-        if (fileUploadingResponse.failed) {
-            this.submissionResult = {
-                status: 500,
-                message: "Error occurred while uploading file, please try again"
-            };
-        } else if (fileUploadingResponse.fileFullyUploaded) {
-            this.submissionResult = {
-                status: 200,
-                message: "You have successfully uploaded the file"
-            };
+        if (!this.isFormValid()) {
+            return;
         }
 
-        await this.deleteLocalFile(serviceNodeFileRecord.id);
+        this.pending = true;
+        this.submissionResult = undefined;
+
+        try {
+            const localFileRecord = await this.createLocalFile();
+
+            await this.uploadFileByChunks(localFileRecord.id);
+
+            const serviceNodeFileRecord = await this.uploadLocalFileToServiceNode(
+                localFileRecord.id
+            );
+
+            const fileUploadingResponse = await this.checkIfLocalFileUploadToDds(
+                serviceNodeFileRecord.id
+            );
+
+            this.resetUploadForm();
+
+            this.pending = false;
+
+            if (fileUploadingResponse.failed) {
+                this.submissionResult = {
+                    status: 500,
+                    message: "Error occurred while uploading file, please try again"
+                };
+            } else if (fileUploadingResponse.fileFullyUploaded) {
+                this.submissionResult = {
+                    status: 200,
+                    message: "You have successfully uploaded the file"
+                };
+            }
+
+            await this.deleteLocalFile(serviceNodeFileRecord.id);
+        } catch {
+            this.pending = false;
+            this.submissionResult = {
+                status: 500,
+                message: "Something went wrong"
+            };
+        }
+    };
+
+    @action
+    isFormValid = () => {
+        this.uploadFormErrors = {
+            name: validateFileName(this.uploadForm.name),
+            price: validatePrice(this.uploadForm.price),
+            attachedFile: validateAttachedFile(this.attachedFile)
+        };
+
+        return !Boolean(
+            this.uploadFormErrors.name ||
+                this.uploadFormErrors.price ||
+                this.uploadFormErrors.attachedFile
+        );
     };
 
     @action
@@ -103,6 +156,7 @@ export class FileUploadStore {
     @action
     resetUploadForm = () => {
         this.uploadForm = INITIAL_UPLOAD_FORM;
+        this.uploadFormErrors = INITIAL_UPLOAD_FORM_ERRORS;
         this.attachedFile = undefined;
     };
 

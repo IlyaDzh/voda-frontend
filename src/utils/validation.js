@@ -13,8 +13,6 @@ export const validateWallet = wallet => {
     if (!WALLET_REGEXP.test(wallet)) {
         return "Wallet contains invalid characters";
     }
-
-    return undefined;
 };
 
 export const validatePassword = password => {
@@ -29,14 +27,36 @@ export const validatePassword = password => {
     if (!PASSWORD_REGEXP.test(password)) {
         return "Your password must be at least 8 characters long, be of mixed case and also contain digit or symbol";
     }
-
-    return undefined;
 };
 
 export const validatePasswordConfirmation = (passwordConfirmation, password) => {
     if (passwordConfirmation !== password) {
         return "Password mismatch";
     }
+};
 
-    return undefined;
+export const validateFileName = name => {
+    if (isStringEmpty(name)) {
+        return "File name must be specified";
+    }
+};
+
+export const validatePrice = price => {
+    if (price === undefined) {
+        return "Price must be specified";
+    }
+
+    if (isNaN(price)) {
+        return "Price must be a valid number";
+    }
+
+    if (price <= 0) {
+        return "Price must be positive";
+    }
+};
+
+export const validateAttachedFile = file => {
+    if (file === undefined || file === null) {
+        return "File is required";
+    }
 };
