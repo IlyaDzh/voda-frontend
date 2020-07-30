@@ -17,7 +17,7 @@ const register = new RegisterStore(user);
 const files = new FilesStore();
 const digitalGoods = new DigitalGoodsStore(user);
 const salesHistory = new SalesHistoryStore(user);
-const fileUpload = new FileUploadStore();
+const fileUpload = new FileUploadStore(user);
 const infoModals = new InfoModalsStore();
 
 export const store = {

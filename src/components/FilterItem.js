@@ -3,7 +3,7 @@ import { Paper, Typography, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     filterItem: {
-        padding: "10px 12px",
+        padding: "10px 11px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center"

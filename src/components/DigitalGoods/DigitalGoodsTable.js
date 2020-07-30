@@ -112,9 +112,7 @@ const DigitalGoodsTable = ({
                     <Typography>Price</Typography>
                     <Typography></Typography>
                 </div>
-                {pending ? (
-                    <Loader mt={25} mb={25} />
-                ) : (
+                {uploadedItems &&
                     uploadedItems.map((item, i) => (
                         <Paper
                             key={i}
@@ -144,32 +142,36 @@ const DigitalGoodsTable = ({
                                 </Hidden>
                             </Button>
                         </Paper>
-                    ))
-                )}
+                    ))}
+                {pending && <Loader mt={25} mb={25} />}
             </Grid>
             <Grid item xs={12}>
-                <Hidden smDown>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        size="large"
-                        color="secondary"
-                        onClick={() => console.log("load more")}
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
-                <Hidden mdUp>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        color="secondary"
-                        onClick={() => console.log("load more")}
-                        disableElevation
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
+                {!pending && (
+                    <>
+                        <Hidden smDown>
+                            <Button
+                                className={classes.loadMoreBtn}
+                                size="large"
+                                color="secondary"
+                                onClick={fetchUploadedItems}
+                                fullWidth
+                            >
+                                Load more
+                            </Button>
+                        </Hidden>
+                        <Hidden mdUp>
+                            <Button
+                                className={classes.loadMoreBtn}
+                                color="secondary"
+                                onClick={fetchUploadedItems}
+                                disableElevation
+                                fullWidth
+                            >
+                                Load more
+                            </Button>
+                        </Hidden>
+                    </>
+                )}
             </Grid>
         </>
     );

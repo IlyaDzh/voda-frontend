@@ -27,7 +27,7 @@ export class SalesHistoryStore {
                 `api/v3/transactions?address=${this.userStore.user.address}&page=${this.page}&pageSize=10&type=dataPurchase`
             )
             .then(({ data }) => {
-                this.historyItems = data;
+                this.historyItems.push(...data);
             })
             .finally(() => (this.pending = false));
     };

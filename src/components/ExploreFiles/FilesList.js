@@ -44,29 +44,34 @@ const FilesList = ({
                     />
                 ))}
             <Grid item xs={12}>
-                {pending && <Loader mt={25} mb={25} />}
-                <Hidden smDown>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        size="large"
-                        color="secondary"
-                        onClick={fetchExploreFiles}
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
-                <Hidden mdUp>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        color="secondary"
-                        onClick={fetchExploreFiles}
-                        disableElevation
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
+                {pending ? (
+                    <Loader mt={25} mb={25} />
+                ) : (
+                    <>
+                        <Hidden smDown>
+                            <Button
+                                className={classes.loadMoreBtn}
+                                size="large"
+                                color="secondary"
+                                onClick={fetchExploreFiles}
+                                fullWidth
+                            >
+                                Load more
+                            </Button>
+                        </Hidden>
+                        <Hidden mdUp>
+                            <Button
+                                className={classes.loadMoreBtn}
+                                color="secondary"
+                                onClick={fetchExploreFiles}
+                                disableElevation
+                                fullWidth
+                            >
+                                Load more
+                            </Button>
+                        </Hidden>
+                    </>
+                )}
             </Grid>
         </>
     );

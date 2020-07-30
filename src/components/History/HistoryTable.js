@@ -118,57 +118,54 @@ const HistoryTable = ({
                     <Typography>Uploaded</Typography>
                     <Typography>File ID</Typography>
                 </div>
-                {pending ? (
-                    <Loader mt={25} mb={25} />
-                ) : (
-                    historyItems.map(item => (
-                        <Paper
-                            key={item.hash}
-                            classes={{ root: classes.tableItem }}
-                            elevation={3}
+                {historyItems.map(item => (
+                    <Paper
+                        key={item.hash}
+                        classes={{ root: classes.tableItem }}
+                        elevation={3}
+                    >
+                        <Typography onClick={() => setOpenTxnInfoModal(true, item)}>
+                            {item.hash}
+                        </Typography>
+                        <Typography>{formatDate(item.createdAt)}</Typography>
+                        <Typography>{item.sum}</Typography>
+                        <Typography>{formatDate(item.file.createdAt)}</Typography>
+                        <Typography
+                            onClick={() => setOpenGoodsInfoModal(true, item)}
                         >
-                            <Typography
-                                onClick={() => setOpenTxnInfoModal(true, item)}
-                            >
-                                {item.hash}
-                            </Typography>
-                            <Typography>{formatDate(item.createdAt)}</Typography>
-                            <Typography>{item.sum}</Typography>
-                            <Typography>
-                                {formatDate(item.file.createdAt)}
-                            </Typography>
-                            <Typography
-                                onClick={() => setOpenGoodsInfoModal(true, item)}
-                            >
-                                {item.file.id}
-                            </Typography>
-                        </Paper>
-                    ))
-                )}
+                            {item.file.id}
+                        </Typography>
+                    </Paper>
+                ))}
+                {pending && <Loader mt={25} mb={25} />}
             </Grid>
             <Grid item xs={12}>
-                <Hidden smDown>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        size="large"
-                        color="secondary"
-                        onClick={() => console.log("load more")}
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
-                <Hidden mdUp>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        color="secondary"
-                        onClick={() => console.log("load more")}
-                        disableElevation
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
+                {!pending && (
+                    <>
+                        <Hidden smDown>
+                            <Button
+                                className={classes.loadMoreBtn}
+                                size="large"
+                                color="secondary"
+                                onClick={fetchSalesHistory}
+                                fullWidth
+                            >
+                                Load more
+                            </Button>
+                        </Hidden>
+                        <Hidden mdUp>
+                            <Button
+                                className={classes.loadMoreBtn}
+                                color="secondary"
+                                onClick={fetchSalesHistory}
+                                disableElevation
+                                fullWidth
+                            >
+                                Load more
+                            </Button>
+                        </Hidden>
+                    </>
+                )}
             </Grid>
         </>
     );

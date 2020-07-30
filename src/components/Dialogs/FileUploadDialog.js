@@ -12,7 +12,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button, TextField } from "@/components";
+import { Button, TextField, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -69,7 +69,19 @@ const useStyles = makeStyles(theme => ({
         marginBottom: "16px"
     },
     dialogActions: {
-        padding: "16px 24px 54px"
+        padding: "16px 24px 54px",
+        flexDirection: "column",
+        alignItems: "unset",
+        justifyContent: "unset"
+    },
+    dialogActionsButtons: {
+        display: "flex"
+    },
+    uploadResultText: {
+        marginBottom: "15px"
+    },
+    successUploadResultText: {
+        color: "#09c709"
     },
     dialogAttachFileButton: {
         marginRight: "24px",
@@ -91,9 +103,11 @@ const FileUploadDialog = ({
     openFileUploadModal,
     setOpenFileUploadModal,
     uploadForm,
+    submissionResult,
+    pending,
     setUploadFormValue,
-    doUpload,
-    setAttachedFile
+    setAttachedFile,
+    doUpload
 }) => {
     const classes = useStyles();
 
@@ -252,57 +266,91 @@ const FileUploadDialog = ({
                 />
             </DialogContent>
             <DialogActions classes={{ root: classes.dialogActions }} disableSpacing>
-                <Hidden xsDown>
-                    <Button
-                        className={classes.dialogAttachFileButton}
-                        color="secondary"
-                        variant="outlined"
-                        component="label"
-                        size="large"
-                        onClick={() => console.log("attach file")}
-                        fullWidth
-                        autoFocus
-                    >
-                        Attach File
-                        <input
-                            type="file"
-                            onChange={event =>
-                                setAttachedFile(event.target.files[0])
-                            }
-                            style={{ display: "none" }}
-                        />
-                    </Button>
-                    <Button
-                        color="secondary"
-                        size="large"
-                        onClick={doUpload}
-                        fullWidth
-                    >
-                        Upload
-                    </Button>
-                </Hidden>
-                <Hidden smUp>
-                    <Button
-                        className={classes.dialogAttachFileButton}
-                        color="secondary"
-                        variant="outlined"
-                        component="label"
-                        onClick={() => console.log("attach file")}
-                        fullWidth
-                        autoFocus
-                    >
-                        Attach File
-                        <input type="file" style={{ display: "none" }} />
-                    </Button>
-                    <Button
-                        color="secondary"
-                        onClick={doUpload}
-                        disableElevation
-                        fullWidth
-                    >
-                        Upload
-                    </Button>
-                </Hidden>
+                {pending ? (
+                    <Loader mb={25} />
+                ) : (
+                    submissionResult &&
+                    (submissionResult.status === 200 ? (
+                        <Typography
+                            classes={{
+                                root: classes.uploadResultText,
+                                colorPrimary: classes.successUploadResultText
+                            }}
+                            align="center"
+                        >
+                            {submissionResult.message}
+                        </Typography>
+                    ) : (
+                        <Typography
+                            classes={{ root: classes.uploadResultText }}
+                            align="center"
+                            color="error"
+                        >
+                            {submissionResult.message}
+                        </Typography>
+                    ))
+                )}
+                <div className={classes.dialogActionsButtons}>
+                    <Hidden xsDown>
+                        <Button
+                            className={classes.dialogAttachFileButton}
+                            color="secondary"
+                            variant="outlined"
+                            component="label"
+                            size="large"
+                            disabled={pending}
+                            fullWidth
+                            autoFocus
+                        >
+                            Attach File
+                            <input
+                                type="file"
+                                onChange={event =>
+                                    setAttachedFile(event.target.files[0])
+                                }
+                                style={{ display: "none" }}
+                            />
+                        </Button>
+                        <Button
+                            color="secondary"
+                            size="large"
+                            onClick={doUpload}
+                            disabled={pending}
+                            fullWidth
+                        >
+                            Upload
+                        </Button>
+                    </Hidden>
+                    <Hidden smUp>
+                        <Button
+                            className={classes.dialogAttachFileButton}
+                            color="secondary"
+                            variant="outlined"
+                            component="label"
+                            disabled={pending}
+                            fullWidth
+                            autoFocus
+                        >
+                            Attach File
+                            <input
+                                type="file"
+                                onChange={event =>
+                                    setAttachedFile(event.target.files[0])
+                                }
+                                style={{ display: "none" }}
+                            />
+                        </Button>
+                        <Button
+                            color="secondary"
+                            onClick={doUpload}
+                            disabled={pending}
+                            disableElevation
+                            fullWidth
+                        >
+                            Upload
+                        </Button>
+                    </Hidden>
+                </div>
             </DialogActions>
         </Dialog>
     );
@@ -312,9 +360,11 @@ const mapMoxToProps = ({ fileUpload }) => ({
     openFileUploadModal: fileUpload.openFileUploadModal,
     setOpenFileUploadModal: fileUpload.setOpenFileUploadModal,
     uploadForm: fileUpload.uploadForm,
+    submissionResult: fileUpload.submissionResult,
+    pending: fileUpload.pending,
     setUploadFormValue: fileUpload.setUploadFormValue,
-    doUpload: fileUpload.doUpload,
-    setAttachedFile: fileUpload.setAttachedFile
+    setAttachedFile: fileUpload.setAttachedFile,
+    doUpload: fileUpload.doUpload
 });
 
 export default inject(mapMoxToProps)(observer(FileUploadDialog));
