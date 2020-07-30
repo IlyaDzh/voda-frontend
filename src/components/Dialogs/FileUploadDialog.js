@@ -15,7 +15,6 @@ import {
 import { Button, TextField, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
 import { UPLOAD_SELECTOR_TYPE, UPLOAD_SELECTOR_CATEROGY  } from '@/utils';
-import { BabelFileResult } from '@babel/core';
 
 const useStyles = makeStyles(theme => ({
     dialogPaper: {
