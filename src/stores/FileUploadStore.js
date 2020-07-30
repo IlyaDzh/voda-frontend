@@ -3,8 +3,11 @@ import { getYear, getMonth, getDate } from "date-fns";
 
 import { axiosInstance } from "@/api/axios-instance";
 import {
+    validateYear,
+    validateDay,
     validateFileName,
     validatePrice,
+    validateInfo,
     validateAttachedFile,
     convertToBase64,
     getFileExtensionFromName,
@@ -61,13 +64,28 @@ export class FileUploadStore {
         this.userStore = userStore;
 
         reaction(
+            () => this.uploadForm.day,
+            day => day && (this.uploadFormErrors.day = validateDay(day))
+        );
+
+        reaction(
+            () => this.uploadForm.year,
+            year => year && (this.uploadFormErrors.year = validateYear(year))
+        );
+
+        reaction(
             () => this.uploadForm.name,
-            name => (this.uploadFormErrors.name = validateFileName(name))
+            name => name && (this.uploadFormErrors.name = validateFileName(name))
         );
 
         reaction(
             () => this.uploadForm.price,
-            price => (this.uploadFormErrors.price = validatePrice(price))
+            price => price && (this.uploadFormErrors.price = validatePrice(price))
+        );
+
+        reaction(
+            () => this.uploadForm.info,
+            info => info && (this.uploadFormErrors.info = validateInfo(info))
         );
     }
 
@@ -122,14 +140,20 @@ export class FileUploadStore {
     @action
     isFormValid = () => {
         this.uploadFormErrors = {
+            day: validateDay(this.uploadForm.day),
+            year: validateYear(this.uploadForm.year),
             name: validateFileName(this.uploadForm.name),
             price: validatePrice(this.uploadForm.price),
+            info: validateInfo(this.uploadForm.info),
             attachedFile: validateAttachedFile(this.attachedFile)
         };
 
         return !Boolean(
-            this.uploadFormErrors.name ||
+            this.uploadFormErrors.day ||
+                this.uploadFormErrors.year ||
+                this.uploadFormErrors.name ||
                 this.uploadFormErrors.price ||
+                this.uploadFormErrors.info ||
                 this.uploadFormErrors.attachedFile
         );
     };
@@ -137,7 +161,6 @@ export class FileUploadStore {
     @action
     setAttachedFile = file => {
         this.attachedFile = file;
-        this.uploadForm.name = file.name;
     };
 
     @action

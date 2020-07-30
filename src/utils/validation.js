@@ -37,13 +37,13 @@ export const validatePasswordConfirmation = (passwordConfirmation, password) => 
 
 export const validateFileName = name => {
     if (isStringEmpty(name)) {
-        return "File name must be specified";
+        return "File name can't be empty";
     }
 };
 
 export const validatePrice = price => {
     if (price === undefined) {
-        return "Price must be specified";
+        return "Price can't be empty";
     }
 
     if (isNaN(price)) {
@@ -55,8 +55,26 @@ export const validatePrice = price => {
     }
 };
 
+export const validateInfo = info => {
+    if (info.length >= 350) {
+        return "Info is too long";
+    }
+};
+
 export const validateAttachedFile = file => {
     if (file === undefined || file === null) {
         return "File is required";
+    }
+};
+
+export const validateYear = year => {
+    if (year === "") {
+        return "Required";
+    }
+};
+
+export const validateDay = day => {
+    if (day === "") {
+        return "Required";
     }
 };
