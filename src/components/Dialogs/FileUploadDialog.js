@@ -14,7 +14,7 @@ import {
 
 import { Button, TextField, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
-import { UPLOAD_SELECTOR_TYPE, UPLOAD_SELECTOR_CATEROGY  } from '@/utils';
+import { UPLOAD_SELECTOR_TYPE, UPLOAD_SELECTOR_CATEROGY, UPLOAD_SELECTOR_GENRE } from '@/utils';
 
 const useStyles = makeStyles(theme => ({
     dialogPaper: {
@@ -258,9 +258,10 @@ const FileUploadDialog = ({
                     variant="outlined"
                     select
                     fullWidth
+                    disabled={!uploadForm.type}
                 >
                     {uploadForm.type && UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
-                        return <MenuItem value="category1">{category}</MenuItem>
+                        return <MenuItem value={category}>{category}</MenuItem>
                     })}
                     
                 </TextField>
@@ -274,9 +275,11 @@ const FileUploadDialog = ({
                     variant="outlined"
                     select
                     fullWidth
+                    disabled={!uploadForm.category}
                 >
-                    <MenuItem value="genre1">Genre 1</MenuItem>
-                    <MenuItem value="genre2">Genre 2</MenuItem>
+                    {uploadForm.category && UPLOAD_SELECTOR_GENRE[uploadForm.category].map(genre => {
+                        return <MenuItem value={genre}>{genre}</MenuItem>
+                    })}
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
