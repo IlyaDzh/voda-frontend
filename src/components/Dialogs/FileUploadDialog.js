@@ -262,9 +262,9 @@ const FileUploadDialog = ({
                     variant="outlined"
                     select
                     fullWidth
-                    disabled={!uploadForm.type}
+                    disabled={!(uploadForm.type && uploadForm.type !== 'Other')}
                 >
-                    {uploadForm.type ? UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
+                    {uploadForm.type && uploadForm.type !== 'Other' ? UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
                         return <MenuItem key={category} value={category}>{category}</MenuItem>
                     }) : <MenuItem key={'default'} value={'default'}> </MenuItem>
                     }

@@ -12,7 +12,8 @@ export const UPLOAD_SELECTOR_TYPE = [
     {name:'Video'},
     {name:'Document'},
     {name:'Picture'},
-    {name:'Application'}
+    {name:'Application'},
+    {name:'Other'}
 ];
 
 export const UPLOAD_SELECTOR_CATEROGY = {
@@ -20,7 +21,7 @@ export const UPLOAD_SELECTOR_CATEROGY = {
     'Video': ['Adult', 'Movies', 'TV series', 'Clips', 'Tutorials', 'Other'],
     'Document': ['Books', 'Journals', 'Coupons', 'Articles', 'Sources'],
     'Picture': ['Photos', 'Drawings', 'Templates'],
-    'Application': ['Games', 'Utilities', 'Other']
+    'Application': ['Games', 'Utilities', 'Other'],
 };
 
 export const UPLOAD_SELECTOR_GENRE = {
