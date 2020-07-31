@@ -14,6 +14,7 @@ import {
 
 import { Button, TextField, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
+import { UPLOAD_SELECTOR_TYPE, UPLOAD_SELECTOR_CATEROGY, UPLOAD_SELECTOR_GENRE } from '@/utils';
 
 const useStyles = makeStyles(theme => ({
     dialogPaper: {
@@ -86,8 +87,8 @@ const useStyles = makeStyles(theme => ({
     dialogAttachFileButton: {
         marginRight: "24px",
         boxShadow: `
-            0px 3px 1px -2px rgba(0,0,0,0.2), 
-            0px 2px 2px 0px rgba(0,0,0,0.14), 
+            0px 3px 1px -2px rgba(0,0,0,0.2),
+            0px 2px 2px 0px rgba(0,0,0,0.14),
             0px 1px 5px 0px rgba(0,0,0,0.12)
         `,
         [theme.breakpoints.down("xs")]: {
@@ -121,6 +122,7 @@ const FileUploadDialog = ({
             classes={{ paper: classes.dialogPaper }}
             open={openFileUploadModal}
             onClose={handleClose}
+            scroll={'body'}
         >
             <DialogTitle
                 classes={{ root: classes.dialogTitleWrapper }}
@@ -236,15 +238,18 @@ const FileUploadDialog = ({
                     className={classes.dialogInput}
                     label="Type"
                     value={uploadForm.type}
-                    onChange={event =>
-                        setUploadFormValue("type", event.target.value)
-                    }
+                    onChange={event =>{
+                        setUploadFormValue("type", event.target.value);
+                        setUploadFormValue("category", '');
+                        setUploadFormValue("genre", '');
+                    }}
                     variant="outlined"
                     select
                     fullWidth
                 >
-                    <MenuItem value="image">Image</MenuItem>
-                    <MenuItem value="audio">Audio</MenuItem>
+                    {UPLOAD_SELECTOR_TYPE.map( type => {
+                        return <MenuItem key={type.name} value={type.name}>{type.name}</MenuItem>
+                    })}
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
@@ -256,9 +261,12 @@ const FileUploadDialog = ({
                     variant="outlined"
                     select
                     fullWidth
+                    disabled={!uploadForm.type}
                 >
-                    <MenuItem value="category1">Category 1</MenuItem>
-                    <MenuItem value="category2">Category 2</MenuItem>
+                    {uploadForm.type ? UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
+                        return <MenuItem key={category} value={category}>{category}</MenuItem>
+                    }) : <MenuItem key={'default'} value={'default'}> </MenuItem>
+                    }
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
@@ -270,9 +278,12 @@ const FileUploadDialog = ({
                     variant="outlined"
                     select
                     fullWidth
+                    disabled={!uploadForm.category}
                 >
-                    <MenuItem value="genre1">Genre 1</MenuItem>
-                    <MenuItem value="genre2">Genre 2</MenuItem>
+                    {uploadForm.category ? UPLOAD_SELECTOR_GENRE[uploadForm.category].map(genre => {
+                        return <MenuItem key={genre} value={genre}>{genre}</MenuItem>
+                    }): <MenuItem key={'default'} value={'default'}> </MenuItem>
+                    }
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
