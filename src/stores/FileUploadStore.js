@@ -59,9 +59,11 @@ export class FileUploadStore {
     pending = false;
 
     userStore = undefined;
+    digitalGoodsStore = undefined;
 
-    constructor(userStore) {
+    constructor(userStore, digitalGoodsStore) {
         this.userStore = userStore;
+        this.digitalGoodsStore = digitalGoodsStore;
 
         reaction(
             () => this.uploadForm.day,
@@ -111,8 +113,6 @@ export class FileUploadStore {
                 serviceNodeFileRecord.id
             );
 
-            this.resetUploadForm();
-
             this.pending = false;
 
             if (fileUploadingResponse.failed) {
@@ -134,6 +134,12 @@ export class FileUploadStore {
                 status: 500,
                 message: "Something went wrong"
             };
+        } finally {
+            if (this.submissionResult && this.submissionResult.status === 200) {
+                this.resetUploadForm();
+                this.digitalGoodsStore.resetUploadedItems();
+                this.digitalGoodsStore.fetchUploadedItems();
+            }
         }
     };
 
@@ -161,6 +167,7 @@ export class FileUploadStore {
     @action
     setAttachedFile = file => {
         this.attachedFile = file;
+        this.uploadFormErrors.attachedFile = undefined;
     };
 
     @action

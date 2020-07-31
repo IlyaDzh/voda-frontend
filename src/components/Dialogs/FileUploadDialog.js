@@ -105,6 +105,7 @@ const FileUploadDialog = ({
     uploadForm,
     uploadFormErrors,
     submissionResult,
+    attachedFile,
     pending,
     setUploadFormValue,
     setAttachedFile,
@@ -332,7 +333,7 @@ const FileUploadDialog = ({
                             variant="outlined"
                             component="label"
                             size="large"
-                            disabled={pending}
+                            disabled={Boolean(attachedFile)}
                             fullWidth
                             autoFocus
                         >
@@ -361,7 +362,7 @@ const FileUploadDialog = ({
                             color="secondary"
                             variant="outlined"
                             component="label"
-                            disabled={pending}
+                            disabled={Boolean(attachedFile)}
                             fullWidth
                             autoFocus
                         >
@@ -396,6 +397,7 @@ const mapMoxToProps = ({ fileUpload }) => ({
     uploadForm: fileUpload.uploadForm,
     uploadFormErrors: fileUpload.uploadFormErrors,
     submissionResult: fileUpload.submissionResult,
+    attachedFile: fileUpload.attachedFile,
     pending: fileUpload.pending,
     setUploadFormValue: fileUpload.setUploadFormValue,
     setAttachedFile: fileUpload.setAttachedFile,
