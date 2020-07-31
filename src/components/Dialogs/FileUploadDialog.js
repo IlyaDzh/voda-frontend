@@ -240,15 +240,15 @@ const FileUploadDialog = ({
                     value={uploadForm.type}
                     onChange={event =>{
                         setUploadFormValue("type", event.target.value);
-                        setUploadFormValue("category", undefined);
-                        setUploadFormValue("genre", undefined);
+                        setUploadFormValue("category", '');
+                        setUploadFormValue("genre", '');
                     }}
                     variant="outlined"
                     select
                     fullWidth
                 >
                     {UPLOAD_SELECTOR_TYPE.map( type => {
-                        return <MenuItem value={type.name}>{type.name}</MenuItem>
+                        return <MenuItem key={type.name} value={type.name}>{type.name}</MenuItem>
                     })}
                 </TextField>
                 <TextField
@@ -263,10 +263,10 @@ const FileUploadDialog = ({
                     fullWidth
                     disabled={!uploadForm.type}
                 >
-                    {uploadForm.type && UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
-                        return <MenuItem value={category}>{category}</MenuItem>
-                    })}
-                    
+                    {uploadForm.type ? UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
+                        return <MenuItem key={category} value={category}>{category}</MenuItem>
+                    }) : <MenuItem key={'default'} value={'default'}> </MenuItem>
+                    }
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
@@ -280,9 +280,10 @@ const FileUploadDialog = ({
                     fullWidth
                     disabled={!uploadForm.category}
                 >
-                    {uploadForm.category && UPLOAD_SELECTOR_GENRE[uploadForm.category].map(genre => {
-                        return <MenuItem value={genre}>{genre}</MenuItem>
-                    })}
+                    {uploadForm.category ? UPLOAD_SELECTOR_GENRE[uploadForm.category].map(genre => {
+                        return <MenuItem key={genre} value={genre}>{genre}</MenuItem>
+                    }): <MenuItem key={'default'} value={'default'}> </MenuItem>
+                    }
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
