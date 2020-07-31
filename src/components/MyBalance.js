@@ -13,6 +13,9 @@ const useStyles = makeStyles(theme => ({
         padding: "19px 24px",
         [theme.breakpoints.down("sm")]: {
             display: "block"
+        },
+        [theme.breakpoints.down("xs")]: {
+            display: "flex",
         }
     },
     walletHeader: {
@@ -20,10 +23,16 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         [theme.breakpoints.down("sm")]: {
             marginBottom: "24px"
+        },
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 0,
         }
     },
     walletIcon: {
-        marginRight: "16px"
+        marginRight: "16px",
+        [theme.breakpoints.down("xs")]: {
+            display: "none",
+        }
     },
     walletTitle: {
         fontSize: "24px",
@@ -33,7 +42,7 @@ const useStyles = makeStyles(theme => ({
             fontSize: "22px"
         },
         [theme.breakpoints.down("sm")]: {
-            fontSize: "16px"
+            fontSize: "16px",
         }
     },
     walletBody: {
@@ -42,6 +51,11 @@ const useStyles = makeStyles(theme => ({
         border: `1px solid ${theme.palette.background.main}`,
         [theme.breakpoints.down("sm")]: {
             display: "block"
+        },
+        [theme.breakpoints.down("xs")]: {
+            display: "flex",
+            width: '100%',
+            overflow: 'hidden',
         }
     },
     disabledField: {
@@ -52,23 +66,42 @@ const useStyles = makeStyles(theme => ({
             wordBreak: "break-word",
             [theme.breakpoints.down("sm")]: {
                 fontSize: "12px"
+            },
+            [theme.breakpoints.down("xs")]: {
+                wordBreak: 'normal',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
             }
         },
         [theme.breakpoints.down("sm")]: {
             width: "unset"
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: "40%"
         }
     },
     activeField: {
         borderRadius: "0 5px 5px 0",
         padding: "11px",
         height: "20px",
-        margin: "auto 0"
+        margin: "auto 0",
+        [theme.breakpoints.down("xs")]: {
+            padding: "11px 8px 7px",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+        }
     },
     walletNumber: {
         fontSize: "22px",
         fontWeight: "bold",
         [theme.breakpoints.down("md")]: {
             fontSize: "16px"
+        },
+        [theme.breakpoints.down("xs")]: {
+            fontSize: "16px",
+            wordBreak: "normal",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
         }
     }
 }));
