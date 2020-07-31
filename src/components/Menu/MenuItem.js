@@ -1,4 +1,5 @@
 import React from "react";
+import { inject, observer } from "mobx-react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
     ListItem,
@@ -7,7 +8,6 @@ import {
     Typography,
     makeStyles
 } from "@material-ui/core";
-import { inject, observer } from 'mobx-react';
 
 const useStyles = makeStyles(theme => ({
     listItem: {
@@ -38,7 +38,7 @@ const MenuItem = ({ to, activeRoutes, icon, text, setMobileOpen }) => {
         <ListItem
             classes={{ root: classes.listItem }}
             component={NavLink}
-            onClick={()=>setMobileOpen(false)}
+            onClick={() => setMobileOpen(false)}
             isActive={() =>
                 activeRoutes ? activeRoutes.includes(pathname) : to === pathname
             }
@@ -59,6 +59,7 @@ const MenuItem = ({ to, activeRoutes, icon, text, setMobileOpen }) => {
 };
 
 const mapMoxToProps = ({ drawer }) => ({
-    setMobileOpen: drawer.setMobileOpen,
+    setMobileOpen: drawer.setMobileOpen
 });
+
 export default inject(mapMoxToProps)(observer(MenuItem));
