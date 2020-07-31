@@ -14,9 +14,6 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down("sm")]: {
             display: "block"
         },
-        [theme.breakpoints.down("xs")]: {
-            display: "flex",
-        }
     },
     walletHeader: {
         display: "flex",
@@ -25,7 +22,7 @@ const useStyles = makeStyles(theme => ({
             marginBottom: "24px"
         },
         [theme.breakpoints.down("xs")]: {
-            marginBottom: 0,
+            marginBottom: 8,
         }
     },
     walletIcon: {
@@ -68,6 +65,7 @@ const useStyles = makeStyles(theme => ({
                 fontSize: "12px"
             },
             [theme.breakpoints.down("xs")]: {
+                fontSize: "14px",
                 wordBreak: 'normal',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -98,7 +96,8 @@ const useStyles = makeStyles(theme => ({
             fontSize: "16px"
         },
         [theme.breakpoints.down("xs")]: {
-            fontSize: "16px",
+            fontSize: "14px",
+            lineHeight: 1.5,
             wordBreak: "normal",
             overflow: 'hidden',
             textOverflow: 'ellipsis',
