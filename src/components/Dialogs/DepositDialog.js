@@ -118,6 +118,7 @@ const DepositDialog = ({ openDepositModal, setOpenDepositModal, user }) => {
                         <Button
                             className={classes.copyBtn}
                             color="secondary"
+                            disabled={copied}
                             disableElevation
                         >
                             {copied ? "Copied" : "Copy"}
