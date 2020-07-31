@@ -1,9 +1,8 @@
+import { getYear, getDate } from "date-fns";
 import { isStringEmpty } from "@/utils";
 
 const WALLET_REGEXP = /^[a-zA-Z0-9\u3130-\u318F\uAC00-\uD7AF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\uF900-\uFAFF\u2F800-\u2FA1F_]+$/;
-const PASSWORD_REGEXP = new RegExp(
-    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9!@#$%^&*])(?=.{8,})"
-);
+const PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9!@#$%^&*])(?=.{8,})/;
 
 export const validateWallet = wallet => {
     if (isStringEmpty(wallet)) {
@@ -71,10 +70,18 @@ export const validateYear = year => {
     if (year === "") {
         return "Required";
     }
+
+    if (year < getYear(new Date())) {
+        return "Incorrect";
+    }
 };
 
 export const validateDay = day => {
     if (day === "") {
         return "Required";
+    }
+
+    if (day <= 0 || day > 31) {
+        return "Incorrect";
     }
 };

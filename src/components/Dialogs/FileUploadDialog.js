@@ -14,7 +14,11 @@ import {
 
 import { Button, TextField, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
-import { UPLOAD_SELECTOR_TYPE, UPLOAD_SELECTOR_CATEROGY, UPLOAD_SELECTOR_GENRE } from '@/utils';
+import {
+    UPLOAD_SELECTOR_TYPE,
+    UPLOAD_SELECTOR_CATEROGY,
+    UPLOAD_SELECTOR_GENRE
+} from "@/utils";
 
 const useStyles = makeStyles(theme => ({
     dialogPaper: {
@@ -44,15 +48,15 @@ const useStyles = makeStyles(theme => ({
     availableWrapper: {
         display: "flex",
         "& > div:not(:last-child)": {
-            marginRight: "16px"
+            marginRight: "12px"
         },
         "& > div": {
-            width: "45%",
+            width: "46%",
             "&:first-child": {
-                width: "30%"
+                width: "31%"
             },
             "&:last-child": {
-                width: "25%"
+                width: "23%"
             }
         }
     },
@@ -67,7 +71,10 @@ const useStyles = makeStyles(theme => ({
         marginBottom: "24px"
     },
     dialogInput: {
-        marginBottom: "16px"
+        marginBottom: "16px",
+        "&:last-child": {
+            marginBottom: 0
+        }
     },
     dialogActions: {
         padding: "16px 24px 54px",
@@ -123,7 +130,7 @@ const FileUploadDialog = ({
             classes={{ paper: classes.dialogPaper }}
             open={openFileUploadModal}
             onClose={handleClose}
-            scroll={'body'}
+            scroll={"body"}
         >
             <DialogTitle
                 classes={{ root: classes.dialogTitleWrapper }}
@@ -151,6 +158,7 @@ const FileUploadDialog = ({
                         <TextField
                             placeholder="Year"
                             variant="outlined"
+                            type="number"
                             value={uploadForm.year}
                             onChange={event =>
                                 setUploadFormValue("year", event.target.value)
@@ -194,6 +202,8 @@ const FileUploadDialog = ({
                         <TextField
                             placeholder="Day"
                             variant="outlined"
+                            type="number"
+                            InputProps={{ inputProps: { min: 1, max: 31 } }}
                             value={uploadForm.day}
                             onChange={event =>
                                 setUploadFormValue("day", event.target.value)
@@ -239,17 +249,21 @@ const FileUploadDialog = ({
                     className={classes.dialogInput}
                     label="Type"
                     value={uploadForm.type}
-                    onChange={event =>{
+                    onChange={event => {
                         setUploadFormValue("type", event.target.value);
-                        setUploadFormValue("category", '');
-                        setUploadFormValue("genre", '');
+                        setUploadFormValue("category", "");
+                        setUploadFormValue("genre", "");
                     }}
                     variant="outlined"
                     select
                     fullWidth
                 >
-                    {UPLOAD_SELECTOR_TYPE.map( type => {
-                        return <MenuItem key={type.name} value={type.name}>{type.name}</MenuItem>
+                    {UPLOAD_SELECTOR_TYPE.map(type => {
+                        return (
+                            <MenuItem key={type.name} value={type.name}>
+                                {type.name}
+                            </MenuItem>
+                        );
                     })}
                 </TextField>
                 <TextField
@@ -262,12 +276,21 @@ const FileUploadDialog = ({
                     variant="outlined"
                     select
                     fullWidth
-                    disabled={!(uploadForm.type && uploadForm.type !== 'Other')}
+                    disabled={!uploadForm.type}
                 >
-                    {uploadForm.type && uploadForm.type !== 'Other' ? UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
-                        return <MenuItem key={category} value={category}>{category}</MenuItem>
-                    }) : <MenuItem key={'default'} value={'default'}> </MenuItem>
-                    }
+                    {uploadForm.type ? (
+                        UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
+                            return (
+                                <MenuItem key={category} value={category}>
+                                    {category}
+                                </MenuItem>
+                            );
+                        })
+                    ) : (
+                        <MenuItem key={"default"} value={"default"}>
+                            {" "}
+                        </MenuItem>
+                    )}
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
@@ -281,10 +304,19 @@ const FileUploadDialog = ({
                     fullWidth
                     disabled={!uploadForm.category}
                 >
-                    {uploadForm.category ? UPLOAD_SELECTOR_GENRE[uploadForm.category].map(genre => {
-                        return <MenuItem key={genre} value={genre}>{genre}</MenuItem>
-                    }): <MenuItem key={'default'} value={'default'}> </MenuItem>
-                    }
+                    {uploadForm.category ? (
+                        UPLOAD_SELECTOR_GENRE[uploadForm.category].map(genre => {
+                            return (
+                                <MenuItem key={genre} value={genre}>
+                                    {genre}
+                                </MenuItem>
+                            );
+                        })
+                    ) : (
+                        <MenuItem key={"default"} value={"default"}>
+                            {" "}
+                        </MenuItem>
+                    )}
                 </TextField>
                 <TextField
                     className={classes.dialogInput}
@@ -327,7 +359,7 @@ const FileUploadDialog = ({
                         </Typography>
                     ))
                 )}
-                {uploadFormErrors && (
+                {uploadFormErrors && uploadFormErrors.attachedFile && (
                     <Typography
                         classes={{ root: classes.uploadResultText }}
                         align="center"

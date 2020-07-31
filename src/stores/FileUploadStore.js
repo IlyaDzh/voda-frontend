@@ -247,7 +247,12 @@ export class FileUploadStore {
                     price: Number(this.uploadForm.price),
                     extension: getFileExtensionFromName(this.attachedFile.name),
                     additional: {
-                        fullDescription: this.uploadForm.info
+                        fullDescription: this.uploadForm.info,
+                        hashTags: [
+                            this.uploadForm.type,
+                            this.uploadForm.category,
+                            this.uploadForm.genre
+                        ]
                     }
                 }
             )
