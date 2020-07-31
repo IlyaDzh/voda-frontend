@@ -7,6 +7,7 @@ import {
     Typography,
     makeStyles
 } from "@material-ui/core";
+import { inject, observer } from 'mobx-react';
 
 const useStyles = makeStyles(theme => ({
     listItem: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const MenuItem = ({ to, activeRoutes, icon, text }) => {
+const MenuItem = ({ to, activeRoutes, icon, text, setMobileOpen }) => {
     const classes = useStyles();
     const { pathname } = useLocation();
 
@@ -37,6 +38,7 @@ const MenuItem = ({ to, activeRoutes, icon, text }) => {
         <ListItem
             classes={{ root: classes.listItem }}
             component={NavLink}
+            onClick={()=>setMobileOpen(false)}
             isActive={() =>
                 activeRoutes ? activeRoutes.includes(pathname) : to === pathname
             }
@@ -56,4 +58,7 @@ const MenuItem = ({ to, activeRoutes, icon, text }) => {
     );
 };
 
-export default MenuItem;
+const mapMoxToProps = ({ drawer }) => ({
+    setMobileOpen: drawer.setMobileOpen,
+});
+export default inject(mapMoxToProps)(observer(MenuItem));
