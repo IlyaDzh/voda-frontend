@@ -53,33 +53,29 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const BalanceOperationDialog = ({
-    openBalanceModal,
-    typeBalanceModal,
-    setOpenBalanceModal,
-    doDeposit,
+const WithdrawDialog = ({
+    openWithdrawModal,
+    setOpenWithdrawModal,
     doWithdraw,
     user
 }) => {
     const classes = useStyles();
 
     const handleClose = () => {
-        setOpenBalanceModal(false);
+        setOpenWithdrawModal(false);
     };
 
     return (
         <Dialog
             classes={{ paper: classes.dialogPaper }}
-            open={openBalanceModal}
+            open={openWithdrawModal}
             onClose={handleClose}
         >
             <DialogTitle
                 classes={{ root: classes.dialogTitleWrapper }}
                 disableTypography
             >
-                <Typography variant="h2">
-                    {typeBalanceModal === "deposit" ? "Deposit" : "Withdraw"}
-                </Typography>
+                <Typography variant="h2">Withdraw</Typography>
                 <IconButton
                     aria-label="close"
                     className={classes.closeButton}
@@ -109,37 +105,24 @@ const BalanceOperationDialog = ({
                     InputProps={{ disableUnderline: true }}
                     fullWidth
                 />
-                {typeBalanceModal === "deposit" ? (
-                    <Button
-                        className={classes.balanceOperationBtn}
-                        color="secondary"
-                        onClick={doDeposit}
-                        disableElevation
-                    >
-                        Deposit
-                    </Button>
-                ) : (
-                    <Button
-                        className={classes.balanceOperationBtn}
-                        onClick={doWithdraw}
-                        disableElevation
-                        error
-                    >
-                        Withdraw
-                    </Button>
-                )}
+                <Button
+                    className={classes.balanceOperationBtn}
+                    onClick={doWithdraw}
+                    disableElevation
+                    error
+                >
+                    Withdraw
+                </Button>
             </DialogActions>
         </Dialog>
     );
 };
 
 const mapMoxToProps = ({ userBalance, user }) => ({
-    openBalanceModal: userBalance.openBalanceModal,
-    typeBalanceModal: userBalance.typeBalanceModal,
-    setOpenBalanceModal: userBalance.setOpenBalanceModal,
-    doDeposit: userBalance.doDeposit,
+    openWithdrawModal: userBalance.openWithdrawModal,
+    setOpenWithdrawModal: userBalance.setOpenWithdrawModal,
     doWithdraw: userBalance.doWithdraw,
     user: user.user
 });
 
-export default inject(mapMoxToProps)(observer(BalanceOperationDialog));
+export default inject(mapMoxToProps)(observer(WithdrawDialog));

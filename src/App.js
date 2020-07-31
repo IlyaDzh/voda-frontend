@@ -12,7 +12,8 @@ import {
     FileUploadDialog,
     CardInfoDialog,
     TransactionInfoDialog,
-    BalanceOperationDialog
+    DepositDialog,
+    WithdrawDialog
 } from "@/components";
 
 const useStyles = makeStyles(theme => ({
@@ -68,7 +69,8 @@ const _App = ({ isAuth, pending, authWithForm, logoutWithForm, user }) => {
             <FileUploadDialog />
             <CardInfoDialog />
             <TransactionInfoDialog />
-            <BalanceOperationDialog />
+            <DepositDialog />
+            <WithdrawDialog />
         </div>
     );
 };

@@ -9,10 +9,10 @@ export class UserBalanceStore {
     pending = false;
 
     @observable
-    openBalanceModal = false;
+    openWithdrawModal = false;
 
     @observable
-    typeBalanceModal = undefined;
+    openDepositModal = false;
 
     userStore = undefined;
 
@@ -37,16 +37,13 @@ export class UserBalanceStore {
     };
 
     @action
-    setOpenBalanceModal = (openBalanceModal, typeBalanceModal) => {
-        this.openBalanceModal = openBalanceModal;
-        if (typeBalanceModal) {
-            this.typeBalanceModal = typeBalanceModal;
-        }
+    setOpenWithdrawModal = openWithdrawModal => {
+        this.openWithdrawModal = openWithdrawModal;
     };
 
     @action
-    doDeposit = () => {
-        console.log("deposit");
+    setOpenDepositModal = openDepositModal => {
+        this.openDepositModal = openDepositModal;
     };
 
     @action

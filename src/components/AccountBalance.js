@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const AccountBalance = ({ balance, setOpenBalanceModal }) => {
+const AccountBalance = ({ balance, setOpenDepositModal, setOpenWithdrawModal }) => {
     const classes = useStyles();
 
     return (
@@ -96,14 +96,14 @@ const AccountBalance = ({ balance, setOpenBalanceModal }) => {
                 <Button
                     className={classes.depositBtn}
                     color="secondary"
-                    onClick={() => setOpenBalanceModal(true, "deposit")}
+                    onClick={() => setOpenDepositModal(true)}
                     disableElevation
                 >
                     Deposit
                 </Button>
                 <Button
                     className={classes.withdrawBtn}
-                    onClick={() => setOpenBalanceModal(true, "withdraw")}
+                    onClick={() => setOpenWithdrawModal(true)}
                     disableElevation
                     error
                 >
@@ -116,7 +116,8 @@ const AccountBalance = ({ balance, setOpenBalanceModal }) => {
 
 const mapMoxToProps = ({ userBalance }) => ({
     balance: userBalance.balance,
-    setOpenBalanceModal: userBalance.setOpenBalanceModal
+    setOpenDepositModal: userBalance.setOpenDepositModal,
+    setOpenWithdrawModal: userBalance.setOpenWithdrawModal
 });
 
 export default inject(mapMoxToProps)(observer(AccountBalance));
