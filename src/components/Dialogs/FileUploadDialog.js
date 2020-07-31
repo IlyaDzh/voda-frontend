@@ -270,15 +270,16 @@ const FileUploadDialog = ({
                     className={classes.dialogInput}
                     label="Category"
                     value={uploadForm.category}
-                    onChange={event =>
+                    onChange={event =>{
                         setUploadFormValue("category", event.target.value)
-                    }
+                        setUploadFormValue("genre", "");
+                    }}
                     variant="outlined"
                     select
                     fullWidth
-                    disabled={!(uploadForm.type && uploadForm.type !== "Other")}
+                    disabled={!(uploadForm.type && UPLOAD_SELECTOR_CATEROGY[uploadForm.type])}
                 >
-                    {uploadForm.type && uploadForm.type !== "Other" ? (
+                    {uploadForm.type && UPLOAD_SELECTOR_CATEROGY[uploadForm.type] ? (
                         UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
                             return (
                                 <MenuItem key={category} value={category}>
@@ -302,9 +303,9 @@ const FileUploadDialog = ({
                     variant="outlined"
                     select
                     fullWidth
-                    disabled={!uploadForm.category}
+                    disabled={!(uploadForm.category && UPLOAD_SELECTOR_GENRE[uploadForm.category])}
                 >
-                    {uploadForm.category ? (
+                    {uploadForm.category && UPLOAD_SELECTOR_GENRE[uploadForm.category] ? (
                         UPLOAD_SELECTOR_GENRE[uploadForm.category].map(genre => {
                             return (
                                 <MenuItem key={genre} value={genre}>

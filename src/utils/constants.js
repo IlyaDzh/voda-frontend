@@ -27,10 +27,6 @@ export const UPLOAD_SELECTOR_CATEROGY = {
 export const UPLOAD_SELECTOR_GENRE = {
     'Music' : ['Popular','Classic','Ethnical', 'Soundtracks', 'Oldies'],
     'Audiobooks' : ['Fiction','Journalism','Tutorials', 'Manuals', 'Real story', 'Academic', 'Business', 'Other'],
-    'Other' : [''],
-    'Clips' : [''],
-    'Tutorials' : [''],
-    'Utilities' : [''],
     'Messages' : ['Man','Woman','Kid'],
     'Adult' : ['Homemade','Mature','Hentai', 'Hardcore', 'Gangbang', 'BDSM', 'Gay', 'Ebony','Other'],
     'Movies' : ['Short','Comedy','Horror', 'Romance', 'Thriller', 'Crime', 'Fantasy', 'Historical','Cartoons','Other'],
