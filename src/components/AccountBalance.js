@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
         whiteSpace: "nowrap",
         [theme.breakpoints.down("sm")]: {
             fontSize: "16px",
-            marginBottom: "24px"
+            marginBottom: "16px"
         }
     },
     disabledField: {
