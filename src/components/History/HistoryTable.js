@@ -1,9 +1,17 @@
 import React, { useCallback, useEffect } from "react";
 import { inject, observer } from "mobx-react";
-import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
+import {
+    Grid,
+    Typography,
+    Paper,
+    Tooltip,
+    Hidden,
+    makeStyles
+} from "@material-ui/core";
 
 import { Button, Loader } from "@/components";
 import { formatDate } from "@/utils";
+import { DownloadIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
     tableHeader: {
@@ -11,30 +19,34 @@ const useStyles = makeStyles(theme => ({
         padding: "10px 16px",
         marginBottom: "4px",
         [theme.breakpoints.down("xs")]: {
+            wordBreak: "break-word",
             padding: "8px"
         },
         "& p": {
             fontSize: "16px",
             fontWeight: "bold",
-            width: "14%",
+            width: "15%",
             "&:first-child": {
-                width: "30%",
+                width: "23%",
                 [theme.breakpoints.down("sm")]: {
-                    width: "20%"
+                    width: "18%"
+                }
+            },
+            "&:nth-child(5)": {
+                width: "23%",
+                [theme.breakpoints.down("sm")]: {
+                    width: "18%"
                 }
             },
             "&:last-child": {
-                width: "30%",
-                [theme.breakpoints.down("sm")]: {
-                    width: "20%"
+                width: "10%",
+                [theme.breakpoints.down("xs")]: {
+                    width: "24px"
                 }
             },
             [theme.breakpoints.down("sm")]: {
-                width: "20%",
-                fontSize: "12px"
-            },
-            [theme.breakpoints.down("xs")]: {
-                width: "25%"
+                width: "18%",
+                fontSize: "13px"
             }
         }
     },
@@ -48,38 +60,47 @@ const useStyles = makeStyles(theme => ({
         },
         "& p": {
             fontSize: "12px",
-            width: "14%",
+            width: "15%",
             "&:first-child": {
+                width: "23%",
                 color: theme.palette.primary.main,
                 cursor: "pointer",
                 textDecoration: "underline",
-                width: "30%",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 [theme.breakpoints.down("sm")]: {
-                    width: "20%"
+                    width: "18%"
                 }
             },
-            "&:last-child": {
+            "&:nth-child(3)": {
+                wordBreak: "break-all"
+            },
+            "&:nth-child(5)": {
+                width: "23%",
                 color: theme.palette.primary.main,
                 cursor: "pointer",
                 textDecoration: "underline",
-                width: "30%",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 [theme.breakpoints.down("sm")]: {
-                    width: "20%"
+                    width: "18%"
                 }
             },
             [theme.breakpoints.down("sm")]: {
-                width: "20%",
-                fontSize: "10px"
-            },
-            [theme.breakpoints.down("xs")]: {
-                width: "25%"
+                width: "18%",
+                fontSize: "12px"
             }
+        }
+    },
+    tableItemDownload: {
+        width: "10%",
+        [theme.breakpoints.down("xs")]: {
+            width: "24px",
+            minWidth: "24px",
+            height: "24px",
+            padding: 0
         }
     },
     loadMoreBtn: {
@@ -117,6 +138,7 @@ const HistoryTable = ({
                     <Typography>Value</Typography>
                     <Typography>Uploaded</Typography>
                     <Typography>File ID</Typography>
+                    <Typography></Typography>
                 </div>
                 {historyItems.map(item => (
                     <Paper
@@ -135,6 +157,22 @@ const HistoryTable = ({
                         >
                             {item.file.id}
                         </Typography>
+                        <Tooltip title="Retrieve the file" arrow>
+                            <div>
+                                <Button
+                                    className={classes.tableItemDownload}
+                                    onClick={() => console.log("download")}
+                                    color="secondary"
+                                    size="small"
+                                    disableElevation
+                                >
+                                    <Hidden xsDown>Download</Hidden>
+                                    <Hidden smUp>
+                                        <DownloadIcon />
+                                    </Hidden>
+                                </Button>
+                            </div>
+                        </Tooltip>
                     </Paper>
                 ))}
                 {pending && <Loader mt={25} mb={25} />}

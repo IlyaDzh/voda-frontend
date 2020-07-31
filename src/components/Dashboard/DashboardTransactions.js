@@ -23,12 +23,18 @@ const useStyles = makeStyles(theme => ({
             "&:first-child": {
                 width: "55%",
                 [theme.breakpoints.down("sm")]: {
+                    width: "40%"
+                },
+                [theme.breakpoints.down("440")]: {
                     width: "25%"
                 }
             },
             [theme.breakpoints.down("sm")]: {
-                width: "25%",
-                fontSize: "12px"
+                width: "20%",
+                fontSize: "13px"
+            },
+            [theme.breakpoints.down("440")]: {
+                width: "25%"
             }
         }
     },
@@ -47,12 +53,18 @@ const useStyles = makeStyles(theme => ({
                 textOverflow: "ellipsis",
                 overflow: "hidden",
                 [theme.breakpoints.down("sm")]: {
+                    width: "40%"
+                },
+                [theme.breakpoints.down("440")]: {
                     width: "25%"
                 }
             },
             [theme.breakpoints.down("sm")]: {
-                width: "25%",
-                fontSize: "10px"
+                width: "20%",
+                fontSize: "12px"
+            },
+            [theme.breakpoints.down("440")]: {
+                width: "25%"
             }
         }
     },
