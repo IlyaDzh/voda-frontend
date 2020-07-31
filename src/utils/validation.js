@@ -76,7 +76,8 @@ export const validateYear = year => {
     }
 };
 
-export const validateDay = day => {
+export const validateDay = (year, month, day) => {
+    console.log(year, month, day);
     if (day === "") {
         return "Required";
     }

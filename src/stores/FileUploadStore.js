@@ -66,13 +66,39 @@ export class FileUploadStore {
         this.digitalGoodsStore = digitalGoodsStore;
 
         reaction(
-            () => this.uploadForm.day,
-            day => day && (this.uploadFormErrors.day = validateDay(day))
+            () => this.uploadForm.year,
+            year => {
+                if (year) {
+                    this.uploadFormErrors.year = validateYear(year);
+                    this.uploadFormErrors.day = validateDay(
+                        year,
+                        this.uploadForm.month,
+                        this.uploadForm.day
+                    );
+                }
+            }
         );
 
         reaction(
-            () => this.uploadForm.year,
-            year => year && (this.uploadFormErrors.year = validateYear(year))
+            () => this.uploadForm.month,
+            month =>
+                month &&
+                (this.uploadFormErrors.day = validateDay(
+                    this.uploadForm.year,
+                    month,
+                    this.uploadForm.day
+                ))
+        );
+
+        reaction(
+            () => this.uploadForm.day,
+            day =>
+                day &&
+                (this.uploadFormErrors.day = validateDay(
+                    this.uploadForm.year,
+                    this.uploadForm.month,
+                    day
+                ))
         );
 
         reaction(
@@ -146,8 +172,8 @@ export class FileUploadStore {
     @action
     isFormValid = () => {
         this.uploadFormErrors = {
-            day: validateDay(this.uploadForm.day),
             year: validateYear(this.uploadForm.year),
+            day: validateDay(this.uploadForm.day),
             name: validateFileName(this.uploadForm.name),
             price: validatePrice(this.uploadForm.price),
             info: validateInfo(this.uploadForm.info),
@@ -155,8 +181,8 @@ export class FileUploadStore {
         };
 
         return !Boolean(
-            this.uploadFormErrors.day ||
-                this.uploadFormErrors.year ||
+            this.uploadFormErrors.year ||
+                this.uploadFormErrors.day ||
                 this.uploadFormErrors.name ||
                 this.uploadFormErrors.price ||
                 this.uploadFormErrors.info ||

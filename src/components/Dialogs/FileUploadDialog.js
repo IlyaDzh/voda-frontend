@@ -130,7 +130,7 @@ const FileUploadDialog = ({
             classes={{ paper: classes.dialogPaper }}
             open={openFileUploadModal}
             onClose={handleClose}
-            scroll={"body"}
+            scroll="body"
         >
             <DialogTitle
                 classes={{ root: classes.dialogTitleWrapper }}
