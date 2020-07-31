@@ -122,6 +122,7 @@ const FileUploadDialog = ({
             classes={{ paper: classes.dialogPaper }}
             open={openFileUploadModal}
             onClose={handleClose}
+            scroll={'body'}
         >
             <DialogTitle
                 classes={{ root: classes.dialogTitleWrapper }}
@@ -237,9 +238,11 @@ const FileUploadDialog = ({
                     className={classes.dialogInput}
                     label="Type"
                     value={uploadForm.type}
-                    onChange={event =>
-                        setUploadFormValue("type", event.target.value)
-                    }
+                    onChange={event =>{
+                        setUploadFormValue("type", event.target.value);
+                        setUploadFormValue("category", undefined);
+                        setUploadFormValue("genre", undefined);
+                    }}
                     variant="outlined"
                     select
                     fullWidth
