@@ -5,7 +5,6 @@ import { MenuItem } from "@/components";
 import { SELLER_MENU_LIST, PURCHASER_MENU_LIST, UNREG_MENU_LIST } from "@/utils";
 import {
     ExploreFilesIcon,
-    KibanaDashboardsIcon,
     DataPurchasesIcon,
     ProfileIcon,
     DashboardIcon,
@@ -43,15 +42,6 @@ const MenuList = ({ typeUser }) => {
                                 }
                                 icon={<ExploreFilesIcon />}
                                 text="Explore files"
-                            />
-                        );
-                    case "kibana-dashboards":
-                        return (
-                            <MenuItem
-                                key={item}
-                                to="/kibana-dashboards"
-                                icon={<KibanaDashboardsIcon />}
-                                text="Kibana Dashboards"
                             />
                         );
                     case "data-purchases":

@@ -2,24 +2,22 @@ import React from "react";
 
 const HistoryIcon = () => (
     <svg
+        xmlns="http://www.w3.org/2000/svg"
         width="30"
         height="30"
-        viewBox="0 0 30 30"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 30 30"
     >
-        <rect width="30" height="30" rx="2" fill="#DEEFF7" />
+        <rect width="30" height="30" fill="#DEEFF7" rx="2"></rect>
         <path
-            opacity="0.9"
-            d="M15.5 5.5C12 5.5 8.9 7.4 7.3 10.3L5 8V14.5H11.5L8.7 11.7C10 9.2 12.5 7.5 15.5 7.5C19.6 7.5 23 10.9 23 15C23 19.1 19.6 22.5 15.5 22.5C12.2 22.5 9.5 20.4 8.4 17.5H6.3C7.4 21.5 11.1 24.5 15.5 24.5C20.8 24.5 25 20.2 25 15C25 9.8 20.7 5.5 15.5 5.5Z"
             fill="#1885EA"
-        />
+            d="M15.5 5.5c-3.5 0-6.6 1.9-8.2 4.8L5 8v6.5h6.5l-2.8-2.8c1.3-2.5 3.8-4.2 6.8-4.2 4.1 0 7.5 3.4 7.5 7.5s-3.4 7.5-7.5 7.5c-3.3 0-6-2.1-7.1-5H6.3c1.1 4 4.8 7 9.2 7 5.3 0 9.5-4.3 9.5-9.5s-4.3-9.5-9.5-9.5z"
+            opacity="0.9"
+        ></path>
         <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M15.5 10.5H14V15.5L18.3301 18L19.0801 16.701L15.5 14.634V10.5Z"
             fill="#17E3B2"
-        />
+            d="M15.5 10.5H14v5l4.33 2.5.75-1.299-3.58-2.067V10.5z"
+        ></path>
     </svg>
 );
 

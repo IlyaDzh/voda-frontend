@@ -1,11 +1,6 @@
-export const UNREG_MENU_LIST = ["explore-files", "kibana-dashboards"];
+export const UNREG_MENU_LIST = ["explore-files"];
 
-export const PURCHASER_MENU_LIST = [
-    "data-purchases",
-    "explore-files",
-    "profile",
-    "kibana-dashboards"
-];
+export const PURCHASER_MENU_LIST = ["data-purchases", "explore-files", "profile"];
 
 export const UPLOAD_SELECTOR_TYPE = [
     {name:'Audio'},

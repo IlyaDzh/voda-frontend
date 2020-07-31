@@ -52,6 +52,16 @@ const useStyles = makeStyles(theme => ({
             padding: "0 24px"
         }
     },
+    lendingLinks: {
+        padding: "16px 32px 0px",
+        "& a": {
+            display: "block",
+            color: "white",
+            marginBottom: "8px",
+            textDecoration: "none",
+            fontSize: "14px"
+        }
+    },
     bottomMenu: {
         padding: "32px"
     },
@@ -164,6 +174,44 @@ const Menu = ({
                             </Hidden>
                         </>
                     )}
+                </div>
+                <div className={classes.lendingLinks}>
+                    <Typography>
+                        <a
+                            href="https://voda.global/technology"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Technology
+                        </a>
+                    </Typography>
+                    <Typography>
+                        <a
+                            href="https://voda.global/documents"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Documents
+                        </a>
+                    </Typography>
+                    <Typography>
+                        <a
+                            href="https://voda.global/about"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            About
+                        </a>
+                    </Typography>
+                    <Typography>
+                        <a
+                            href="https://voda.global/contacts"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Contacts
+                        </a>
+                    </Typography>
                 </div>
             </div>
             <div className={classes.bottomMenu}>

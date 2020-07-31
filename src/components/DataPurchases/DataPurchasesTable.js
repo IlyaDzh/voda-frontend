@@ -1,7 +1,15 @@
 import React from "react";
-import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
+import {
+    Grid,
+    Typography,
+    Paper,
+    Tooltip,
+    Hidden,
+    makeStyles
+} from "@material-ui/core";
 
 import { Button } from "@/components";
+import { DownloadIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
     transactionsTitle: {
@@ -19,12 +27,21 @@ const useStyles = makeStyles(theme => ({
         "& p": {
             fontSize: "16px",
             fontWeight: "bold",
-            width: "15%",
+            width: "17%",
             "&:first-child": {
-                width: "25%"
+                width: "21%"
+            },
+            "&:last-child": {
+                width: "10%",
+                [theme.breakpoints.down("xs")]: {
+                    width: "24px"
+                }
             },
             [theme.breakpoints.down("sm")]: {
-                fontSize: "12px"
+                fontSize: "13px"
+            },
+            [theme.breakpoints.down("xs")]: {
+                width: "20%"
             }
         }
     },
@@ -37,22 +54,31 @@ const useStyles = makeStyles(theme => ({
         },
         "& p": {
             fontSize: "12px",
-            width: "15%",
+            width: "17%",
             textOverflow: "ellipsis",
             overflow: "hidden",
             "&:first-child": {
-                width: "25%"
+                width: "21%"
             },
             "&:nth-child(2)": {
                 overflow: "unset",
                 wordBreak: "break-word"
             },
-            "&:last-child": {
-                whiteSpace: "nowrap"
-            },
             [theme.breakpoints.down("sm")]: {
-                fontSize: "10px"
+                fontSize: "12px"
+            },
+            [theme.breakpoints.down("xs")]: {
+                width: "20%"
             }
+        }
+    },
+    tableItemDownload: {
+        width: "10%",
+        [theme.breakpoints.down("xs")]: {
+            width: "24px",
+            minWidth: "24px",
+            height: "24px",
+            padding: 0
         }
     },
     loadMoreBtn: {
@@ -160,12 +186,12 @@ const DataPurchasesTable = () => {
                     Data Purchases
                 </Typography>
                 <div className={classes.tableHeader}>
-                    <Typography>Data Owner (Wallet ID)</Typography>
+                    <Typography>Txn Hash</Typography>
                     <Typography>Sum</Typography>
                     <Typography>Date</Typography>
                     <Typography>Data Validator</Typography>
-                    <Typography>Txn Hash</Typography>
                     <Typography>File ID</Typography>
+                    <Typography></Typography>
                 </div>
                 {ROWS.map((item, i) => (
                     <Paper
@@ -173,12 +199,27 @@ const DataPurchasesTable = () => {
                         classes={{ root: classes.tableItem }}
                         elevation={3}
                     >
-                        <Typography>{item.owner}</Typography>
+                        <Typography>{item.txnId}</Typography>
                         <Typography>{item.sum}</Typography>
                         <Typography>{item.date}</Typography>
                         <Typography>{item.validator}</Typography>
-                        <Typography>{item.txnId}</Typography>
-                        <Typography>{item.fileId}</Typography>
+                        <Typography noWrap>{item.fileId}</Typography>
+                        <Tooltip title="Retrieve the file" arrow>
+                            <div>
+                                <Button
+                                    className={classes.tableItemDownload}
+                                    onClick={() => console.log("download")}
+                                    color="secondary"
+                                    size="small"
+                                    disableElevation
+                                >
+                                    <Hidden xsDown>Download</Hidden>
+                                    <Hidden smUp>
+                                        <DownloadIcon />
+                                    </Hidden>
+                                </Button>
+                            </div>
+                        </Tooltip>
                     </Paper>
                 ))}
             </Grid>
