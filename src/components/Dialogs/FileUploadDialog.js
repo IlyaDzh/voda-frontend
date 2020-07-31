@@ -83,7 +83,10 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "unset"
     },
     dialogActionsButtons: {
-        display: "flex"
+        display: "flex",
+        [theme.breakpoints.down("xs")]: {
+            display: "block"
+        }
     },
     uploadResultText: {
         marginBottom: "15px"
@@ -99,10 +102,9 @@ const useStyles = makeStyles(theme => ({
             0px 1px 5px 0px rgba(0,0,0,0.12)
         `,
         [theme.breakpoints.down("xs")]: {
-            boxShadow: "unset"
-        },
-        [theme.breakpoints.down("360")]: {
-            marginRight: "8px"
+            boxShadow: "unset",
+            marginRight: 0,
+            marginBottom: "8px"
         }
     }
 }));
@@ -114,6 +116,7 @@ const FileUploadDialog = ({
     uploadFormErrors,
     submissionResult,
     attachedFile,
+    maxDate,
     pending,
     setUploadFormValue,
     setAttachedFile,
@@ -203,7 +206,12 @@ const FileUploadDialog = ({
                             placeholder="Day"
                             variant="outlined"
                             type="number"
-                            InputProps={{ inputProps: { min: 1, max: 31 } }}
+                            InputProps={{
+                                inputProps: {
+                                    min: 1,
+                                    max: maxDate
+                                }
+                            }}
                             value={uploadForm.day}
                             onChange={event =>
                                 setUploadFormValue("day", event.target.value)
@@ -255,6 +263,8 @@ const FileUploadDialog = ({
                         setUploadFormValue("genre", "");
                     }}
                     variant="outlined"
+                    error={Boolean(uploadFormErrors.type)}
+                    helperText={uploadFormErrors.type}
                     select
                     fullWidth
                 >
@@ -270,14 +280,19 @@ const FileUploadDialog = ({
                     className={classes.dialogInput}
                     label="Category"
                     value={uploadForm.category}
-                    onChange={event =>{
-                        setUploadFormValue("category", event.target.value)
+                    onChange={event => {
+                        setUploadFormValue("category", event.target.value);
                         setUploadFormValue("genre", "");
                     }}
                     variant="outlined"
+                    disabled={
+                        !(
+                            uploadForm.type &&
+                            UPLOAD_SELECTOR_CATEROGY[uploadForm.type]
+                        )
+                    }
                     select
                     fullWidth
-                    disabled={!(uploadForm.type && UPLOAD_SELECTOR_CATEROGY[uploadForm.type])}
                 >
                     {uploadForm.type && UPLOAD_SELECTOR_CATEROGY[uploadForm.type] ? (
                         UPLOAD_SELECTOR_CATEROGY[uploadForm.type].map(category => {
@@ -301,11 +316,17 @@ const FileUploadDialog = ({
                         setUploadFormValue("genre", event.target.value)
                     }
                     variant="outlined"
+                    disabled={
+                        !(
+                            uploadForm.category &&
+                            UPLOAD_SELECTOR_GENRE[uploadForm.category]
+                        )
+                    }
                     select
                     fullWidth
-                    disabled={!(uploadForm.category && UPLOAD_SELECTOR_GENRE[uploadForm.category])}
                 >
-                    {uploadForm.category && UPLOAD_SELECTOR_GENRE[uploadForm.category] ? (
+                    {uploadForm.category &&
+                    UPLOAD_SELECTOR_GENRE[uploadForm.category] ? (
                         UPLOAD_SELECTOR_GENRE[uploadForm.category].map(genre => {
                             return (
                                 <MenuItem key={genre} value={genre}>
@@ -442,6 +463,7 @@ const mapMoxToProps = ({ fileUpload }) => ({
     uploadFormErrors: fileUpload.uploadFormErrors,
     submissionResult: fileUpload.submissionResult,
     attachedFile: fileUpload.attachedFile,
+    maxDate: fileUpload.maxDate,
     pending: fileUpload.pending,
     setUploadFormValue: fileUpload.setUploadFormValue,
     setAttachedFile: fileUpload.setAttachedFile,

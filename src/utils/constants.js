@@ -19,8 +19,8 @@ export const UPLOAD_SELECTOR_TYPE = [
 export const UPLOAD_SELECTOR_CATEROGY = {
     'Audio': ['Music', 'Audiobooks', 'Messages', 'Other'],
     'Video': ['Adult', 'Movies', 'TV series', 'Clips', 'Tutorials', 'Other'],
-    'Document': ['Books', 'Journals', 'Coupons', 'Articles', 'Sources'],
-    'Picture': ['Photos', 'Drawings', 'Templates'],
+    'Document': ['Books', 'Journals', 'Coupons', 'Articles', 'Sources', 'Other'],
+    'Picture': ['Photos', 'Drawings', 'Templates', 'Other'],
     'Application': ['Games', 'Utilities', 'Other'],
 };
 

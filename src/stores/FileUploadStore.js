@@ -1,5 +1,5 @@
 import { observable, action, reaction } from "mobx";
-import { getYear, getMonth, getDate } from "date-fns";
+import { getYear, getMonth, getDate, getDaysInMonth } from "date-fns";
 
 import { axiosInstance } from "@/api/axios-instance";
 import {
@@ -7,6 +7,7 @@ import {
     validateDay,
     validateFileName,
     validatePrice,
+    validateSelect,
     validateInfo,
     validateAttachedFile,
     convertToBase64,
@@ -29,6 +30,10 @@ const INITIAL_UPLOAD_FORM = {
     genre: "",
     info: ""
 };
+
+const INITIAL_MAX_DATE = getDaysInMonth(
+    new Date(getYear(new Date()), getMonth(new Date()) + 1)
+);
 
 const INITIAL_UPLOAD_FORM_ERRORS = {
     year: undefined,
@@ -53,6 +58,9 @@ export class FileUploadStore {
     attachedFile = undefined;
 
     @observable
+    maxDate = INITIAL_MAX_DATE;
+
+    @observable
     submissionResult = undefined;
 
     @observable
@@ -69,6 +77,7 @@ export class FileUploadStore {
             () => this.uploadForm.year,
             year => {
                 if (year) {
+                    this.setMaxDate();
                     this.uploadFormErrors.year = validateYear(year);
                     this.uploadFormErrors.day = validateDay(
                         year,
@@ -81,13 +90,16 @@ export class FileUploadStore {
 
         reaction(
             () => this.uploadForm.month,
-            month =>
-                month &&
-                (this.uploadFormErrors.day = validateDay(
-                    this.uploadForm.year,
-                    month,
-                    this.uploadForm.day
-                ))
+            month => {
+                if (month) {
+                    this.setMaxDate();
+                    this.uploadFormErrors.day = validateDay(
+                        this.uploadForm.year,
+                        month,
+                        this.uploadForm.day
+                    );
+                }
+            }
         );
 
         reaction(
@@ -114,6 +126,11 @@ export class FileUploadStore {
         reaction(
             () => this.uploadForm.info,
             info => info && (this.uploadFormErrors.info = validateInfo(info))
+        );
+
+        reaction(
+            () => this.uploadForm.type,
+            type => type && (this.uploadFormErrors.type = validateSelect(type))
         );
     }
 
@@ -173,10 +190,15 @@ export class FileUploadStore {
     isFormValid = () => {
         this.uploadFormErrors = {
             year: validateYear(this.uploadForm.year),
-            day: validateDay(this.uploadForm.day),
+            day: validateDay(
+                this.uploadForm.year,
+                this.uploadForm.month,
+                this.uploadForm.day
+            ),
             name: validateFileName(this.uploadForm.name),
             price: validatePrice(this.uploadForm.price),
             info: validateInfo(this.uploadForm.info),
+            type: validateSelect(this.uploadForm.type),
             attachedFile: validateAttachedFile(this.attachedFile)
         };
 
@@ -186,6 +208,7 @@ export class FileUploadStore {
                 this.uploadFormErrors.name ||
                 this.uploadFormErrors.price ||
                 this.uploadFormErrors.info ||
+                this.uploadFormErrors.type ||
                 this.uploadFormErrors.attachedFile
         );
     };
@@ -202,6 +225,13 @@ export class FileUploadStore {
     };
 
     @action
+    setMaxDate = () => {
+        this.maxDate = getDaysInMonth(
+            new Date(+this.uploadForm.year, +this.uploadForm.month - 1)
+        );
+    };
+
+    @action
     setOpenFileUploadModal = openFileUploadModal => {
         this.openFileUploadModal = openFileUploadModal;
         if (!openFileUploadModal) {
@@ -213,6 +243,7 @@ export class FileUploadStore {
     resetUploadForm = () => {
         this.uploadForm = INITIAL_UPLOAD_FORM;
         this.uploadFormErrors = INITIAL_UPLOAD_FORM_ERRORS;
+        this.maxDate = INITIAL_MAX_DATE;
         this.attachedFile = undefined;
     };
 

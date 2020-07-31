@@ -1,4 +1,4 @@
-import { getYear, getDate } from "date-fns";
+import { getYear, getDaysInMonth } from "date-fns";
 import { isStringEmpty } from "@/utils";
 
 const WALLET_REGEXP = /^[a-zA-Z0-9\u3130-\u318F\uAC00-\uD7AF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\uF900-\uFAFF\u2F800-\u2FA1F_]+$/;
@@ -77,12 +77,17 @@ export const validateYear = year => {
 };
 
 export const validateDay = (year, month, day) => {
-    console.log(year, month, day);
     if (day === "") {
         return "Required";
     }
 
-    if (day <= 0 || day > 31) {
+    if (day <= 0 || day > getDaysInMonth(new Date(+year, +month - 1))) {
         return "Incorrect";
+    }
+};
+
+export const validateSelect = select => {
+    if (isStringEmpty(select)) {
+        return "Can't be empty";
     }
 };
