@@ -108,11 +108,11 @@ const DepositDialog = ({ openDepositModal, setOpenDepositModal, user }) => {
                             classes={{ root: classes.disabledFieldAddress }}
                             color="textSecondary"
                         >
-                            {user && user.address}
+                            {user && user.ethereumAddress}
                         </Typography>
                     </div>
                     <CopyToClipboard
-                        text={user && user.address}
+                        text={user && user.ethereumAddress}
                         onCopy={() => setCopied(true)}
                     >
                         <Button

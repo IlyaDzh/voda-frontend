@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const _App = ({ isAuth, pending, authWithForm, logoutWithForm, user }) => {
+const _App = ({ isAuth, userType, pending, authWithForm, logoutWithForm }) => {
     const classes = useStyles();
 
     return (
@@ -51,7 +51,7 @@ const _App = ({ isAuth, pending, authWithForm, logoutWithForm, user }) => {
                 <div className={classes.toolbar} />
                 {!pending ? (
                     isAuth ? (
-                        user.type === "purchaser" ? (
+                        userType === "purchaser" ? (
                             <PurchaserRoutes redirect={authWithForm} />
                         ) : (
                             <SellerRoutes redirect={authWithForm} />
@@ -77,10 +77,10 @@ const _App = ({ isAuth, pending, authWithForm, logoutWithForm, user }) => {
 
 const mapMoxToProps = ({ user }) => ({
     isAuth: user.isAuth,
+    userType: user.userType,
     pending: user.pending,
     authWithForm: user.authWithForm,
-    logoutWithForm: user.logoutWithForm,
-    user: user.user
+    logoutWithForm: user.logoutWithForm
 });
 
 export const App = inject(mapMoxToProps)(observer(_App));

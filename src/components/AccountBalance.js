@@ -75,7 +75,12 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const AccountBalance = ({ balance, setOpenDepositModal, setOpenWithdrawModal }) => {
+const AccountBalance = ({
+    balance,
+    pending,
+    setOpenDepositModal,
+    setOpenWithdrawModal
+}) => {
     const classes = useStyles();
 
     return (
@@ -85,7 +90,7 @@ const AccountBalance = ({ balance, setOpenDepositModal, setOpenWithdrawModal }) 
                     Account Balance
                 </Typography>
                 <div className={classes.disabledField}>
-                    {balance ? (
+                    {!pending ? (
                         <Typography>{balance}</Typography>
                     ) : (
                         <Loader size={20} />
@@ -116,6 +121,7 @@ const AccountBalance = ({ balance, setOpenDepositModal, setOpenWithdrawModal }) 
 
 const mapMoxToProps = ({ userBalance }) => ({
     balance: userBalance.balance,
+    pending: userBalance.pending,
     setOpenDepositModal: userBalance.setOpenDepositModal,
     setOpenWithdrawModal: userBalance.setOpenWithdrawModal
 });

@@ -89,7 +89,7 @@ const WithdrawDialog = ({
                     You can deposit <b>22000</b> max from your registered wallet
                     <Typography>
                         <b style={{ wordBreak: "break-all" }}>
-                            {user && user.address}
+                            {user && user.ethereumAddress}
                         </b>
                     </Typography>
                 </Typography>

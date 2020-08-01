@@ -78,6 +78,7 @@ const useStyles = makeStyles(theme => ({
 
 const Menu = ({
     isAuth,
+    userType,
     user,
     setOpenLoginModal,
     setOpenRegisterModal,
@@ -106,12 +107,12 @@ const Menu = ({
                 </Hidden>
                 <div className={classes.userTypeWrapper}>
                     <Typography classes={{ root: classes.userType }} variant="h3">
-                        {user && user.type === "seller"
+                        {isAuth && userType === "seller"
                             ? "Data validator client"
                             : "Data mart client"}
                     </Typography>
                 </div>
-                <MenuList typeUser={user && user.type} />
+                <MenuList typeUser={userType} />
                 <div className={classes.entryActions}>
                     {!isAuth ? (
                         <>
@@ -260,7 +261,7 @@ const Menu = ({
 
 const mapMoxToProps = ({ user, login, register, drawer }) => ({
     isAuth: user.isAuth,
-    user: user.user,
+    userType: user.userType,
     setOpenLoginModal: login.setOpenLoginModal,
     setOpenRegisterModal: register.setOpenRegisterModal,
     doLogout: login.doLogout,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { inject, observer } from "mobx-react";
 import {
     Dialog,
@@ -15,7 +15,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button, TextField, ReCaptcha } from "@/components";
+import { Button, TextField, ReCaptcha, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -66,6 +66,10 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: "24px",
         paddingBottom: "54px"
     },
+    submissionErrorTitle: {
+        color: theme.palette.error.main,
+        marginBottom: "10px"
+    },
     dialogRegisterButton: {
         marginBottom: "16px"
     },
@@ -81,12 +85,13 @@ const RegisterDialog = ({
     setOpenLoginModal,
     registerForm,
     registerFormErrors,
+    registerSubmissionError,
+    pending,
     setRegisterFormValue,
     setCaptchaToken,
     doRegister
 }) => {
     const classes = useStyles();
-    const [radioValue, setRadioValue] = useState("purchaser");
 
     const handleClose = () => {
         setOpenRegisterModal(false);
@@ -97,8 +102,14 @@ const RegisterDialog = ({
         setOpenLoginModal(true);
     };
 
-    const handleChangeRadio = event => {
-        setRadioValue(event.target.value);
+    const getLabelFromSubmissionError = error => {
+        if (error.response) {
+            if (error.response.status === 409) {
+                return "Lambda wallet is already in use";
+            }
+            return `Unknown error occurred when tried to log in. Server responded with ${error.response.status} status`;
+        }
+        return "No response from server";
     };
 
     return (
@@ -125,10 +136,12 @@ const RegisterDialog = ({
             <DialogContent classes={{ root: classes.dialogContent }}>
                 <RadioGroup
                     classes={{ root: classes.dialogRadioGroup }}
-                    aria-label="gender"
-                    name="gender"
-                    value={radioValue}
-                    onChange={handleChangeRadio}
+                    aria-label="type"
+                    name="type"
+                    value={registerForm.type}
+                    onChange={event =>
+                        setRegisterFormValue("type", event.target.value)
+                    }
                     row
                 >
                     <FormControlLabel
@@ -205,12 +218,23 @@ const RegisterDialog = ({
                 <ReCaptcha onChange={setCaptchaToken} />
             </DialogContent>
             <DialogActions classes={{ root: classes.dialogActions }} disableSpacing>
+                {registerSubmissionError && (
+                    <Typography
+                        variant="body2"
+                        className={classes.submissionErrorTitle}
+                        align="center"
+                    >
+                        {getLabelFromSubmissionError(registerSubmissionError)}
+                    </Typography>
+                )}
+                {pending && <Loader mb={25} />}
                 <Hidden xsDown>
                     <Button
                         className={classes.dialogRegisterButton}
                         color="secondary"
                         size="large"
                         onClick={doRegister}
+                        disabled={pending}
                         fullWidth
                         autoFocus
                     >
@@ -222,6 +246,7 @@ const RegisterDialog = ({
                         className={classes.dialogRegisterButton}
                         color="secondary"
                         onClick={doRegister}
+                        disabled={pending}
                         disableElevation
                         fullWidth
                         autoFocus
@@ -246,6 +271,8 @@ const mapMoxToProps = ({ register, login }) => ({
     openRegisterModal: register.openRegisterModal,
     registerForm: register.registerForm,
     registerFormErrors: register.registerFormErrors,
+    registerSubmissionError: register.registerSubmissionError,
+    pending: register.pending,
     setRegisterFormValue: register.setRegisterFormValue,
     setCaptchaToken: register.setCaptchaToken,
     doRegister: register.doRegister,

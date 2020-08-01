@@ -1,8 +1,14 @@
 import { observable, action } from "mobx";
 
+import { axiosInstance } from "@/api/axios-instance";
+import { API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
+
 export class UserStore {
     @observable
     user = undefined;
+
+    @observable
+    userType = localStorage.getItem("userType");
 
     @observable
     pending = false;
@@ -19,16 +25,23 @@ export class UserStore {
     @action
     fetchUser = () => {
         this.pending = true;
-        setTimeout(() => {
-            this.user = {
-                address: "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312",
-                type:
-                    localStorage.getItem("accessToken") === "seller123"
-                        ? "seller"
-                        : "purchaser"
-            };
-            this.isAuth = true;
-            this.pending = false;
-        }, 500);
+
+        const url =
+            this.userType === "purchaser"
+                ? `${API_BASE_MART}/api/v2/accounts/current`
+                : `${API_BASE_VALIDATOR}/api/v3/accounts/current`;
+
+        axiosInstance
+            .get(url)
+            .then(({ data }) => {
+                this.user = data;
+                this.isAuth = true;
+            })
+            .catch(() => {
+                this.userType = undefined;
+            })
+            .finally(() => {
+                this.pending = false;
+            });
     };
 }

@@ -7,12 +7,15 @@ import {
     DialogTitle,
     Typography,
     IconButton,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
     Link,
     Hidden,
     makeStyles
 } from "@material-ui/core";
 
-import { Button, TextField, ReCaptcha } from "@/components";
+import { Button, TextField, ReCaptcha, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -35,7 +38,18 @@ const useStyles = makeStyles(theme => ({
         textTransform: "uppercase"
     },
     dialogContent: {
-        paddingBottom: "32px"
+        paddingBottom: "32px",
+        overflow: "hidden"
+    },
+    dialogRadioGroup: {
+        marginBottom: "15px"
+    },
+    dialogRadioControl: {
+        width: "50%",
+        marginRight: 0,
+        "&:last-child": {
+            marginLeft: 0
+        }
     },
     dialogInput: {
         marginBottom: "16px",
@@ -68,6 +82,7 @@ const LoginDialog = ({
     setOpenRegisterModal,
     loginForm,
     loginSubmissionError,
+    pending,
     setLoginFormValue,
     setCaptchaToken,
     doLogin
@@ -115,6 +130,27 @@ const LoginDialog = ({
                 </IconButton>
             </DialogTitle>
             <DialogContent classes={{ root: classes.dialogContent }}>
+                <RadioGroup
+                    classes={{ root: classes.dialogRadioGroup }}
+                    aria-label="type"
+                    name="type"
+                    value={loginForm.type}
+                    onChange={event => setLoginFormValue("type", event.target.value)}
+                    row
+                >
+                    <FormControlLabel
+                        classes={{ root: classes.dialogRadioControl }}
+                        value="purchaser"
+                        control={<Radio color="primary" />}
+                        label="Purchaser"
+                    />
+                    <FormControlLabel
+                        classes={{ root: classes.dialogRadioControl }}
+                        value="seller"
+                        control={<Radio color="primary" />}
+                        label="Seller"
+                    />
+                </RadioGroup>
                 <div>
                     <TextField
                         className={classes.dialogInput}
@@ -150,12 +186,14 @@ const LoginDialog = ({
                         {getLabelFromSubmissionError(loginSubmissionError)}
                     </Typography>
                 )}
+                {pending && <Loader mb={25} />}
                 <Hidden xsDown>
                     <Button
                         className={classes.dialogLoginButton}
                         color="secondary"
                         size="large"
                         onClick={doLogin}
+                        disabled={pending}
                         fullWidth
                         autoFocus
                     >
@@ -167,6 +205,7 @@ const LoginDialog = ({
                         className={classes.dialogLoginButton}
                         color="secondary"
                         onClick={doLogin}
+                        disabled={pending}
                         disableElevation
                         fullWidth
                         autoFocus
@@ -191,6 +230,7 @@ const mapMoxToProps = ({ login, register }) => ({
     openLoginModal: login.openLoginModal,
     loginForm: login.loginForm,
     loginSubmissionError: login.loginSubmissionError,
+    pending: login.pending,
     setLoginFormValue: login.setLoginFormValue,
     setCaptchaToken: login.setCaptchaToken,
     doLogin: login.doLogin,

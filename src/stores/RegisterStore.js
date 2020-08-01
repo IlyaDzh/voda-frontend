@@ -1,31 +1,45 @@
 import { observable, action, reaction } from "mobx";
 
+import { axiosInstance } from "@/api/axios-instance";
+import { API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
+
 import {
     validateWallet,
     validatePassword,
     validatePasswordConfirmation
 } from "@/utils";
 
+const INITIAL_REGISTER_FORM = {
+    type: "purchaser",
+    wallet: "",
+    password: "",
+    repeat_password: ""
+};
+
+const INITIAL_REGISTER_FORM_ERRORS = {
+    wallet: undefined,
+    password: undefined,
+    repeat_password: undefined
+};
+
 export class RegisterStore {
     @observable
-    registerForm = {
-        wallet: "",
-        password: "",
-        repeat_password: ""
-    };
+    registerForm = INITIAL_REGISTER_FORM;
 
     @observable
-    registerFormErrors = {
-        wallet: undefined,
-        password: undefined,
-        repeat_password: undefined
-    };
+    registerFormErrors = INITIAL_REGISTER_FORM_ERRORS;
 
     @observable
     captchaToken = null;
 
     @observable
     openRegisterModal = false;
+
+    @observable
+    registerSubmissionError = undefined;
+
+    @observable
+    pending = false;
 
     userStore = undefined;
 
@@ -34,13 +48,19 @@ export class RegisterStore {
 
         reaction(
             () => this.registerForm.wallet,
-            wallet => (this.registerFormErrors.wallet = validateWallet(wallet))
+            wallet =>
+                wallet && (this.registerFormErrors.wallet = validateWallet(wallet))
         );
 
         reaction(
             () => this.registerForm.password,
             password =>
-                (this.registerFormErrors.password = validatePassword(password))
+                password &&
+                (this.registerFormErrors.password = validatePassword(password)) &
+                    (this.registerFormErrors.repeat_password = validatePasswordConfirmation(
+                        password,
+                        this.registerForm.repeat_password
+                    ))
         );
 
         reaction(
@@ -63,7 +83,31 @@ export class RegisterStore {
             return;
         }
 
-        console.log("register");
+        this.pending = true;
+
+        this.registerSubmissionError = undefined;
+
+        const url =
+            this.registerForm.type === "purchaser"
+                ? `${API_BASE_MART}/api/v2/accounts`
+                : `${API_BASE_VALIDATOR}/api/v3/accounts`;
+
+        axiosInstance
+            .post(url, {
+                lambdaWallet: this.registerForm.wallet,
+                password: this.registerForm.password,
+                passwordConfirmation: this.registerForm.repeat_password
+            })
+            .then(() => {
+                this.openRegisterModal = false;
+                // this.userStore.userType = this.registerForm.type;
+                // this.userStore.fetchUser();
+                this.resetRegisterForm();
+            })
+            .catch(error => {
+                this.registerSubmissionError = error;
+            })
+            .finally(() => (this.pending = false));
     };
 
     @action
@@ -79,6 +123,9 @@ export class RegisterStore {
     @action
     setOpenRegisterModal = openRegisterModal => {
         this.openRegisterModal = openRegisterModal;
+        if (!openRegisterModal) {
+            this.resetRegisterForm();
+        }
     };
 
     @action
@@ -95,5 +142,12 @@ export class RegisterStore {
         const { wallet, password, repeat_password } = this.registerFormErrors;
 
         return Boolean(!(wallet || password || repeat_password));
+    };
+
+    @action
+    resetRegisterForm = () => {
+        this.registerForm = INITIAL_REGISTER_FORM;
+        this.registerFormErrors = INITIAL_REGISTER_FORM_ERRORS;
+        this.registerSubmissionError = undefined;
     };
 }

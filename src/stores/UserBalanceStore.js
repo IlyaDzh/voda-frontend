@@ -1,5 +1,7 @@
 import { observable, action, reaction } from "mobx";
+
 import { axiosInstance } from "@/api/axios-instance";
+import { API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
 
 export class UserBalanceStore {
     @observable
@@ -28,8 +30,14 @@ export class UserBalanceStore {
     @action
     fetchUserBalance = () => {
         this.pending = true;
+
+        const url =
+            this.userStore.userType === "purchaser"
+                ? `${API_BASE_MART}/api/v2/accounts/current/balance`
+                : `${API_BASE_VALIDATOR}/api/v3/accounts/current/balance`;
+
         axiosInstance
-            .get(`api/v3/accounts/${this.userStore.user.address}/balance`)
+            .get(url)
             .then(({ data }) => {
                 this.balance = data.balance;
             })

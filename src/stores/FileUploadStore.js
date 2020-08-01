@@ -300,7 +300,7 @@ export class FileUploadStore {
                     name: this.uploadForm.name,
                     mimeType,
                     size: this.attachedFile.size,
-                    dataValidatorAddress: this.userStore.user.address,
+                    dataValidatorAddress: this.userStore.user.ethereumAddress,
                     price: Number(this.uploadForm.price),
                     extension: getFileExtensionFromName(this.attachedFile.name),
                     additional: {

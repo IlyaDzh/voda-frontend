@@ -24,7 +24,7 @@ export class SalesHistoryStore {
 
         axiosInstance
             .get(
-                `api/v3/transactions?address=${this.userStore.user.address}&page=${this.page}&pageSize=10&type=dataPurchase`
+                `api/v3/transactions?address=${this.userStore.user.ethereumAddress}&page=${this.page}&pageSize=10&type=dataPurchase`
             )
             .then(({ data }) => {
                 this.historyItems.push(...data);

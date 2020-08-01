@@ -24,7 +24,7 @@ export class DigitalGoodsStore {
 
         axiosInstance
             .get(
-                `api/v3/transactions?address=${this.userStore.user.address}&page=${this.page}&size=10&type=dataUpload`
+                `api/v3/transactions?address=${this.userStore.user.ethereumAddress}&page=${this.page}&size=10&type=dataUpload`
             )
             .then(({ data }) => {
                 this.uploadedItems.push(...data);

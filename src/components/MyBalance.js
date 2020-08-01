@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
         padding: "19px 24px",
         [theme.breakpoints.down("sm")]: {
             display: "block"
-        },
+        }
     },
     walletHeader: {
         display: "flex",
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     walletIcon: {
         marginRight: "16px",
         [theme.breakpoints.down("xs")]: {
-            display: "none",
+            display: "none"
         }
     },
     walletTitle: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
             fontSize: "22px"
         },
         [theme.breakpoints.down("sm")]: {
-            fontSize: "16px",
+            fontSize: "16px"
         }
     },
     walletBody: {
@@ -48,8 +48,8 @@ const useStyles = makeStyles(theme => ({
         },
         [theme.breakpoints.down("xs")]: {
             display: "flex",
-            width: '100%',
-            overflow: 'hidden',
+            width: "100%",
+            overflow: "hidden"
         }
     },
     disabledField: {
@@ -63,9 +63,9 @@ const useStyles = makeStyles(theme => ({
             },
             [theme.breakpoints.down("xs")]: {
                 fontSize: "16px",
-                wordBreak: 'normal',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
+                wordBreak: "normal",
+                overflow: "hidden",
+                textOverflow: "ellipsis"
             }
         },
         [theme.breakpoints.down("sm")]: {
@@ -82,8 +82,8 @@ const useStyles = makeStyles(theme => ({
         margin: "auto 0",
         [theme.breakpoints.down("xs")]: {
             padding: "11px 8px 7px",
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            overflow: "hidden",
+            textOverflow: "ellipsis"
         }
     },
     walletNumber: {
@@ -96,13 +96,13 @@ const useStyles = makeStyles(theme => ({
             fontSize: "16px",
             lineHeight: 1.5,
             wordBreak: "normal",
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            overflow: "hidden",
+            textOverflow: "ellipsis"
         }
     }
 }));
 
-const MyWallet = ({ address, balance }) => {
+const MyWallet = ({ user, balance, pending }) => {
     const classes = useStyles();
 
     return (
@@ -122,7 +122,7 @@ const MyWallet = ({ address, balance }) => {
             </div>
             <div className={classes.walletBody}>
                 <div className={classes.disabledField}>
-                    <Typography>{address}</Typography>
+                    <Typography>{user && user.ethereumAddress}</Typography>
                 </div>
                 <div className={classes.activeField}>
                     <Typography
@@ -130,7 +130,7 @@ const MyWallet = ({ address, balance }) => {
                         variant="h2"
                         color="textSecondary"
                     >
-                        {balance || <Loader size={20} />}
+                        {!pending ? balance : <Loader size={20} />}
                     </Typography>
                 </div>
             </div>
@@ -139,8 +139,9 @@ const MyWallet = ({ address, balance }) => {
 };
 
 const mapMoxToProps = ({ user, userBalance }) => ({
-    address: user.user.address,
-    balance: userBalance.balance
+    user: user.user,
+    balance: userBalance.balance,
+    pending: userBalance.pending
 });
 
 export default inject(mapMoxToProps)(observer(MyWallet));

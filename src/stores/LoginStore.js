@@ -1,11 +1,17 @@
 import { observable, action } from "mobx";
 
+import { axiosInstance } from "@/api/axios-instance";
+import { API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
+
+const INITIAL_LOGIN_FORM = {
+    type: "purchaser",
+    wallet: "",
+    password: ""
+};
+
 export class LoginStore {
     @observable
-    loginForm = {
-        wallet: "",
-        password: ""
-    };
+    loginForm = INITIAL_LOGIN_FORM;
 
     @observable
     loginSubmissionError = undefined;
@@ -15,6 +21,9 @@ export class LoginStore {
 
     @observable
     openLoginModal = false;
+
+    @observable
+    pending = false;
 
     userStore = undefined;
 
@@ -28,52 +37,45 @@ export class LoginStore {
             return;
         }
 
+        this.pending = true;
+
         this.loginSubmissionError = undefined;
 
-        if (
-            this.loginForm.wallet === "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312" &&
-            this.loginForm.password === "seller123"
-        ) {
-            this.userStore.isAuth = true;
-            this.userStore.logoutWithForm = false;
-            this.userStore.authWithForm = true;
-            this.userStore.user = {
-                address: "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312",
-                type: "seller"
-            };
-            this.openLoginModal = false;
-            localStorage.setItem("accessToken", "seller123");
-            this.resetLoginForm();
-        } else if (
-            this.loginForm.wallet === "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312" &&
-            this.loginForm.password === "purchaser123"
-        ) {
-            this.userStore.isAuth = true;
-            this.userStore.logoutWithForm = false;
-            this.userStore.authWithForm = true;
-            this.userStore.user = {
-                address: "0xd99f1b5534E38b8CBf1ee7a33110cC6F665C8312",
-                type: "purchaser"
-            };
-            this.openLoginModal = false;
-            localStorage.setItem("accessToken", "purchaser123");
-            this.resetLoginForm();
-        } else {
-            this.loginSubmissionError = {
-                response: {
-                    status: 401
-                }
-            };
-        }
+        const url =
+            this.loginForm.type === "purchaser"
+                ? `${API_BASE_MART}/api/v2/auth/login`
+                : `${API_BASE_VALIDATOR}/api/v3/auth/login`;
+
+        axiosInstance
+            .post(url, {
+                username: this.loginForm.wallet,
+                password: this.loginForm.password
+            })
+            .then(({ data }) => {
+                localStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("userType", this.loginForm.type);
+                this.openLoginModal = false;
+                this.userStore.logoutWithForm = false;
+                this.userStore.authWithForm = true;
+                this.userStore.userType = this.loginForm.type;
+                this.userStore.fetchUser();
+                this.resetLoginForm();
+            })
+            .catch(error => {
+                this.loginSubmissionError = error;
+            })
+            .finally(() => (this.pending = false));
     };
 
     @action
     doLogout = () => {
-        this.userStore.isAuth = false;
         this.userStore.logoutWithForm = true;
         this.userStore.authWithForm = false;
         this.userStore.user = undefined;
+        this.userStore.userType = undefined;
+        this.userStore.isAuth = false;
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("userType");
     };
 
     @action
@@ -89,13 +91,14 @@ export class LoginStore {
     @action
     setOpenLoginModal = openLoginModal => {
         this.openLoginModal = openLoginModal;
+        if (!openLoginModal) {
+            this.resetLoginForm();
+        }
     };
 
     @action
     resetLoginForm = () => {
-        this.loginForm = {
-            wallet: "",
-            password: ""
-        };
+        this.loginForm = INITIAL_LOGIN_FORM;
+        this.loginSubmissionError = undefined;
     };
 }
