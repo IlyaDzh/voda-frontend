@@ -15,7 +15,11 @@ import { ArrowIcon } from "@/icons";
 const useStyles = makeStyles(theme => ({
     fileCard: {
         position: "relative",
-        padding: "24px"
+        padding: "24px",
+        height: "calc(100% - 48px)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
     },
     fileCardContent: {
         padding: 0
@@ -54,32 +58,33 @@ const FileCard = ({ card, buyFile, openDetails }) => {
                         <ArrowIcon />
                     </IconButton>
                     <Typography className={classes.fileCardTitle} variant="h2">
-                        {card.file.fileMetadata.title}
+                        {card.name}
                     </Typography>
                     <div className={classes.fileCardInfo}>
                         <Typography variant="subtitle1" color="textSecondary">
                             PRICE:{" "}
                             <Typography color="textSecondary" display="inline">
-                                {card.file.price} PROM
+                                {card.price || 0} PROM
                             </Typography>
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
                             MIME TYPE:{" "}
                             <Typography color="textSecondary" display="inline">
-                                {card.file.mimeType}
+                                {card.mimeType}
                             </Typography>
                         </Typography>
                         <Typography className={classes.infoHashtags}>
-                            {card.file.fileMetadata.hashtags.map(
-                                hashtag => `#${hashtag} `
-                            )}
+                            {card.metadata.hashTags &&
+                                card.metadata.hashTags
+                                    .filter(hashtag => hashtag)
+                                    .map(hashtag => `#${hashtag} `)}
                         </Typography>
                     </div>
                 </CardContent>
                 <CardActions className={classes.fileCardActions}>
                     <Button
                         color="secondary"
-                        onClick={() => buyFile(card.title)}
+                        onClick={() => buyFile(card.name)}
                         fullWidth
                         disableElevation
                     >

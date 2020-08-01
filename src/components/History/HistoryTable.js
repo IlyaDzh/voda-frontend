@@ -153,7 +153,7 @@ const HistoryTable = ({
                         <Typography>{item.sum}</Typography>
                         <Typography>{formatDate(item.file.createdAt)}</Typography>
                         <Typography
-                            onClick={() => setOpenGoodsInfoModal(true, item)}
+                            onClick={() => setOpenGoodsInfoModal(true, item.file)}
                         >
                             {item.file.id}
                         </Typography>

@@ -44,9 +44,12 @@ const useStyles = makeStyles(theme => ({
         }
     },
     entryActions: {
-        padding: "0 32px",
+        padding: "0 32px 16px",
         "& button:first-child": {
             marginBottom: "16px"
+        },
+        "& button:last-child": {
+            marginBottom: 0
         },
         [theme.breakpoints.down("xs")]: {
             padding: "0 24px"
@@ -262,9 +265,9 @@ const Menu = ({
 const mapMoxToProps = ({ user, login, register, drawer }) => ({
     isAuth: user.isAuth,
     userType: user.userType,
+    doLogout: user.doLogout,
     setOpenLoginModal: login.setOpenLoginModal,
     setOpenRegisterModal: register.setOpenRegisterModal,
-    doLogout: login.doLogout,
     mobileOpen: drawer.mobileOpen,
     setMobileOpen: drawer.setMobileOpen,
     toggleMobileOpen: drawer.toggleMobileOpen

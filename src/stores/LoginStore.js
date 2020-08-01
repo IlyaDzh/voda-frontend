@@ -68,17 +68,6 @@ export class LoginStore {
     };
 
     @action
-    doLogout = () => {
-        this.userStore.logoutWithForm = true;
-        this.userStore.authWithForm = false;
-        this.userStore.user = undefined;
-        this.userStore.userType = undefined;
-        this.userStore.isAuth = false;
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("userType");
-    };
-
-    @action
     setCaptchaToken = captchaToken => {
         this.captchaToken = captchaToken;
     };

@@ -1,4 +1,7 @@
-import { observable, action } from "mobx";
+import { observable, action, reaction } from "mobx";
+
+import { axiosInstance } from "@/api/axios-instance";
+import { debounce, API_BASE_MART } from "@/utils";
 
 export class FilesStore {
     @observable
@@ -7,155 +10,59 @@ export class FilesStore {
     @observable
     pending = false;
 
+    @observable
+    searchValue = undefined;
+
+    @observable
+    page = 0;
+
+    @observable
+    shouldResetResults = false;
+
+    constructor() {
+        reaction(
+            () => this.searchValue,
+            debounce(searchValue => {
+                this.shouldResetResults = true;
+                this.fetchExploreFiles(searchValue);
+            }, 350)
+        );
+    }
+
     @action
-    fetchExploreFiles = () => {
+    fetchExploreFiles = searchValue => {
+        if (this.shouldResetResults) {
+            this.exploreFiles = [];
+            this.page = 0;
+            this.shouldResetResults = false;
+        }
+
         this.pending = true;
 
-        setTimeout(() => {
-            this.exploreFiles.push(
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                },
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                },
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                },
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                },
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                },
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                },
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                },
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                },
-                {
-                    file: {
-                        createdAt: "2020-06-24T18:27:37.061Z",
-                        fileMetadata: {
-                            title: "File #1",
-                            briefDescription: "Test file",
-                            hashtags: ["Lorem", "Ipsum", "Dolor", "Consectetur"]
-                        },
-                        id: "32ddf9ab-f142-4ff6-9722-3f51588ceed5",
-                        keepUntil: "2020-07-24T17:49:41.176Z",
-                        mimeType: "image/png",
-                        price: 1
-                    },
-                    sum: 0
-                }
-            );
-            this.pending = false;
-        }, 500);
+        let url;
+        if (searchValue) {
+            url = `${API_BASE_MART}/api/v2/files/search?query=${searchValue}&page=${this.page}&size=9`;
+        } else {
+            url = `${API_BASE_MART}/api/v2/files/search?page=${this.page}&size=9`;
+        }
+
+        axiosInstance
+            .get(url)
+            .then(({ data }) => {
+                this.exploreFiles.push(...data);
+                this.page += 1;
+            })
+            .finally(() => (this.pending = false));
     };
 
     @action
     buyFile = title => {
         console.log(`file ${title} was purchased`);
+    };
+
+    @action
+    setSearchText = searchValue => {
+        this.searchValue = searchValue;
     };
 
     @action

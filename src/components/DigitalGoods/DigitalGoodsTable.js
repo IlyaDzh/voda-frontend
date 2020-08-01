@@ -130,7 +130,7 @@ const DigitalGoodsTable = ({
                             <Button
                                 className={classes.tableItemDetails}
                                 onClick={() =>
-                                    setOpenGoodsInfoModal(true, item, true)
+                                    setOpenGoodsInfoModal(true, item.file, true)
                                 }
                                 color="secondary"
                                 size="small"

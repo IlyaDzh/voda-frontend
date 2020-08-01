@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SearchInput = ({ isMobile }) => {
+const SearchInput = ({ value, handleChange, isMobile }) => {
     const classes = useStyles();
 
     return (
@@ -33,6 +33,8 @@ const SearchInput = ({ isMobile }) => {
             placeholder="Search"
             variant="outlined"
             size={isMobile ? "small" : undefined}
+            value={value}
+            onChange={handleChange}
             InputProps={{
                 startAdornment: (
                     <InputAdornment

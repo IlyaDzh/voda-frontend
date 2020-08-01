@@ -67,7 +67,7 @@ const CardInfoDialog = ({
                 disableTypography
             >
                 <Typography classes={{ root: classes.dialogTitle }} variant="h2">
-                    {currentGoodsInfo && currentGoodsInfo.file.id}
+                    {currentGoodsInfo && currentGoodsInfo.id}
                 </Typography>
                 <IconButton
                     aria-label="close"
@@ -81,27 +81,26 @@ const CardInfoDialog = ({
                 <Typography variant="subtitle1" color="textSecondary">
                     AVAILABLE UNTIL:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentGoodsInfo &&
-                            formatDate(currentGoodsInfo.file.keepUntil)}
+                        {currentGoodsInfo && formatDate(currentGoodsInfo.keepUntil)}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     PRICE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentGoodsInfo && currentGoodsInfo.file.price}
+                        {currentGoodsInfo && (currentGoodsInfo.price || 0)}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     TYPE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentGoodsInfo && currentGoodsInfo.file.mimeType}
+                        {currentGoodsInfo && currentGoodsInfo.mimeType}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     INFORMATION:{" "}
                     <Typography color="textSecondary" display="inline">
                         {currentGoodsInfo &&
-                            currentGoodsInfo.file.fileMetadata.fullDescription}
+                            (currentGoodsInfo.metadata.fullDescription || "None")}
                     </Typography>
                 </Typography>
             </DialogContent>

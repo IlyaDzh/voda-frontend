@@ -44,4 +44,15 @@ export class UserStore {
                 this.pending = false;
             });
     };
+
+    @action
+    doLogout = () => {
+        this.logoutWithForm = true;
+        this.authWithForm = false;
+        this.user = undefined;
+        this.userType = undefined;
+        this.isAuth = false;
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userType");
+    };
 }

@@ -1,42 +1,74 @@
 import React from "react";
-import { Grid, makeStyles } from "@material-ui/core";
+import { inject, observer } from "mobx-react";
+import { Grid, Hidden, makeStyles } from "@material-ui/core";
 
-import { SearchInput, FilterItem } from "@/components";
+import { Button, SearchInput, FilterItem } from "@/components";
+import { FilterIcon } from "@/icons";
 
 const useStyles = makeStyles(() => ({
-    searchWrapper: {},
-    searchInputWrapper: {
-        marginBottom: "32px"
+    searchMobileWrapper: {
+        display: "flex"
     },
-    searchFiltersWrapper: {
-        marginBottom: "32px"
+    filterMobileBtn: {
+        minWidth: "48px",
+        marginRight: "16px"
     }
 }));
 
-const SearchBar = () => {
+const SearchBar = ({ searchValue, setSearchText }) => {
     const classes = useStyles();
 
     return (
-        <div className={classes.searchWrapper}>
-            <div className={classes.searchInputWrapper}>
-                <SearchInput />
-            </div>
-            <Grid className={classes.searchFiltersWrapper} container spacing={1}>
-                {[
-                    "Filter by name",
-                    "Filter by price",
-                    "Filter by date",
-                    "Filter by type",
-                    "Filter by category",
-                    "Filter by genre"
-                ].map((filter, i) => (
-                    <Grid key={i} item xs={4} sm={4} md={4} lg={2}>
-                        <FilterItem filter={filter} />
+        <>
+            <Hidden smDown>
+                <Grid item xs={12}>
+                    <SearchInput
+                        value={searchValue || ""}
+                        handleChange={e => setSearchText(e.target.value)}
+                    />
+                </Grid>
+            </Hidden>
+            <Grid item xs={12}>
+                <Hidden smDown>
+                    <Grid container spacing={1}>
+                        {[
+                            "Filter by name",
+                            "Filter by price",
+                            "Filter by date",
+                            "Filter by type",
+                            "Filter by category",
+                            "Filter by genre"
+                        ].map((filter, i) => (
+                            <Grid key={i} item xs={4} sm={4} md={4} lg={2}>
+                                <FilterItem filter={filter} />
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
+                </Hidden>
+                <Hidden mdUp>
+                    <div className={classes.searchMobileWrapper}>
+                        <Button
+                            className={classes.filterMobileBtn}
+                            color="secondary"
+                            disableElevation
+                        >
+                            <FilterIcon />
+                        </Button>
+                        <SearchInput
+                            value={searchValue || ""}
+                            handleChange={e => setSearchText(e.target.value)}
+                            isMobile
+                        />
+                    </div>
+                </Hidden>
             </Grid>
-        </div>
+        </>
     );
 };
 
-export default SearchBar;
+const mapMoxToProps = ({ files }) => ({
+    searchValue: files.searchValue,
+    setSearchText: files.setSearchText
+});
+
+export default inject(mapMoxToProps)(observer(SearchBar));
