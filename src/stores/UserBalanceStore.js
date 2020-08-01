@@ -11,6 +11,9 @@ export class UserBalanceStore {
     pending = false;
 
     @observable
+    withdrawNumber = undefined;
+
+    @observable
     openWithdrawModal = false;
 
     @observable
@@ -45,8 +48,16 @@ export class UserBalanceStore {
     };
 
     @action
+    setWithdrawNumber = withdrawNumber => {
+        this.withdrawNumber = withdrawNumber;
+    };
+
+    @action
     setOpenWithdrawModal = openWithdrawModal => {
         this.openWithdrawModal = openWithdrawModal;
+        if (!openWithdrawModal) {
+            this.setWithdrawNumber("");
+        }
     };
 
     @action
@@ -56,7 +67,18 @@ export class UserBalanceStore {
 
     @action
     doWithdraw = () => {
-        console.log("withdraw");
+        const url =
+            this.userStore.userType === "purchaser"
+                ? `${API_BASE_MART}/api/v2/withdraw`
+                : `${API_BASE_VALIDATOR}/api/v3/withdraw`;
+
+        axiosInstance
+            .post(url, {
+                amount: this.withdrawNumber
+            })
+            .then(data => {
+                console.log(data);
+            });
     };
 
     @action

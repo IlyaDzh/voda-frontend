@@ -55,7 +55,9 @@ const useStyles = makeStyles(theme => ({
 
 const WithdrawDialog = ({
     openWithdrawModal,
+    withdrawNumber,
     setOpenWithdrawModal,
+    setWithdrawNumber,
     doWithdraw,
     user
 }) => {
@@ -103,6 +105,8 @@ const WithdrawDialog = ({
                     variant="filled"
                     size="small"
                     InputProps={{ disableUnderline: true }}
+                    value={withdrawNumber || ""}
+                    onChange={e => setWithdrawNumber(e.target.value)}
                     fullWidth
                 />
                 <Button
@@ -120,7 +124,9 @@ const WithdrawDialog = ({
 
 const mapMoxToProps = ({ userBalance, user }) => ({
     openWithdrawModal: userBalance.openWithdrawModal,
+    withdrawNumber: userBalance.withdrawNumber,
     setOpenWithdrawModal: userBalance.setOpenWithdrawModal,
+    setWithdrawNumber: userBalance.setWithdrawNumber,
     doWithdraw: userBalance.doWithdraw,
     user: user.user
 });

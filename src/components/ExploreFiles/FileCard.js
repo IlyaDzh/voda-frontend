@@ -28,7 +28,9 @@ const useStyles = makeStyles(theme => ({
         padding: 0
     },
     fileCardTitle: {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        wordBreak: "break-word",
+        paddingRight: "25px"
     },
     fileCardInfo: {
         margin: "16px 0 24px"
@@ -63,7 +65,11 @@ const FileCard = ({ card, buyFile, openDetails }) => {
                     <div className={classes.fileCardInfo}>
                         <Typography variant="subtitle1" color="textSecondary">
                             PRICE:{" "}
-                            <Typography color="textSecondary" display="inline">
+                            <Typography
+                                color="textSecondary"
+                                display="inline"
+                                style={{ wordBreak: "break-word" }}
+                            >
                                 {card.price || 0} PROM
                             </Typography>
                         </Typography>

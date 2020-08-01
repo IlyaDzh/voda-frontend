@@ -14,7 +14,7 @@ export class FilesStore {
     searchValue = undefined;
 
     @observable
-    page = 0;
+    page = 1;
 
     @observable
     shouldResetResults = false;
@@ -22,26 +22,26 @@ export class FilesStore {
     constructor() {
         reaction(
             () => this.searchValue,
-            debounce(searchValue => {
+            debounce(() => {
                 this.shouldResetResults = true;
-                this.fetchExploreFiles(searchValue);
+                this.fetchExploreFiles();
             }, 350)
         );
     }
 
     @action
-    fetchExploreFiles = searchValue => {
+    fetchExploreFiles = () => {
         if (this.shouldResetResults) {
             this.exploreFiles = [];
-            this.page = 0;
+            this.page = 1;
             this.shouldResetResults = false;
         }
 
         this.pending = true;
-
+        
         let url;
-        if (searchValue) {
-            url = `${API_BASE_MART}/api/v2/files/search?query=${searchValue}&page=${this.page}&size=9`;
+        if (this.searchValue) {
+            url = `${API_BASE_MART}/api/v2/files/search?query=${this.searchValue}&page=${this.page}&size=9`;
         } else {
             url = `${API_BASE_MART}/api/v2/files/search?page=${this.page}&size=9`;
         }

@@ -98,10 +98,15 @@ export class RegisterStore {
                 password: this.registerForm.password,
                 passwordConfirmation: this.registerForm.repeat_password
             })
-            .then(() => {
+            .then(({ data: { accessToken, ...data } }) => {
+                localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("userType", this.registerForm.type);
                 this.openRegisterModal = false;
-                // this.userStore.userType = this.registerForm.type;
-                // this.userStore.fetchUser();
+                this.userStore.userType = this.registerForm.type;
+                this.userStore.user = data;
+                this.userStore.logoutWithForm = false;
+                this.userStore.authWithForm = true;
+                this.userStore.isAuth = true;
                 this.resetRegisterForm();
             })
             .catch(error => {
