@@ -39,6 +39,10 @@ export class UserStore {
             })
             .catch(() => {
                 this.userType = undefined;
+                this.logoutWithForm = true;
+                this.authWithForm = false;
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("userType");
             })
             .finally(() => {
                 this.pending = false;

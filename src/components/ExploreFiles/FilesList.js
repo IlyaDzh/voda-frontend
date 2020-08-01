@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { inject, observer } from "mobx-react";
-import { Grid, Hidden, makeStyles } from "@material-ui/core";
+import { Grid, Typography, Hidden, makeStyles } from "@material-ui/core";
 
 import { Button, FileCard, Loader } from "@/components";
 
@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 const FilesList = ({
     exploreFiles,
     pending,
+    nextPageIsExist,
     fetchExploreFiles,
     buyFile,
     resetFiles,
@@ -34,43 +35,52 @@ const FilesList = ({
 
     return (
         <>
-            {exploreFiles &&
-                exploreFiles.map((card, i) => (
-                    <FileCard
-                        key={i}
-                        card={card}
-                        buyFile={buyFile}
-                        openDetails={setOpenGoodsInfoModal}
-                    />
-                ))}
+            {exploreFiles.length
+                ? exploreFiles.map((card, i) => (
+                      <FileCard
+                          key={i}
+                          card={card}
+                          buyFile={buyFile}
+                          openDetails={setOpenGoodsInfoModal}
+                      />
+                  ))
+                : !pending && (
+                      <Grid item xs={12}>
+                          <Typography color="primary" variant="h1">
+                              Not Found
+                          </Typography>
+                      </Grid>
+                  )}
             <Grid item xs={12}>
                 {pending ? (
                     <Loader mt={25} mb={25} />
                 ) : (
-                    <>
-                        <Hidden smDown>
-                            <Button
-                                className={classes.loadMoreBtn}
-                                size="large"
-                                color="secondary"
-                                onClick={fetchExploreFiles}
-                                fullWidth
-                            >
-                                Load more
-                            </Button>
-                        </Hidden>
-                        <Hidden mdUp>
-                            <Button
-                                className={classes.loadMoreBtn}
-                                color="secondary"
-                                onClick={fetchExploreFiles}
-                                disableElevation
-                                fullWidth
-                            >
-                                Load more
-                            </Button>
-                        </Hidden>
-                    </>
+                    nextPageIsExist() && (
+                        <>
+                            <Hidden smDown>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    size="large"
+                                    color="secondary"
+                                    onClick={fetchExploreFiles}
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                            <Hidden mdUp>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    color="secondary"
+                                    onClick={fetchExploreFiles}
+                                    disableElevation
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                        </>
+                    )
                 )}
             </Grid>
         </>
@@ -80,6 +90,7 @@ const FilesList = ({
 const mapMoxToProps = ({ files, infoModals }) => ({
     exploreFiles: files.exploreFiles,
     pending: files.pending,
+    nextPageIsExist: files.nextPageIsExist,
     fetchExploreFiles: files.fetchExploreFiles,
     buyFile: files.buyFile,
     resetFiles: files.resetFiles,

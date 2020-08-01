@@ -1,4 +1,4 @@
-import { observable, action, reaction } from "mobx";
+import { observable, get, action, reaction } from "mobx";
 
 import { axiosInstance } from "@/api/axios-instance";
 import { debounce, API_BASE_MART } from "@/utils";
@@ -19,6 +19,14 @@ export class FilesStore {
     @observable
     shouldResetResults = false;
 
+    @observable
+    countFiles = undefined;
+
+    @get
+    nextPageIsExist = () => {
+        return this.exploreFiles.length < this.countFiles;
+    };
+
     constructor() {
         reaction(
             () => this.searchValue,
@@ -35,24 +43,46 @@ export class FilesStore {
             this.exploreFiles = [];
             this.page = 1;
             this.shouldResetResults = false;
+            this.countFiles = undefined;
         }
 
         this.pending = true;
-        
-        let url;
+
+        let urlFiles, urlCount;
         if (this.searchValue) {
-            url = `${API_BASE_MART}/api/v2/files/search?query=${this.searchValue}&page=${this.page}&size=9`;
+            urlFiles = `${API_BASE_MART}/api/v2/files/search?query=${this.searchValue}&page=${this.page}&size=9`;
+            urlCount = `${API_BASE_MART}/api/v2/files/search/count?query=${this.searchValue}`;
         } else {
-            url = `${API_BASE_MART}/api/v2/files/search?page=${this.page}&size=9`;
+            urlFiles = `${API_BASE_MART}/api/v2/files/search?page=${this.page}&size=9`;
+            urlCount = `${API_BASE_MART}/api/v2/files/search/count`;
         }
 
-        axiosInstance
-            .get(url)
-            .then(({ data }) => {
-                this.exploreFiles.push(...data);
-                this.page += 1;
-            })
-            .finally(() => (this.pending = false));
+        if (this.page === 1) {
+            const fetchFilesPromise = axiosInstance
+                .get(urlFiles)
+                .then(({ data }) => {
+                    this.exploreFiles = [...data];
+                    this.page += 1;
+                });
+
+            const fetchCountPromise = axiosInstance
+                .get(urlCount)
+                .then(({ data }) => {
+                    this.countFiles = data.count;
+                });
+
+            Promise.all([fetchFilesPromise, fetchCountPromise]).then(() => {
+                this.pending = false;
+            });
+        } else {
+            axiosInstance
+                .get(urlFiles)
+                .then(({ data }) => {
+                    this.exploreFiles.push(...data);
+                    this.page += 1;
+                })
+                .finally(() => (this.pending = false));
+        }
     };
 
     @action
@@ -68,5 +98,8 @@ export class FilesStore {
     @action
     resetFiles = () => {
         this.exploreFiles = [];
+        this.page = 1;
+        this.countFiles = undefined;
+        this.searchValue = undefined;
     };
 }
