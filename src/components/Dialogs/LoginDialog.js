@@ -174,7 +174,7 @@ const LoginDialog = ({
                         fullWidth
                     />
                 </div>
-                <ReCaptcha onChange={setCaptchaToken} />
+                {!pending && <ReCaptcha onChange={setCaptchaToken} />}
             </DialogContent>
             <DialogActions classes={{ root: classes.dialogActions }} disableSpacing>
                 {loginSubmissionError && (
