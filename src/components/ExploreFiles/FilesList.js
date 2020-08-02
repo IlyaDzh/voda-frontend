@@ -16,11 +16,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const FilesList = ({
+    isAuth,
+    setOpenLoginModal,
     exploreFiles,
     pending,
     nextPageIsExist,
     fetchExploreFiles,
-    buyFile,
+    doPurchase,
     resetFiles,
     setOpenGoodsInfoModal
 }) => {
@@ -40,8 +42,10 @@ const FilesList = ({
                       <FileCard
                           key={i}
                           card={card}
-                          buyFile={buyFile}
+                          purchaseFile={doPurchase}
                           openDetails={setOpenGoodsInfoModal}
+                          userIsAuth={isAuth}
+                          openLoginModal={setOpenLoginModal}
                       />
                   ))
                 : !pending && (
@@ -87,13 +91,15 @@ const FilesList = ({
     );
 };
 
-const mapMoxToProps = ({ files, infoModals }) => ({
+const mapMoxToProps = ({ user, login, files, filePurchase, infoModals }) => ({
+    isAuth: user.isAuth,
+    setOpenLoginModal: login.setOpenLoginModal,
     exploreFiles: files.exploreFiles,
     pending: files.pending,
     nextPageIsExist: files.nextPageIsExist,
     fetchExploreFiles: files.fetchExploreFiles,
-    buyFile: files.buyFile,
     resetFiles: files.resetFiles,
+    doPurchase: filePurchase.doPurchase,
     setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });
 

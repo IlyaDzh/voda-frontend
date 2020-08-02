@@ -1,7 +1,5 @@
 import { observable, action } from "mobx";
-
-import { axiosInstance } from "@/api/axios-instance";
-import { API_BASE_MART } from "@/utils";
+import { DataMartApi } from "@/api";
 
 export class DataPurchasesStore {
     @observable
@@ -24,10 +22,7 @@ export class DataPurchasesStore {
         this.pending = true;
         this.page += 1;
 
-        axiosInstance
-            .get(
-                `${API_BASE_MART}/api/v2/transactions/${this.userStore.user.ethereumAddress}?page=${this.page}&size=10`
-            )
+        DataMartApi.getTransactions(this.userStore.user.ethereumAddress, this.page)
             .then(({ data }) => {
                 this.purchasesItems.push(...data);
             })

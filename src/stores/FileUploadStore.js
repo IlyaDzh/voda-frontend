@@ -1,7 +1,7 @@
 import { observable, action, reaction } from "mobx";
 import { getYear, getMonth, getDate, getDaysInMonth } from "date-fns";
 
-import { axiosInstance } from "@/api/axios-instance";
+import { DataValidatorApi } from "@/api";
 import {
     validateYear,
     validateDay,
@@ -254,7 +254,7 @@ export class FileUploadStore {
     };
 
     createLocalFile = async () => {
-        return (await axiosInstance.post(`/api/v3/files/local`)).data;
+        return (await DataValidatorApi.createLocalFile()).data;
     };
 
     uploadFileByChunks = async localFileId => {
@@ -266,11 +266,13 @@ export class FileUploadStore {
 
         while (currentChunk < totalChunks) {
             const offset = currentChunk * CHUNK_SIZE;
+
             chunk = removeBase64Header(
                 await convertToBase64(
                     this.attachedFile.slice(offset, offset + CHUNK_SIZE)
                 )
             );
+
             if (offset + CHUNK_SIZE < targetPosition) {
                 if (chunk.endsWith("=")) {
                     chunk = chunk.substring(0, chunk.indexOf("="));
@@ -279,9 +281,8 @@ export class FileUploadStore {
                 }
             }
             currentChunk++;
-            await axiosInstance.post(`/api/v3/files/local/${fileId}/chunk`, {
-                chunkData: chunk
-            });
+
+            await DataValidatorApi.uploadFileByChunk(fileId, chunk);
         }
     };
 
@@ -290,29 +291,27 @@ export class FileUploadStore {
             this.attachedFile.type && this.attachedFile.type.length !== 0
                 ? this.attachedFile.type
                 : "application/octet-stream";
+
         return (
-            await axiosInstance.post(
-                `/api/v3/files/local/${localFileId}/to-service-node`,
-                {
-                    keepUntil: new Date(
-                        `${this.uploadForm.year}/${this.uploadForm.month}/${this.uploadForm.day}`
-                    ).toISOString(),
-                    name: this.uploadForm.name,
-                    mimeType,
-                    size: this.attachedFile.size,
-                    dataValidatorAddress: this.userStore.user.ethereumAddress,
-                    price: Number(this.uploadForm.price),
-                    extension: getFileExtensionFromName(this.attachedFile.name),
-                    additional: {
-                        fullDescription: this.uploadForm.info,
-                        hashTags: [
-                            this.uploadForm.type,
-                            this.uploadForm.category,
-                            this.uploadForm.genre
-                        ]
-                    }
+            await DataValidatorApi.uploadLocalFile(localFileId, {
+                keepUntil: new Date(
+                    `${this.uploadForm.year}/${this.uploadForm.month}/${this.uploadForm.day}`
+                ).toISOString(),
+                name: this.uploadForm.name,
+                mimeType,
+                size: this.attachedFile.size,
+                dataValidatorAddress: this.userStore.user.ethereumAddress,
+                price: Number(this.uploadForm.price),
+                extension: getFileExtensionFromName(this.attachedFile.name),
+                additional: {
+                    fullDescription: this.uploadForm.info,
+                    hashTags: [
+                        this.uploadForm.type,
+                        this.uploadForm.category,
+                        this.uploadForm.genre
+                    ]
                 }
-            )
+            })
         ).data;
     };
 
@@ -322,8 +321,8 @@ export class FileUploadStore {
 
         while (!fileFullyUploaded && !failed) {
             await sleep(5000);
-            const fileUploadingCheckingResponse = await axiosInstance.get(
-                `/api/v3/files/service-node/${serviceNodeFileId}/status`
+            const fileUploadingCheckingResponse = await DataValidatorApi.checkIfLocalFileUpload(
+                serviceNodeFileId
             );
             failed = fileUploadingCheckingResponse.data.failed;
             fileFullyUploaded = fileUploadingCheckingResponse.data.fullyUploaded;
@@ -333,8 +332,6 @@ export class FileUploadStore {
     };
 
     deleteLocalFile = async serviceNodeFileId => {
-        return await axiosInstance.delete(
-            `/api/v3/files/service-node/${serviceNodeFileId}`
-        );
+        return await DataValidatorApi.deleteLocalFile(serviceNodeFileId);
     };
 }

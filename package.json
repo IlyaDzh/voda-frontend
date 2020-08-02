@@ -11,6 +11,7 @@
         "axios": "^0.19.2",
         "date-fns": "^2.15.0",
         "file-extension": "^4.0.5",
+        "js-file-download": "^0.4.12",
         "lodash": "^4.17.19",
         "mobx": "^5.15.4",
         "mobx-react": "^6.2.2",

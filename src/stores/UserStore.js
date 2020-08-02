@@ -1,7 +1,5 @@
 import { observable, action } from "mobx";
-
-import { axiosInstance } from "@/api/axios-instance";
-import { API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
+import { axiosInstance, DataMartApi, DataValidatorApi } from "@/api";
 
 export class UserStore {
     @observable
@@ -28,8 +26,8 @@ export class UserStore {
 
         const url =
             this.userType === "purchaser"
-                ? `${API_BASE_MART}/api/v2/accounts/current`
-                : `${API_BASE_VALIDATOR}/api/v3/accounts/current`;
+                ? DataMartApi.getCurrentUserUrl()
+                : DataValidatorApi.getCurrentUserUrl();
 
         axiosInstance
             .get(url)

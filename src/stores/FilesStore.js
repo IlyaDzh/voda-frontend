@@ -1,7 +1,6 @@
 import { observable, get, action, reaction } from "mobx";
-
-import { axiosInstance } from "@/api/axios-instance";
-import { debounce, API_BASE_MART } from "@/utils";
+import { axiosInstance, DataMartApi } from "@/api";
+import { debounce } from "@/utils";
 
 export class FilesStore {
     @observable
@@ -50,11 +49,11 @@ export class FilesStore {
 
         let urlFiles, urlCount;
         if (this.searchValue) {
-            urlFiles = `${API_BASE_MART}/api/v2/files/search?query=${this.searchValue}&page=${this.page}&size=9`;
-            urlCount = `${API_BASE_MART}/api/v2/files/search/count?query=${this.searchValue}`;
+            urlFiles = DataMartApi.getSearchByQueryUrl(this.searchValue, this.page);
+            urlCount = DataMartApi.getCountByQueryUrl(this.searchValue);
         } else {
-            urlFiles = `${API_BASE_MART}/api/v2/files/search?page=${this.page}&size=9`;
-            urlCount = `${API_BASE_MART}/api/v2/files/search/count`;
+            urlFiles = DataMartApi.getAllFilesUrl(this.page);
+            urlCount = DataMartApi.getAllCountUrl();
         }
 
         if (this.page === 1) {
@@ -83,11 +82,6 @@ export class FilesStore {
                 })
                 .finally(() => (this.pending = false));
         }
-    };
-
-    @action
-    buyFile = title => {
-        console.log(`file ${title} was purchased`);
     };
 
     @action

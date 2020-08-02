@@ -46,7 +46,13 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const FileCard = ({ card, buyFile, openDetails }) => {
+const FileCard = ({
+    userIsAuth,
+    openLoginModal,
+    card,
+    purchaseFile,
+    openDetails
+}) => {
     const classes = useStyles();
 
     return (
@@ -90,7 +96,9 @@ const FileCard = ({ card, buyFile, openDetails }) => {
                 <CardActions className={classes.fileCardActions}>
                     <Button
                         color="secondary"
-                        onClick={() => buyFile(card.name)}
+                        onClick={() =>
+                            userIsAuth ? purchaseFile(card) : openLoginModal(true)
+                        }
                         fullWidth
                         disableElevation
                     >

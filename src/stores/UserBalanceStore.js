@@ -1,7 +1,6 @@
 import { observable, action, reaction } from "mobx";
-
-import { axiosInstance } from "@/api/axios-instance";
-import { validateWithdrawNumber, API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
+import { axiosInstance, DataMartApi, DataValidatorApi } from "@/api";
+import { validateWithdrawNumber } from "@/utils";
 
 export class UserBalanceStore {
     @observable
@@ -45,8 +44,8 @@ export class UserBalanceStore {
 
         const url =
             this.userStore.userType === "purchaser"
-                ? `${API_BASE_MART}/api/v2/accounts/current/balance`
-                : `${API_BASE_VALIDATOR}/api/v3/accounts/current/balance`;
+                ? DataMartApi.getCurrentBalanceUrl()
+                : DataValidatorApi.getCurrentBalanceUrl();
 
         axiosInstance
             .get(url)
@@ -87,8 +86,8 @@ export class UserBalanceStore {
 
         const url =
             this.userStore.userType === "purchaser"
-                ? `${API_BASE_MART}/api/v2/accounts/withdraw`
-                : `${API_BASE_VALIDATOR}/api/v3/accounts/withdraw`;
+                ? DataMartApi.getWithdrawBalanceUrl()
+                : DataValidatorApi.getWithdrawBalanceUrl();
 
         axiosInstance
             .post(url, {

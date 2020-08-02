@@ -1,7 +1,5 @@
 import { observable, action } from "mobx";
-
-import { axiosInstance } from "@/api/axios-instance";
-import { API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
+import { axiosInstance, DataMartApi, DataValidatorApi } from "@/api";
 
 const INITIAL_LOGIN_FORM = {
     type: "purchaser",
@@ -43,8 +41,8 @@ export class LoginStore {
 
         const url =
             this.loginForm.type === "purchaser"
-                ? `${API_BASE_MART}/api/v2/auth/login`
-                : `${API_BASE_VALIDATOR}/api/v3/auth/login`;
+                ? DataMartApi.getLoginUrl()
+                : DataValidatorApi.getLoginUrl();
 
         axiosInstance
             .post(url, {

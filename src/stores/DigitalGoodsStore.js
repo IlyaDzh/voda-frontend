@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import { axiosInstance } from "@/api/axios-instance";
+import { DataValidatorApi } from "@/api";
 
 export class DigitalGoodsStore {
     @observable
@@ -22,10 +22,11 @@ export class DigitalGoodsStore {
         this.pending = true;
         this.page += 1;
 
-        axiosInstance
-            .get(
-                `api/v3/transactions?address=${this.userStore.user.ethereumAddress}&page=${this.page}&size=10&type=dataUpload`
-            )
+        DataValidatorApi.getTransactionByType(
+            this.userStore.user.ethereumAddress,
+            this.page,
+            "dataUpload"
+        )
             .then(({ data }) => {
                 this.uploadedItems.push(...data);
             })

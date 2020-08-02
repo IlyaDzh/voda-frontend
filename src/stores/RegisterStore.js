@@ -1,7 +1,5 @@
 import { observable, action, reaction } from "mobx";
-
-import { axiosInstance } from "@/api/axios-instance";
-import { API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
+import { axiosInstance, DataMartApi, DataValidatorApi } from "@/api";
 
 import {
     validateWallet,
@@ -89,8 +87,8 @@ export class RegisterStore {
 
         const url =
             this.registerForm.type === "purchaser"
-                ? `${API_BASE_MART}/api/v2/accounts`
-                : `${API_BASE_VALIDATOR}/api/v3/accounts`;
+                ? DataMartApi.getRegisterUrl()
+                : DataValidatorApi.getRegisterUrl();
 
         axiosInstance
             .post(url, {

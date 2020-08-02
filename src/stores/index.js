@@ -8,6 +8,7 @@ import { DigitalGoodsStore } from "./DigitalGoodsStore";
 import { SalesHistoryStore } from "./SalesHistoryStore";
 import { DataPurchasesStore } from "./DataPurchasesStore";
 import { FileUploadStore } from "./FileUploadStore";
+import { FilePurchaseStore } from "./FilePurchaseStore";
 import { InfoModalsStore } from "./InfoModalsStore";
 
 const drawer = new DrawerStore();
@@ -20,6 +21,7 @@ const digitalGoods = new DigitalGoodsStore(user);
 const salesHistory = new SalesHistoryStore(user);
 const dataPurchases = new DataPurchasesStore(user);
 const fileUpload = new FileUploadStore(user, digitalGoods);
+const filePurchase = new FilePurchaseStore(user);
 const infoModals = new InfoModalsStore();
 
 export const store = {
@@ -33,5 +35,6 @@ export const store = {
     salesHistory,
     dataPurchases,
     fileUpload,
+    filePurchase,
     infoModals
 };
