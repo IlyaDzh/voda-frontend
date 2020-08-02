@@ -108,7 +108,7 @@ const WithdrawDialog = ({
             </DialogTitle>
             <DialogContent classes={{ root: classes.dialogContentWrapper }}>
                 <Typography component="div" color="textSecondary">
-                    You can deposit <b>22000</b> max from your registered wallet
+                    You can withdraw <b>22000</b> max to your registered wallet
                     <Typography>
                         <b style={{ wordBreak: "break-all" }}>
                             {user && user.ethereumAddress}
@@ -128,6 +128,7 @@ const WithdrawDialog = ({
                         InputProps={{ disableUnderline: true }}
                         value={withdrawNumber || ""}
                         onChange={e => setWithdrawNumber(e.target.value)}
+                        disabled={widthdrawPending}
                         fullWidth
                     />
                     <Button

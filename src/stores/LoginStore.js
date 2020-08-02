@@ -46,8 +46,8 @@ export class LoginStore {
 
         axiosInstance
             .post(url, {
-                username: this.loginForm.wallet,
-                password: this.loginForm.password
+                username: this.loginForm.wallet.trim(),
+                password: this.loginForm.password.trim()
             })
             .then(({ data }) => {
                 localStorage.setItem("accessToken", data.accessToken);

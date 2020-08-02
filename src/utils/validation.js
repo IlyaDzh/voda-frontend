@@ -1,12 +1,21 @@
 import { getYear, getDaysInMonth } from "date-fns";
 import { isStringEmpty } from "@/utils";
 
-// const PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9!@#$%^&*])(?=.{8,})/;
-const POSITIVE_NUMBER_REGEXP = /^[1-9]\d*/;
+const WALLET_REGEXP = /^[0-9a-zA-Z_-]{6,}$/;
+const PASSWORD_REGEXP = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+const WITHDRAW_NUMBER_REGEXP = /^[0-9]*[.,]?[0-9]+$/;
 
 export const validateWallet = wallet => {
     if (isStringEmpty(wallet)) {
         return "Wallet can't be empty";
+    }
+
+    if (wallet.length <= 8) {
+        return "Wallet is not strong";
+    }
+
+    if (!WALLET_REGEXP.test(wallet)) {
+        return "Wallet contains invalid characters";
     }
 };
 
@@ -15,13 +24,9 @@ export const validatePassword = password => {
         return "Password can't be empty";
     }
 
-    // if (password.length < 8) {
-    //     return "Your password must be at least 8 characters long, be of mixed case and also contain digit or symbol";
-    // }
-
-    // if (!PASSWORD_REGEXP.test(password)) {
-    //     return "Your password must be at least 8 characters long, be of mixed case and also contain digit or symbol";
-    // }
+    if (!PASSWORD_REGEXP.test(password)) {
+        return "Your password must be at least 8 characters long, be of mixed case and also contain digit or symbol";
+    }
 };
 
 export const validatePasswordConfirmation = (passwordConfirmation, password) => {
@@ -89,7 +94,11 @@ export const validateSelect = select => {
 };
 
 export const validateWithdrawNumber = number => {
-    if (!POSITIVE_NUMBER_REGEXP.test(Number(number))) {
+    if (Number(number) === 0) {
         return "Your number must be positive";
+    }
+
+    if (!WITHDRAW_NUMBER_REGEXP.test(Number(number))) {
+        return "Invalid balance to withdraw";
     }
 };

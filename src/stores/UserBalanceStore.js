@@ -93,7 +93,10 @@ export class UserBalanceStore {
             .post(url, {
                 amount: Number(this.withdrawNumber)
             })
-            .then(() => {})
+            .then(() => {
+                this.balance -= Number(this.withdrawNumber);
+                this.setOpenWithdrawModal(false);
+            })
             .catch(error => {
                 this.withdrawSubmissionError = error;
             })

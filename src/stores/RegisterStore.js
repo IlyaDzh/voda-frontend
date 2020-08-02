@@ -52,13 +52,17 @@ export class RegisterStore {
 
         reaction(
             () => this.registerForm.password,
-            password =>
-                password &&
-                (this.registerFormErrors.password = validatePassword(password)) &
-                    (this.registerFormErrors.repeat_password = validatePasswordConfirmation(
-                        password,
-                        this.registerForm.repeat_password
-                    ))
+            password => {
+                if (password) {
+                    this.registerFormErrors.password = validatePassword(password);
+                    if (this.registerForm.repeat_password) {
+                        this.registerFormErrors.repeat_password = validatePasswordConfirmation(
+                            password,
+                            this.registerForm.repeat_password
+                        );
+                    }
+                }
+            }
         );
 
         reaction(
@@ -92,7 +96,7 @@ export class RegisterStore {
 
         axiosInstance
             .post(url, {
-                lambdaWallet: this.registerForm.wallet,
+                lambdaWallet: this.registerForm.wallet.trim(),
                 password: this.registerForm.password,
                 passwordConfirmation: this.registerForm.repeat_password
             })
