@@ -94,6 +94,10 @@ const useStyles = makeStyles(theme => ({
             }
         }
     },
+    tableNotFound: {
+        padding: "4px",
+        marginBottom: "4px"
+    },
     tableItemDownload: {
         width: "10%",
         [theme.breakpoints.down("xs")]: {
@@ -140,69 +144,93 @@ const HistoryTable = ({
                     <Typography>File ID</Typography>
                     <Typography></Typography>
                 </div>
-                {historyItems.map(item => (
-                    <Paper
-                        key={item.hash}
-                        classes={{ root: classes.tableItem }}
-                        elevation={3}
-                    >
-                        <Typography onClick={() => setOpenTxnInfoModal(true, item)}>
-                            {item.hash}
-                        </Typography>
-                        <Typography>{formatDate(item.createdAt)}</Typography>
-                        <Typography>{item.sum}</Typography>
-                        <Typography>{formatDate(item.file.createdAt)}</Typography>
-                        <Typography
-                            onClick={() => setOpenGoodsInfoModal(true, item.file)}
-                        >
-                            {item.file.id}
-                        </Typography>
-                        <Tooltip title="Retrieve the file" arrow>
-                            <div>
-                                <Button
-                                    className={classes.tableItemDownload}
-                                    onClick={() => console.log("download")}
-                                    color="secondary"
-                                    size="small"
-                                    disableElevation
-                                >
-                                    <Hidden xsDown>Download</Hidden>
-                                    <Hidden smUp>
-                                        <DownloadIcon />
-                                    </Hidden>
-                                </Button>
-                            </div>
-                        </Tooltip>
-                    </Paper>
-                ))}
-                {pending && <Loader mt={25} mb={25} />}
+                {historyItems.length
+                    ? historyItems.map(item => (
+                          <Paper
+                              key={item.hash}
+                              classes={{ root: classes.tableItem }}
+                              elevation={3}
+                          >
+                              <Typography
+                                  onClick={() => setOpenTxnInfoModal(true, item)}
+                              >
+                                  {item.hash}
+                              </Typography>
+                              <Typography>{formatDate(item.createdAt)}</Typography>
+                              <Typography>{item.sum}</Typography>
+                              <Typography>
+                                  {formatDate(item.file.createdAt)}
+                              </Typography>
+                              <Typography
+                                  onClick={() =>
+                                      setOpenGoodsInfoModal(true, item.file)
+                                  }
+                              >
+                                  {item.file.id}
+                              </Typography>
+                              <Tooltip title="Retrieve the file" arrow>
+                                  <div>
+                                      <Button
+                                          className={classes.tableItemDownload}
+                                          onClick={() => console.log("download")}
+                                          color="secondary"
+                                          size="small"
+                                          disableElevation
+                                      >
+                                          <Hidden xsDown>Download</Hidden>
+                                          <Hidden smUp>
+                                              <DownloadIcon />
+                                          </Hidden>
+                                      </Button>
+                                  </div>
+                              </Tooltip>
+                          </Paper>
+                      ))
+                    : !pending && (
+                          <Paper
+                              classes={{ root: classes.tableNotFound }}
+                              elevation={3}
+                          >
+                              <Typography
+                                  color="primary"
+                                  variant="h6"
+                                  align="center"
+                              >
+                                  Not Found
+                              </Typography>
+                          </Paper>
+                      )}
             </Grid>
             <Grid item xs={12}>
-                {!pending && (
-                    <>
-                        <Hidden smDown>
-                            <Button
-                                className={classes.loadMoreBtn}
-                                size="large"
-                                color="secondary"
-                                onClick={fetchSalesHistory}
-                                fullWidth
-                            >
-                                Load more
-                            </Button>
-                        </Hidden>
-                        <Hidden mdUp>
-                            <Button
-                                className={classes.loadMoreBtn}
-                                color="secondary"
-                                onClick={fetchSalesHistory}
-                                disableElevation
-                                fullWidth
-                            >
-                                Load more
-                            </Button>
-                        </Hidden>
-                    </>
+                {pending ? (
+                    <Loader mt={25} mb={25} />
+                ) : (
+                    historyItems.length > 0 && (
+                        <>
+                            <Hidden smDown>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    size="large"
+                                    color="secondary"
+                                    onClick={fetchSalesHistory}
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                            <Hidden mdUp>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    color="secondary"
+                                    onClick={fetchSalesHistory}
+                                    disableElevation
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                        </>
+                    )
                 )}
             </Grid>
         </>

@@ -68,6 +68,10 @@ const useStyles = makeStyles(theme => ({
             }
         }
     },
+    tableNotFound: {
+        padding: "4px",
+        marginBottom: "4px"
+    },
     tableItemDetails: {
         width: "10%",
         [theme.breakpoints.down("xs")]: {
@@ -112,65 +116,82 @@ const DigitalGoodsTable = ({
                     <Typography>Price</Typography>
                     <Typography></Typography>
                 </div>
-                {uploadedItems &&
-                    uploadedItems.map((item, i) => (
-                        <Paper
-                            key={i}
-                            classes={{ root: classes.tableItem }}
-                            elevation={3}
-                        >
-                            <Typography>{item.file.id}</Typography>
-                            <Typography>
-                                {formatDate(item.file.createdAt)}
-                            </Typography>
-                            <Typography>
-                                {formatDate(item.file.keepUntil)}
-                            </Typography>
-                            <Typography>{item.file.price}</Typography>
-                            <Button
-                                className={classes.tableItemDetails}
-                                onClick={() =>
-                                    setOpenGoodsInfoModal(true, item.file, true)
-                                }
-                                color="secondary"
-                                size="small"
-                                disableElevation
-                            >
-                                <Hidden xsDown>Details</Hidden>
-                                <Hidden smUp>
-                                    <EyeIcon />
-                                </Hidden>
-                            </Button>
-                        </Paper>
-                    ))}
-                {pending && <Loader mt={25} mb={25} />}
+                {uploadedItems.length
+                    ? uploadedItems.map((item, i) => (
+                          <Paper
+                              key={i}
+                              classes={{ root: classes.tableItem }}
+                              elevation={3}
+                          >
+                              <Typography>{item.file.id}</Typography>
+                              <Typography>
+                                  {formatDate(item.file.createdAt)}
+                              </Typography>
+                              <Typography>
+                                  {formatDate(item.file.keepUntil)}
+                              </Typography>
+                              <Typography>{item.file.price}</Typography>
+                              <Button
+                                  className={classes.tableItemDetails}
+                                  onClick={() =>
+                                      setOpenGoodsInfoModal(true, item.file, true)
+                                  }
+                                  color="secondary"
+                                  size="small"
+                                  disableElevation
+                              >
+                                  <Hidden xsDown>Details</Hidden>
+                                  <Hidden smUp>
+                                      <EyeIcon />
+                                  </Hidden>
+                              </Button>
+                          </Paper>
+                      ))
+                    : !pending && (
+                          <Paper
+                              classes={{ root: classes.tableNotFound }}
+                              elevation={3}
+                          >
+                              <Typography
+                                  color="primary"
+                                  variant="h6"
+                                  align="center"
+                              >
+                                  Not Found
+                              </Typography>
+                          </Paper>
+                      )}
             </Grid>
             <Grid item xs={12}>
-                {!pending && (
-                    <>
-                        <Hidden smDown>
-                            <Button
-                                className={classes.loadMoreBtn}
-                                size="large"
-                                color="secondary"
-                                onClick={fetchUploadedItems}
-                                fullWidth
-                            >
-                                Load more
-                            </Button>
-                        </Hidden>
-                        <Hidden mdUp>
-                            <Button
-                                className={classes.loadMoreBtn}
-                                color="secondary"
-                                onClick={fetchUploadedItems}
-                                disableElevation
-                                fullWidth
-                            >
-                                Load more
-                            </Button>
-                        </Hidden>
-                    </>
+                {pending ? (
+                    <Loader mt={25} mb={25} />
+                ) : (
+                    uploadedItems.length > 0 && (
+                        <>
+                            <Hidden smDown>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    size="large"
+                                    color="secondary"
+                                    onClick={fetchUploadedItems}
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                            <Hidden mdUp>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    color="secondary"
+                                    onClick={fetchUploadedItems}
+                                    disableElevation
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                        </>
+                    )
                 )}
             </Grid>
         </>

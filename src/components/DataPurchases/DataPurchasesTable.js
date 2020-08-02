@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
+import { inject, observer } from "mobx-react";
 import {
     Grid,
     Typography,
@@ -8,7 +9,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button } from "@/components";
+import { Button, Loader } from "@/components";
 import { DownloadIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -72,6 +73,10 @@ const useStyles = makeStyles(theme => ({
             }
         }
     },
+    tableNotFound: {
+        padding: "4px",
+        marginBottom: "4px"
+    },
     tableItemDownload: {
         width: "10%",
         [theme.breakpoints.down("xs")]: {
@@ -90,91 +95,20 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ROWS = [
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    },
-    {
-        owner: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        sum: "0.12345678",
-        date: "2020-06-24",
-        validator: "0x7ceAC27A4Af42A93417743BA7A42A93478",
-        txnId: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        fileId: "32dede-dd8-4yttd-df9ab-f142-4fa45-j19"
-    }
-];
-
-const DataPurchasesTable = () => {
+const DataPurchasesTable = ({
+    purchasesItems,
+    pending,
+    fetchDataPurchases,
+    resetData
+}) => {
     const classes = useStyles();
+    const fetchPurchasesItemsFunc = useCallback(fetchDataPurchases, []);
+    const resetPurchasesItemsFunc = useCallback(resetData, []);
+
+    useEffect(() => {
+        fetchPurchasesItemsFunc();
+        return () => resetPurchasesItemsFunc();
+    }, [fetchPurchasesItemsFunc, resetPurchasesItemsFunc]);
 
     return (
         <>
@@ -193,62 +127,92 @@ const DataPurchasesTable = () => {
                     <Typography>File ID</Typography>
                     <Typography></Typography>
                 </div>
-                {ROWS.map((item, i) => (
-                    <Paper
-                        key={i}
-                        classes={{ root: classes.tableItem }}
-                        elevation={3}
-                    >
-                        <Typography>{item.txnId}</Typography>
-                        <Typography>{item.sum}</Typography>
-                        <Typography>{item.date}</Typography>
-                        <Typography>{item.validator}</Typography>
-                        <Typography noWrap>{item.fileId}</Typography>
-                        <Tooltip title="Retrieve the file" arrow>
-                            <div>
-                                <Button
-                                    className={classes.tableItemDownload}
-                                    onClick={() => console.log("download")}
-                                    color="secondary"
-                                    size="small"
-                                    disableElevation
-                                >
-                                    <Hidden xsDown>Download</Hidden>
-                                    <Hidden smUp>
-                                        <DownloadIcon />
-                                    </Hidden>
-                                </Button>
-                            </div>
-                        </Tooltip>
-                    </Paper>
-                ))}
+                {purchasesItems.length
+                    ? purchasesItems.map((item, i) => (
+                          <Paper
+                              key={i}
+                              classes={{ root: classes.tableItem }}
+                              elevation={3}
+                          >
+                              <Typography>{item.txnId}</Typography>
+                              <Typography>{item.sum}</Typography>
+                              <Typography>{item.date}</Typography>
+                              <Typography>{item.validator}</Typography>
+                              <Typography noWrap>{item.fileId}</Typography>
+                              <Tooltip title="Retrieve the file" arrow>
+                                  <div>
+                                      <Button
+                                          className={classes.tableItemDownload}
+                                          onClick={() => console.log("download")}
+                                          color="secondary"
+                                          size="small"
+                                          disableElevation
+                                      >
+                                          <Hidden xsDown>Download</Hidden>
+                                          <Hidden smUp>
+                                              <DownloadIcon />
+                                          </Hidden>
+                                      </Button>
+                                  </div>
+                              </Tooltip>
+                          </Paper>
+                      ))
+                    : !pending && (
+                          <Paper
+                              classes={{ root: classes.tableNotFound }}
+                              elevation={3}
+                          >
+                              <Typography
+                                  color="primary"
+                                  variant="h6"
+                                  align="center"
+                              >
+                                  Not Found
+                              </Typography>
+                          </Paper>
+                      )}
             </Grid>
             <Grid item xs={12}>
-                <Hidden smDown>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        size="large"
-                        color="secondary"
-                        onClick={() => console.log("load more")}
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
-                <Hidden mdUp>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        color="secondary"
-                        onClick={() => console.log("load more")}
-                        disableElevation
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
+                {pending ? (
+                    <Loader mt={25} mb={25} />
+                ) : (
+                    purchasesItems.length > 0 && (
+                        <>
+                            <Hidden smDown>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    size="large"
+                                    color="secondary"
+                                    onClick={fetchDataPurchases}
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                            <Hidden mdUp>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    color="secondary"
+                                    onClick={fetchDataPurchases}
+                                    disableElevation
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                        </>
+                    )
+                )}
             </Grid>
         </>
     );
 };
 
-export default DataPurchasesTable;
+const mapMoxToProps = ({ dataPurchases }) => ({
+    purchasesItems: dataPurchases.purchasesItems,
+    pending: dataPurchases.pending,
+    fetchDataPurchases: dataPurchases.fetchDataPurchases,
+    resetData: dataPurchases.resetData
+});
+
+export default inject(mapMoxToProps)(observer(DataPurchasesTable));
