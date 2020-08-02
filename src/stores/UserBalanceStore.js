@@ -1,17 +1,26 @@
 import { observable, action, reaction } from "mobx";
 
 import { axiosInstance } from "@/api/axios-instance";
-import { API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
+import { validateWithdrawNumber, API_BASE_MART, API_BASE_VALIDATOR } from "@/utils";
 
 export class UserBalanceStore {
     @observable
     balance = undefined;
 
     @observable
+    balanceValidateError = undefined;
+
+    @observable
     pending = false;
 
     @observable
+    widthdrawPending = false;
+
+    @observable
     withdrawNumber = undefined;
+
+    @observable
+    withdrawSubmissionError = undefined;
 
     @observable
     openWithdrawModal = false;
@@ -56,7 +65,7 @@ export class UserBalanceStore {
     setOpenWithdrawModal = openWithdrawModal => {
         this.openWithdrawModal = openWithdrawModal;
         if (!openWithdrawModal) {
-            this.setWithdrawNumber("");
+            this.resetWithdrawForm();
         }
     };
 
@@ -67,22 +76,47 @@ export class UserBalanceStore {
 
     @action
     doWithdraw = () => {
+        if (!this.validateForm()) {
+            return;
+        }
+
+        this.withdrawSubmissionError = undefined;
+        this.balanceValidateError = undefined;
+
+        this.widthdrawPending = true;
+
         const url =
             this.userStore.userType === "purchaser"
-                ? `${API_BASE_MART}/api/v2/withdraw`
-                : `${API_BASE_VALIDATOR}/api/v3/withdraw`;
+                ? `${API_BASE_MART}/api/v2/accounts/withdraw`
+                : `${API_BASE_VALIDATOR}/api/v3/accounts/withdraw`;
 
         axiosInstance
             .post(url, {
-                amount: this.withdrawNumber
+                amount: Number(this.withdrawNumber)
             })
-            .then(data => {
-                console.log(data);
-            });
+            .then(() => {})
+            .catch(error => {
+                this.withdrawSubmissionError = error;
+            })
+            .finally(() => (this.widthdrawPending = false));
+    };
+
+    @action
+    validateForm = () => {
+        this.balanceValidateError = validateWithdrawNumber(this.withdrawNumber);
+
+        return !Boolean(this.balanceValidateError);
     };
 
     @action
     resetBalance = () => {
         this.balance = undefined;
+    };
+
+    @action
+    resetWithdrawForm = () => {
+        this.withdrawNumber = undefined;
+        this.withdrawSubmissionError = undefined;
+        this.balanceValidateError = undefined;
     };
 }

@@ -10,7 +10,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button, TextField } from "@/components";
+import { Button, TextField, Loader } from "@/components";
 import { CloseIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -32,10 +32,17 @@ const useStyles = makeStyles(theme => ({
         padding: "8px 24px 24px"
     },
     dialogActionsWrapper: {
+        display: "block",
+        padding: "0 24px 24px"
+    },
+    withdrawBalanceBlock: {
         display: "flex",
-        padding: "0 24px 24px",
+        marginBottom: "12px",
         [theme.breakpoints.down("xs")]: {
             display: "block"
+        },
+        "&:last-child": {
+            marginBottom: 0
         }
     },
     balanceOperationBtn: {
@@ -56,6 +63,9 @@ const useStyles = makeStyles(theme => ({
 const WithdrawDialog = ({
     openWithdrawModal,
     withdrawNumber,
+    balanceValidateError,
+    withdrawSubmissionError,
+    widthdrawPending,
     setOpenWithdrawModal,
     setWithdrawNumber,
     doWithdraw,
@@ -65,6 +75,16 @@ const WithdrawDialog = ({
 
     const handleClose = () => {
         setOpenWithdrawModal(false);
+    };
+
+    const getLabelFromSubmissionError = error => {
+        if (error.response) {
+            if (error.response.status === 402) {
+                return "Not enough balance to withdraw";
+            }
+            return `Unknown error occurred when tried to withdraw. Server responded with ${error.response.status} status`;
+        }
+        return "No response from server";
     };
 
     return (
@@ -100,23 +120,39 @@ const WithdrawDialog = ({
                 classes={{ root: classes.dialogActionsWrapper }}
                 disableSpacing
             >
-                <TextField
-                    className={classes.balanceInput}
-                    variant="filled"
-                    size="small"
-                    InputProps={{ disableUnderline: true }}
-                    value={withdrawNumber || ""}
-                    onChange={e => setWithdrawNumber(e.target.value)}
-                    fullWidth
-                />
-                <Button
-                    className={classes.balanceOperationBtn}
-                    onClick={doWithdraw}
-                    disableElevation
-                    error
-                >
-                    Withdraw
-                </Button>
+                <div className={classes.withdrawBalanceBlock}>
+                    <TextField
+                        className={classes.balanceInput}
+                        variant="filled"
+                        size="small"
+                        InputProps={{ disableUnderline: true }}
+                        value={withdrawNumber || ""}
+                        onChange={e => setWithdrawNumber(e.target.value)}
+                        fullWidth
+                    />
+                    <Button
+                        className={classes.balanceOperationBtn}
+                        onClick={doWithdraw}
+                        disabled={widthdrawPending}
+                        disableElevation
+                        error
+                    >
+                        Withdraw
+                    </Button>
+                </div>
+                {widthdrawPending ? (
+                    <Loader />
+                ) : balanceValidateError ? (
+                    <Typography variant="body2" color="error">
+                        {balanceValidateError}
+                    </Typography>
+                ) : (
+                    withdrawSubmissionError && (
+                        <Typography variant="body2" color="error">
+                            {getLabelFromSubmissionError(withdrawSubmissionError)}
+                        </Typography>
+                    )
+                )}
             </DialogActions>
         </Dialog>
     );
@@ -125,6 +161,9 @@ const WithdrawDialog = ({
 const mapMoxToProps = ({ userBalance, user }) => ({
     openWithdrawModal: userBalance.openWithdrawModal,
     withdrawNumber: userBalance.withdrawNumber,
+    balanceValidateError: userBalance.balanceValidateError,
+    withdrawSubmissionError: userBalance.withdrawSubmissionError,
+    widthdrawPending: userBalance.widthdrawPending,
     setOpenWithdrawModal: userBalance.setOpenWithdrawModal,
     setWithdrawNumber: userBalance.setWithdrawNumber,
     doWithdraw: userBalance.doWithdraw,

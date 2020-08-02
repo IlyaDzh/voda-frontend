@@ -2,6 +2,7 @@ import { getYear, getDaysInMonth } from "date-fns";
 import { isStringEmpty } from "@/utils";
 
 // const PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9!@#$%^&*])(?=.{8,})/;
+const POSITIVE_NUMBER_REGEXP = /^[1-9]\d*/;
 
 export const validateWallet = wallet => {
     if (isStringEmpty(wallet)) {
@@ -84,5 +85,11 @@ export const validateDay = (year, month, day) => {
 export const validateSelect = select => {
     if (isStringEmpty(select)) {
         return "Can't be empty";
+    }
+};
+
+export const validateWithdrawNumber = number => {
+    if (!POSITIVE_NUMBER_REGEXP.test(Number(number))) {
+        return "Your number must be positive";
     }
 };

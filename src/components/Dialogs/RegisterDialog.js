@@ -107,7 +107,7 @@ const RegisterDialog = ({
             if (error.response.status === 409) {
                 return "Lambda wallet is already in use";
             }
-            return `Unknown error occurred when tried to log in. Server responded with ${error.response.status} status`;
+            return `Unknown error occurred when tried to register. Server responded with ${error.response.status} status`;
         }
         return "No response from server";
     };
