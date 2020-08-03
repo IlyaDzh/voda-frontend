@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 import { Grid, Typography, Paper, makeStyles } from "@material-ui/core";
 
 import { NotFoundPaper, Loader } from "@/components";
-import { formatDate, capitalizeFirstLetter } from "@/utils";
+import { formatDate } from "@/utils";
 
 const useStyles = makeStyles(theme => ({
     transactionsTitle: {
@@ -132,7 +132,7 @@ const BalanceTransactions = ({
                                               : classes.successColor
                                   }}
                               >
-                                  {capitalizeFirstLetter(item.type)}
+                                  {item.type === "LOCK" ? "Withdraw" : "Deposit"}
                               </Typography>
                               <Typography>{item.value}</Typography>
                           </Paper>

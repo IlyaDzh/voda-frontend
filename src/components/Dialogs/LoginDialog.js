@@ -48,7 +48,13 @@ const useStyles = makeStyles(theme => ({
         width: "50%",
         marginRight: 0,
         "&:last-child": {
-            marginLeft: 0
+            marginLeft: 0,
+            [theme.breakpoints.down(345)]: {
+                width: "40%"
+            }
+        },
+        [theme.breakpoints.down(345)]: {
+            width: "60%"
         }
     },
     dialogInput: {

@@ -76,7 +76,7 @@ const FileCard = ({
                                 display="inline"
                                 style={{ wordBreak: "break-word" }}
                             >
-                                {card.price || 0} PROM
+                                {card.price || 0} VODA
                             </Typography>
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">

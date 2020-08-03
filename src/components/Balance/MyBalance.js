@@ -87,6 +87,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         [theme.breakpoints.down("sm")]: {
+            display: "block",
             borderRadius: "0 0 5px 5px",
         },
         [theme.breakpoints.down("xs")]: {

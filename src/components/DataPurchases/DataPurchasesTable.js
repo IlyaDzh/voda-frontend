@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 
 import { Button, NotFoundPaper, Loader } from "@/components";
+import { formatDate } from "@/utils";
 import { DownloadIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -130,11 +131,11 @@ const DataPurchasesTable = ({
                               classes={{ root: classes.tableItem }}
                               elevation={3}
                           >
-                              <Typography>{item.txnId}</Typography>
-                              <Typography>{item.sum}</Typography>
-                              <Typography>{item.date}</Typography>
-                              <Typography>{item.validator}</Typography>
-                              <Typography noWrap>{item.fileId}</Typography>
+                              <Typography>{item.hash}</Typography>
+                              <Typography>{item.file.price}</Typography>
+                              <Typography>{formatDate(item.created_at)}</Typography>
+                              <Typography>{item.dataValidator}</Typography>
+                              <Typography noWrap>{item.file.id}</Typography>
                               <Tooltip title="Retrieve the file" arrow>
                                   <div>
                                       <Button
