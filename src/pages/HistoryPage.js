@@ -6,10 +6,11 @@ import {
     Button,
     SearchInput,
     FilterItem,
-    HistoryTable
+    HistoryTable,
+    SearchInputGrid
 } from "@/components";
 import { FilterIcon } from "@/icons";
-import { SearchInputGrid } from '@/components/SearchInputGrid';
+
 
 const useStyles = makeStyles(theme => ({
     searchMobileWrapper: {
