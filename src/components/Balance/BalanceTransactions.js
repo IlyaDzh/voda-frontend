@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect } from "react";
-import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
+import { inject, observer } from "mobx-react";
+import { Grid, Typography, Paper, makeStyles } from "@material-ui/core";
 
-import { Button } from "@/components";
+import { Loader } from "@/components";
+import { formatDate, capitalizeFirstLetter } from "@/utils";
 
 const useStyles = makeStyles(theme => ({
     transactionsTitle: {
@@ -83,71 +85,20 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ROWS = [
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Lock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Lock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Lock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Lock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
-    },
-    {
-        txnID: "0xae7ae9020ec8197c66d4fdba47d5a072aa0f590ac186ec1abb3e0119a55cb6a4",
-        time: "2020-06-24",
-        type: "Unlock",
-        value: "0.12345678"
-    }
-];
-
-const BalanceTransactions = ({ type }) => {
+const BalanceTransactions = ({
+    balanceTransactions,
+    pending,
+    fetchBalanceTransactions,
+    resetBalanceTransactions
+}) => {
     const classes = useStyles();
+    const fetchBalanceTransactionsFunc = useCallback(fetchBalanceTransactions, []);
+    const resetBalanceTransactionsFunc = useCallback(resetBalanceTransactions, []);
+
+    useEffect(() => {
+        fetchBalanceTransactionsFunc();
+        return () => resetBalanceTransactionsFunc();
+    }, [fetchBalanceTransactionsFunc, resetBalanceTransactionsFunc]);
 
     return (
         <>
@@ -164,54 +115,85 @@ const BalanceTransactions = ({ type }) => {
                     <Typography>Type</Typography>
                     <Typography>Value</Typography>
                 </div>
-                {ROWS.map((item, i) => (
-                    <Paper
-                        key={i}
-                        classes={{ root: classes.tableItem }}
-                        elevation={3}
-                    >
-                        <Typography>{item.txnID}</Typography>
-                        <Typography>{item.time}</Typography>
-                        <Typography
-                            classes={{
-                                root:
-                                    item.type === "Lock"
-                                        ? classes.errorColor
-                                        : classes.successColor
-                            }}
-                        >
-                            {item.type}
-                        </Typography>
-                        <Typography>{item.value}</Typography>
-                    </Paper>
-                ))}
+                {balanceTransactions.length
+                    ? balanceTransactions.map((item, i) => (
+                          <Paper
+                              key={i}
+                              classes={{ root: classes.tableItem }}
+                              elevation={3}
+                          >
+                              <Typography>{item.hash}</Typography>
+                              <Typography>{formatDate(item.timestamp)}</Typography>
+                              <Typography
+                                  classes={{
+                                      root:
+                                          item.type === "LOCK"
+                                              ? classes.errorColor
+                                              : classes.successColor
+                                  }}
+                              >
+                                  {capitalizeFirstLetter(item.type)}
+                              </Typography>
+                              <Typography>{item.value}</Typography>
+                          </Paper>
+                      ))
+                    : !pending && (
+                          <Paper
+                              classes={{ root: classes.tableNotFound }}
+                              elevation={3}
+                          >
+                              <Typography
+                                  color="primary"
+                                  variant="h6"
+                                  align="center"
+                              >
+                                  Not Found
+                              </Typography>
+                          </Paper>
+                      )}
             </Grid>
             <Grid item xs={12}>
-                <Hidden smDown>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        size="large"
-                        color="secondary"
-                        onClick={() => console.log("load more")}
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
-                <Hidden mdUp>
-                    <Button
-                        className={classes.loadMoreBtn}
-                        color="secondary"
-                        onClick={() => console.log("load more")}
-                        disableElevation
-                        fullWidth
-                    >
-                        Load more
-                    </Button>
-                </Hidden>
+                {pending && <Loader mt={25} mb={25} />}
+                {/* {pending ? (
+                    <Loader mt={25} mb={25} />
+                ) : (
+                    balanceTransactions.length > 0 && (
+                        <>
+                            <Hidden smDown>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    size="large"
+                                    color="secondary"
+                                    onClick={() => console.log("load more")}
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                            <Hidden mdUp>
+                                <Button
+                                    className={classes.loadMoreBtn}
+                                    color="secondary"
+                                    onClick={() => console.log("load more")}
+                                    disableElevation
+                                    fullWidth
+                                >
+                                    Load more
+                                </Button>
+                            </Hidden>
+                        </>
+                    )
+                )} */}
             </Grid>
         </>
     );
 };
 
-export default BalanceTransactions;
+const mapMoxToProps = ({ userBalance }) => ({
+    balanceTransactions: userBalance.balanceTransactions,
+    pending: userBalance.transactionsPending,
+    fetchBalanceTransactions: userBalance.fetchBalanceTransactions,
+    resetBalanceTransactions: userBalance.resetBalanceTransactions
+});
+
+export default inject(mapMoxToProps)(observer(BalanceTransactions));

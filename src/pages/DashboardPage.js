@@ -11,7 +11,7 @@ const DashboardPage = () => (
         <Grid item xs={12}>
             <AccountBalance />
         </Grid>
-        <BalanceTransactions type="seller" />
+        <BalanceTransactions />
     </Grid>
 );
 

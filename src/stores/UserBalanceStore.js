@@ -7,6 +7,9 @@ export class UserBalanceStore {
     balance = undefined;
 
     @observable
+    balanceTransactions = [];
+
+    @observable
     balanceValidateError = undefined;
 
     @observable
@@ -14,6 +17,9 @@ export class UserBalanceStore {
 
     @observable
     widthdrawPending = false;
+
+    @observable
+    transactionsPending = false;
 
     @observable
     withdrawNumber = undefined;
@@ -55,22 +61,22 @@ export class UserBalanceStore {
             .finally(() => (this.pending = false));
     };
 
-    // @action
-    // fetchBalanceTransactions = () => {
-    //     this.pending = true;
+    @action
+    fetchBalanceTransactions = () => {
+        this.transactionsPending = true;
 
-    //     const url =
-    //         this.userStore.userType === "purchaser"
-    //             ? DataMartApi.getCurrentBalanceUrl()
-    //             : DataValidatorApi.getCurrentBalanceUrl();
+        const url =
+            this.userStore.userType === "purchaser"
+                ? DataMartApi.getBalanceTransactionsUrl()
+                : DataValidatorApi.getBalanceTransactionsUrl();
 
-    //     axiosInstance
-    //         .get(url)
-    //         .then(({ data }) => {
-    //             this.balance = data.balance;
-    //         })
-    //         .finally(() => (this.pending = false));
-    // };
+        axiosInstance
+            .get(url)
+            .then(({ data }) => {
+                this.balanceTransactions = data;
+            })
+            .finally(() => (this.transactionsPending = false));
+    };
 
     @action
     setWithdrawNumber = withdrawNumber => {
@@ -137,5 +143,10 @@ export class UserBalanceStore {
         this.withdrawNumber = undefined;
         this.withdrawSubmissionError = undefined;
         this.balanceValidateError = undefined;
+    };
+
+    @action
+    resetBalanceTransactions = () => {
+        this.balanceTransactions = [];
     };
 }
