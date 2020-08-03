@@ -22,6 +22,10 @@ export class DataValidatorApi {
         return `${API_BASE_VALIDATOR}/api/v3/accounts/withdraw`;
     }
 
+    static getBalanceTransactionsUrl() {
+        return `${API_BASE_VALIDATOR}/api/v3/accounts/current/lambda-transactions`;
+    }
+
     static getTransactionByType(dataValidatorAddress, page, type) {
         return axiosInstance.get(
             `${API_BASE_VALIDATOR}/api/v3/transactions?address=${dataValidatorAddress}&page=${page}&size=10&type=${type}`

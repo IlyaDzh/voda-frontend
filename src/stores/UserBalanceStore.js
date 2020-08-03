@@ -55,6 +55,23 @@ export class UserBalanceStore {
             .finally(() => (this.pending = false));
     };
 
+    // @action
+    // fetchBalanceTransactions = () => {
+    //     this.pending = true;
+
+    //     const url =
+    //         this.userStore.userType === "purchaser"
+    //             ? DataMartApi.getCurrentBalanceUrl()
+    //             : DataValidatorApi.getCurrentBalanceUrl();
+
+    //     axiosInstance
+    //         .get(url)
+    //         .then(({ data }) => {
+    //             this.balance = data.balance;
+    //         })
+    //         .finally(() => (this.pending = false));
+    // };
+
     @action
     setWithdrawNumber = withdrawNumber => {
         this.withdrawNumber = withdrawNumber;

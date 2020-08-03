@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import { MyBalance, AccountBalance, DashboardTransactions } from "@/components";
+import { MyBalance, AccountBalance, BalanceTransactions } from "@/components";
 
 const DashboardPage = () => (
     <Grid container spacing={3}>
@@ -11,7 +11,7 @@ const DashboardPage = () => (
         <Grid item xs={12}>
             <AccountBalance />
         </Grid>
-        <DashboardTransactions />
+        <BalanceTransactions type="seller" />
     </Grid>
 );
 

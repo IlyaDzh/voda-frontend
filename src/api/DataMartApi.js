@@ -38,6 +38,10 @@ export class DataMartApi {
         return `${API_BASE_MART}/api/v2/files/search/count`;
     }
 
+    static getBalanceTransactionsUrl() {
+        return `${API_BASE_MART}/api/v2/accounts/current/lambda-transactions`;
+    }
+
     static getTransactions(dataMartAddress, page) {
         return axiosInstance.get(
             `${API_BASE_MART}/api/v2/transactions/${dataMartAddress}?page=${page}&size=10`

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
 
 import { Button } from "@/components";
@@ -146,7 +146,7 @@ const ROWS = [
     }
 ];
 
-const DashboardTransactions = () => {
+const BalanceTransactions = ({ type }) => {
     const classes = useStyles();
 
     return (
@@ -214,4 +214,4 @@ const DashboardTransactions = () => {
     );
 };
 
-export default DashboardTransactions;
+export default BalanceTransactions;
