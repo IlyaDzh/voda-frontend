@@ -31,9 +31,6 @@ export default createMuiTheme({
         h3: {
             fontSize: "22px"
         },
-        h5: {
-          fontFamily: 'Lato',
-        },
         subtitle1: {
             fontWeight: "bold"
         },
