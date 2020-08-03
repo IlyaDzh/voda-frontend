@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     walletTitle: {
         fontSize: "24px",
         fontWeight: "bold",
-        marginRight: "10px",
+        marginRight: 24,
         [theme.breakpoints.down("md")]: {
             fontSize: "22px"
         },
@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
     walletBody: {
         display: "flex",
         borderRadius: "5px",
+        flex: 1,
         border: `1px solid ${theme.palette.background.main}`,
         [theme.breakpoints.down("sm")]: {
             display: "block"
