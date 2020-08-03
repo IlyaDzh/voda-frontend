@@ -136,7 +136,6 @@ const MyBalance = ({ user, balance, pending }) => {
                     </Typography>
                 </div>
             </div>
-            <MyWallet/>
         </Paper>
     );
 };
