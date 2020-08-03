@@ -67,7 +67,7 @@ const CardInfoDialog = ({
                 disableTypography
             >
                 <Typography classes={{ root: classes.dialogTitle }} variant="h2">
-                    {currentGoodsInfo && currentGoodsInfo.id}
+                    {currentGoodsInfo && (currentGoodsInfo.name || currentGoodsInfo.id)}
                 </Typography>
                 <IconButton
                     aria-label="close"

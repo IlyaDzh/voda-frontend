@@ -61,6 +61,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const WithdrawDialog = ({
+    balance,
     openWithdrawModal,
     withdrawNumber,
     balanceValidateError,
@@ -108,7 +109,7 @@ const WithdrawDialog = ({
             </DialogTitle>
             <DialogContent classes={{ root: classes.dialogContentWrapper }}>
                 <Typography component="div" color="textSecondary">
-                    You can withdraw <b>22000</b> max to your registered wallet
+                    You can withdraw <b>{balance}</b> max to your registered wallet
                     <Typography>
                         <b style={{ wordBreak: "break-all" }}>
                             {user && user.ethereumAddress}
@@ -160,6 +161,7 @@ const WithdrawDialog = ({
 };
 
 const mapMoxToProps = ({ userBalance, user }) => ({
+    balance: userBalance.balance,
     openWithdrawModal: userBalance.openWithdrawModal,
     withdrawNumber: userBalance.withdrawNumber,
     balanceValidateError: userBalance.balanceValidateError,

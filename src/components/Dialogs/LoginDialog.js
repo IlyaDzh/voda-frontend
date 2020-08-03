@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     },
     dialogTitleWrapper: {
         textAlign: "center",
-        paddingTop: "54px"
+        paddingTop: "46px"
     },
     dialogTitle: {
         textTransform: "uppercase"
@@ -58,10 +58,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     dialogInput: {
-        marginBottom: "16px",
-        "&:last-child": {
-            marginBottom: "40px"
-        }
+        marginBottom: "16px"
     },
     submissionErrorTitle: {
         color: theme.palette.error.main,
@@ -71,7 +68,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column",
         paddingRight: "24px",
         paddingLeft: "24px",
-        paddingBottom: "54px"
+        paddingBottom: "46px"
     },
     dialogLoginButton: {
         marginBottom: "16px"
@@ -119,6 +116,7 @@ const LoginDialog = ({
             classes={{ paper: classes.dialogPaper }}
             open={openLoginModal}
             onClose={handleClose}
+            scroll="body"
         >
             <DialogTitle
                 classes={{ root: classes.dialogTitleWrapper }}

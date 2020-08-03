@@ -33,6 +33,9 @@ export class UserBalanceStore {
     @observable
     openDepositModal = false;
 
+    @observable
+    openSnackbar = false;
+
     userStore = undefined;
 
     constructor(userStore) {
@@ -84,6 +87,11 @@ export class UserBalanceStore {
     };
 
     @action
+    setOpenSnackbar = openSnackbar => {
+        this.openSnackbar = openSnackbar;
+    };
+
+    @action
     setOpenWithdrawModal = openWithdrawModal => {
         this.openWithdrawModal = openWithdrawModal;
         if (!openWithdrawModal) {
@@ -119,6 +127,7 @@ export class UserBalanceStore {
             .then(() => {
                 this.balance -= Number(this.withdrawNumber);
                 this.setOpenWithdrawModal(false);
+                this.setOpenSnackbar(true);
             })
             .catch(error => {
                 this.withdrawSubmissionError = error;

@@ -17,6 +17,9 @@ export default createMuiTheme({
         },
         error: {
             main: "#f33f17"
+        },
+        success: {
+            main: "#17e3b2"
         }
     },
     typography: {

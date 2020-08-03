@@ -7,6 +7,7 @@ export { default as NotFoundPaper } from "./NotFoundPaper";
 export { default as SearchInput } from "./SearchInput";
 export { default as SearchInputGrid } from "./SearchInputGrid";
 export { default as FilterItem } from "./FilterItem";
+export { default as Snackbar } from "./Snackbar";
 export { default as Menu } from "./Menu/Menu";
 export { default as Header } from "./Menu/Header";
 export { default as MenuList } from "./Menu/MenuList";

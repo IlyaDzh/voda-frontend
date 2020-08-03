@@ -153,17 +153,21 @@ const HistoryTable = ({
                               >
                                   {item.hash}
                               </Typography>
-                              <Typography>{formatDate(item.createdAt)}</Typography>
+                              <Typography>
+                                  {item.createdAt && formatDate(item.createdAt)}
+                              </Typography>
                               <Typography>{item.sum}</Typography>
                               <Typography>
-                                  {formatDate(item.file.createdAt)}
+                                  {item.file &&
+                                      item.file.createdAt &&
+                                      formatDate(item.file.createdAt)}
                               </Typography>
                               <Typography
                                   onClick={() =>
                                       setOpenGoodsInfoModal(true, item.file)
                                   }
                               >
-                                  {item.file.id}
+                                  {item.file && item.file.id}
                               </Typography>
                               <Tooltip title="Retrieve the file" arrow>
                                   <div>
