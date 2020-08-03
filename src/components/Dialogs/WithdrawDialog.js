@@ -109,7 +109,14 @@ const WithdrawDialog = ({
             </DialogTitle>
             <DialogContent classes={{ root: classes.dialogContentWrapper }}>
                 <Typography component="div" color="textSecondary">
-                    You can withdraw <b>{balance}</b> max to your registered wallet
+                    You can withdraw{" "}
+                    <b
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setWithdrawNumber(balance)}
+                    >
+                        {balance}
+                    </b>{" "}
+                    max to your registered wallet
                     <Typography>
                         <b style={{ wordBreak: "break-all" }}>
                             {user && user.ethereumAddress}
