@@ -25,7 +25,7 @@ export const validatePassword = password => {
     }
 
     if (!PASSWORD_REGEXP.test(password)) {
-        return "Your password must be at least 8 characters long, be of mixed case and also contain digit or symbol";
+        return "Your password can only contain Latin letters, must be at least 8 characters long, be of mixed case and also contain digit or symbol";
     }
 };
 

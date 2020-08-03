@@ -55,6 +55,7 @@ const useStyles = makeStyles(theme => ({
     disabledField: {
         background: theme.palette.background.main,
         padding: "11px 11px 7px",
+        borderRadius: "5px 0 0 5px",
         width: "100%",
         "& p": {
             wordBreak: "break-word",
@@ -69,21 +70,30 @@ const useStyles = makeStyles(theme => ({
             }
         },
         [theme.breakpoints.down("sm")]: {
-            width: "unset"
+            width: "unset",
+            borderRadius: "5px 5px 0 0",
         },
         [theme.breakpoints.down("xs")]: {
             width: "40%",
             flex: 1,
+            borderRadius: "5px 0 0 5px",
         }
     },
     activeField: {
         borderRadius: "0 5px 5px 0",
         border: `1px solid ${theme.palette.background.main}`,
         padding: "11px 11px 7px",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        [theme.breakpoints.down("sm")]: {
+            borderRadius: "0 0 5px 5px",
+        },
         [theme.breakpoints.down("xs")]: {
             padding: "11px 8px 7px",
             overflow: "hidden",
-            textOverflow: "ellipsis"
+            textOverflow: "ellipsis",
+            borderRadius: "0 5px 5px 0",
         }
     },
     walletNumber: {

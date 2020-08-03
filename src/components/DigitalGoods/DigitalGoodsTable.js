@@ -70,6 +70,7 @@ const useStyles = makeStyles(theme => ({
     },
     tableItemDetails: {
         width: "10%",
+        fontSize: 12,
         [theme.breakpoints.down("xs")]: {
             width: "24px",
             minWidth: "24px",
