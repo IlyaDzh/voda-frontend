@@ -43,7 +43,6 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         borderRadius: "5px",
         flex: 1,
-        border: `1px solid ${theme.palette.background.main}`,
         [theme.breakpoints.down("sm")]: {
             display: "block"
         },
@@ -73,14 +72,14 @@ const useStyles = makeStyles(theme => ({
             width: "unset"
         },
         [theme.breakpoints.down("xs")]: {
-            width: "40%"
+            width: "40%",
+            flex: 1,
         }
     },
     activeField: {
         borderRadius: "0 5px 5px 0",
-        padding: "11px",
-        height: "20px",
-        margin: "auto 0",
+        border: `1px solid ${theme.palette.background.main}`,
+        padding: "11px 11px 7px",
         [theme.breakpoints.down("xs")]: {
             padding: "11px 8px 7px",
             overflow: "hidden",
