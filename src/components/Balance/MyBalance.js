@@ -103,7 +103,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const MyWallet = ({ user, balance, pending }) => {
+const MyBalance = ({ user, balance, pending }) => {
     const classes = useStyles();
 
     return (
@@ -145,4 +145,4 @@ const mapMoxToProps = ({ user, userBalance }) => ({
     pending: userBalance.pending
 });
 
-export default inject(mapMoxToProps)(observer(MyWallet));
+export default inject(mapMoxToProps)(observer(MyBalance));
