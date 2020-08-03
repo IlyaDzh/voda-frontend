@@ -40,9 +40,11 @@ export class RegisterStore {
     pending = false;
 
     userStore = undefined;
+    drawerStore = undefined;
 
-    constructor(userStore) {
+    constructor(userStore, drawerStore) {
         this.userStore = userStore;
+        this.drawerStore = drawerStore;
 
         reaction(
             () => this.registerForm.wallet,
@@ -110,6 +112,7 @@ export class RegisterStore {
                 this.userStore.authWithForm = true;
                 this.userStore.isAuth = true;
                 this.resetRegisterForm();
+                this.drawerStore.setMobileOpen(false);
             })
             .catch(error => {
                 this.registerSubmissionError = error;

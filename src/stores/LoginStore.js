@@ -24,9 +24,11 @@ export class LoginStore {
     pending = false;
 
     userStore = undefined;
+    drawerStore = undefined;
 
-    constructor(userStore) {
+    constructor(userStore, drawerStore) {
         this.userStore = userStore;
+        this.drawerStore = drawerStore;
     }
 
     @action
@@ -58,6 +60,7 @@ export class LoginStore {
                 this.userStore.userType = this.loginForm.type;
                 this.userStore.fetchUser();
                 this.resetLoginForm();
+                this.drawerStore.setMobileOpen(false);
             })
             .catch(error => {
                 this.loginSubmissionError = error;

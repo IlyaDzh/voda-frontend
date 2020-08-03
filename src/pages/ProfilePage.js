@@ -11,7 +11,7 @@ const ProfilePage = () => (
         <Grid item xs={12}>
             <AccountBalance />
         </Grid>
-        <BalanceTransactions type="purchaser" />
+        <BalanceTransactions />
     </Grid>
 );
 
