@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { Grid, Typography, Paper, Hidden, makeStyles } from "@material-ui/core";
 
-import { Button, Loader } from "@/components";
+import { Button, NotFoundPaper, Loader } from "@/components";
 import { formatDate } from "@/utils";
 import { EyeIcon } from "@/icons";
 
@@ -67,10 +67,6 @@ const useStyles = makeStyles(theme => ({
                 width: "25%"
             }
         }
-    },
-    tableNotFound: {
-        padding: "4px",
-        marginBottom: "4px"
     },
     tableItemDetails: {
         width: "10%",
@@ -147,20 +143,7 @@ const DigitalGoodsTable = ({
                               </Button>
                           </Paper>
                       ))
-                    : !pending && (
-                          <Paper
-                              classes={{ root: classes.tableNotFound }}
-                              elevation={3}
-                          >
-                              <Typography
-                                  color="primary"
-                                  variant="h6"
-                                  align="center"
-                              >
-                                  Not Found
-                              </Typography>
-                          </Paper>
-                      )}
+                    : !pending && <NotFoundPaper />}
             </Grid>
             <Grid item xs={12}>
                 {pending ? (

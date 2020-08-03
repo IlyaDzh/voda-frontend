@@ -9,7 +9,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button, Loader } from "@/components";
+import { Button, NotFoundPaper, Loader } from "@/components";
 import { DownloadIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -72,10 +72,6 @@ const useStyles = makeStyles(theme => ({
                 width: "20%"
             }
         }
-    },
-    tableNotFound: {
-        padding: "4px",
-        marginBottom: "4px"
     },
     tableItemDownload: {
         width: "10%",
@@ -157,20 +153,7 @@ const DataPurchasesTable = ({
                               </Tooltip>
                           </Paper>
                       ))
-                    : !pending && (
-                          <Paper
-                              classes={{ root: classes.tableNotFound }}
-                              elevation={3}
-                          >
-                              <Typography
-                                  color="primary"
-                                  variant="h6"
-                                  align="center"
-                              >
-                                  Not Found
-                              </Typography>
-                          </Paper>
-                      )}
+                    : !pending && <NotFoundPaper />}
             </Grid>
             <Grid item xs={12}>
                 {pending ? (

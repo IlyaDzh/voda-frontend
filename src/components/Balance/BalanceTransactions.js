@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { Grid, Typography, Paper, makeStyles } from "@material-ui/core";
 
-import { Loader } from "@/components";
+import { NotFoundPaper, Loader } from "@/components";
 import { formatDate, capitalizeFirstLetter } from "@/utils";
 
 const useStyles = makeStyles(theme => ({
@@ -137,20 +137,7 @@ const BalanceTransactions = ({
                               <Typography>{item.value}</Typography>
                           </Paper>
                       ))
-                    : !pending && (
-                          <Paper
-                              classes={{ root: classes.tableNotFound }}
-                              elevation={3}
-                          >
-                              <Typography
-                                  color="primary"
-                                  variant="h6"
-                                  align="center"
-                              >
-                                  Not Found
-                              </Typography>
-                          </Paper>
-                      )}
+                    : !pending && <NotFoundPaper />}
             </Grid>
             <Grid item xs={12}>
                 {pending && <Loader mt={25} mb={25} />}
