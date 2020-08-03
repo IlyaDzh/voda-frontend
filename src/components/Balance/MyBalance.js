@@ -4,7 +4,6 @@ import { Paper, Typography, Hidden, makeStyles } from "@material-ui/core";
 
 import { Loader } from "@/components";
 import { WalletIcon } from "@/icons";
-import MyWallet from '@/components/Balance/MyWallet';
 
 const useStyles = makeStyles(theme => ({
     walletWrapper: {

@@ -1,8 +1,7 @@
-import { SearchInput } from '@/components/index';
-import { Grid } from '@material-ui/core';
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, makeStyles } from '@material-ui/core';
 
+import { SearchInput } from '@/components';
 
 const useStyles = makeStyles(() => ({
   searchBlock: {
@@ -10,7 +9,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const SearchInputGrid = ({sm, md, lg}) => {
+const SearchInputGrid = ({sm, md, lg}) => {
   const classes = useStyles();
   return (
     <Grid item sm={sm} md={md} lg={lg}>
@@ -19,4 +18,6 @@ export const SearchInputGrid = ({sm, md, lg}) => {
       </div>
     </Grid>
   )
-}
+};
+
+export default SearchInputGrid;
