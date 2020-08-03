@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
         textTransform: "unset",
         height: "30px",
         fontSize: "16px",
-        lineHeight: "25px",
+        lineHeight: "22px",
         color: "#fff",
         borderRadius: "5px"
     },

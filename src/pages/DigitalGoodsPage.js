@@ -7,7 +7,8 @@ import {
     Button,
     SearchInput,
     FilterItem,
-    DigitalGoodsTable
+    DigitalGoodsTable,
+    SearchInputGrid,
 } from "@/components";
 import { FilterIcon } from "@/icons";
 
@@ -35,9 +36,8 @@ const DigitalGoodsPage = () => {
             <Grid item xs={12}>
                 <Hidden smDown>
                     <Grid container spacing={3}>
-                        <Grid item sm={12} md={12} lg={4}>
-                            <SearchInput />
-                        </Grid>
+                        <SearchInputGrid sm={12} md={12} lg={4} />
+                        
                         <Grid item container sm={12} md={12} lg={8} spacing={1}>
                             {[
                                 "Filter by Uploaded Date",

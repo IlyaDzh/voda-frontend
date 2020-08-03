@@ -6,9 +6,11 @@ import {
     Button,
     SearchInput,
     FilterItem,
-    HistoryTable
+    HistoryTable,
+    SearchInputGrid
 } from "@/components";
 import { FilterIcon } from "@/icons";
+
 
 const useStyles = makeStyles(theme => ({
     searchMobileWrapper: {
@@ -17,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     filterMobileBtn: {
         minWidth: "48px",
         marginRight: "16px"
-    }
+    },
 }));
 
 const HistoryPage = () => {
@@ -31,9 +33,8 @@ const HistoryPage = () => {
             <Grid item xs={12}>
                 <Hidden smDown>
                     <Grid container spacing={3}>
-                        <Grid item sm={12} md={12} lg={4}>
-                            <SearchInput />
-                        </Grid>
+                        <SearchInputGrid sm={12} md={12} lg={4} />
+                        
                         <Grid item container sm={12} md={12} lg={8} spacing={1}>
                             {[
                                 "Filter by Uploaded Date",
