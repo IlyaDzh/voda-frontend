@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const GridSearchInput = ({sm, md, lg}) => {
+export const SearchInputGrid = ({sm, md, lg}) => {
   const classes = useStyles();
   return (
     <Grid item sm={sm} md={md} lg={lg}>
