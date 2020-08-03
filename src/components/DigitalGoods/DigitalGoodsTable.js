@@ -108,7 +108,12 @@ const DigitalGoodsTable = ({
                 <div className={classes.tableHeader}>
                     <Typography>ID</Typography>
                     <Typography>Uploaded</Typography>
-                    <Typography>Available until</Typography>
+                    <Hidden smDown>
+                        <Typography>Available until</Typography>
+                    </Hidden>
+                    <Hidden mdUp>
+                        <Typography>Available</Typography>
+                    </Hidden>
                     <Typography>Price</Typography>
                     <Typography></Typography>
                 </div>
