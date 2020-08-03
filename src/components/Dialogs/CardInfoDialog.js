@@ -100,7 +100,11 @@ const CardInfoDialog = ({
                     INFORMATION:{" "}
                     <Typography color="textSecondary" display="inline">
                         {currentGoodsInfo &&
-                            (currentGoodsInfo.metadata.fullDescription || "None")}
+                            (currentGoodsInfo.metadata
+                                ? currentGoodsInfo.metadata.fullDescription || "None"
+                                : currentGoodsInfo.fileMetadata &&
+                                  (currentGoodsInfo.fileMetadata.fullDescription ||
+                                      "None"))}
                     </Typography>
                 </Typography>
             </DialogContent>
