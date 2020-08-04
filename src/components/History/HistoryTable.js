@@ -119,7 +119,8 @@ const HistoryTable = ({
     fetchSalesHistory,
     resetHistory,
     setOpenTxnInfoModal,
-    setOpenGoodsInfoModal
+    setOpenGoodsInfoModal,
+    downloadFile
 }) => {
     const classes = useStyles();
     const fetchSalesHistoryFunc = useCallback(fetchSalesHistory, []);
@@ -173,7 +174,7 @@ const HistoryTable = ({
                                   <div>
                                       <Button
                                           className={classes.tableItemDownload}
-                                          onClick={() => console.log("download")}
+                                          onClick={() => downloadFile(item.file)}
                                           color="secondary"
                                           size="small"
                                           disableElevation
@@ -225,13 +226,14 @@ const HistoryTable = ({
     );
 };
 
-const mapMoxToProps = ({ salesHistory, infoModals }) => ({
+const mapMoxToProps = ({ salesHistory, infoModals, filePurchase }) => ({
     historyItems: salesHistory.historyItems,
     pending: salesHistory.pending,
     fetchSalesHistory: salesHistory.fetchSalesHistory,
     resetHistory: salesHistory.resetHistory,
     setOpenTxnInfoModal: infoModals.setOpenTxnInfoModal,
-    setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
+    setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal,
+    downloadFile: filePurchase.downloadFile
 });
 
 export default inject(mapMoxToProps)(observer(HistoryTable));

@@ -96,7 +96,8 @@ const DataPurchasesTable = ({
     purchasesItems,
     pending,
     fetchDataPurchases,
-    resetData
+    resetData,
+    downloadFile
 }) => {
     const classes = useStyles();
     const fetchPurchasesItemsFunc = useCallback(fetchDataPurchases, []);
@@ -140,7 +141,7 @@ const DataPurchasesTable = ({
                                   <div>
                                       <Button
                                           className={classes.tableItemDownload}
-                                          onClick={() => console.log("download")}
+                                          onClick={() => downloadFile(item.file)}
                                           color="secondary"
                                           size="small"
                                           disableElevation
@@ -192,11 +193,12 @@ const DataPurchasesTable = ({
     );
 };
 
-const mapMoxToProps = ({ dataPurchases }) => ({
+const mapMoxToProps = ({ dataPurchases, filePurchase }) => ({
     purchasesItems: dataPurchases.purchasesItems,
     pending: dataPurchases.pending,
     fetchDataPurchases: dataPurchases.fetchDataPurchases,
-    resetData: dataPurchases.resetData
+    resetData: dataPurchases.resetData,
+    downloadFile: filePurchase.downloadFile
 });
 
 export default inject(mapMoxToProps)(observer(DataPurchasesTable));

@@ -52,6 +52,13 @@ export class FilePurchaseStore {
             .finally(() => (file.pending = false));
     };
 
+    @action
+    downloadFile = file => {
+        DataMartApi.downloadFile(file.id).then(response =>
+            downloadFile(response.data, `${file.id}.${file.extension}`)
+        );
+    };
+
     checkFilePurchaseStatus = async (dataMartAddress, fileId) => {
         return (await DataMartApi.checkFileStatus(dataMartAddress, fileId)).data;
     };
