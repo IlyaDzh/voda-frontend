@@ -9,10 +9,10 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button, Hashtag } from "@/components";
+import { Button, Hashtag, Loader } from "@/components";
 import { ArrowIcon } from "@/icons";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     fileCard: {
         position: "relative",
         padding: "24px",
@@ -47,6 +47,8 @@ const FileCard = ({
     userIsAuth,
     openLoginModal,
     card,
+    isPending,
+    isPurchased,
     purchaseFile,
     setSearchText,
     openDetails
@@ -105,10 +107,17 @@ const FileCard = ({
                         onClick={() =>
                             userIsAuth ? purchaseFile(card) : openLoginModal(true)
                         }
+                        disabled={isPending || isPurchased}
                         fullWidth
                         disableElevation
                     >
-                        Purchase
+                        {isPending ? (
+                            <Loader size={20} />
+                        ) : isPurchased ? (
+                            "Purchased"
+                        ) : (
+                            "Purchase"
+                        )}
                     </Button>
                 </CardActions>
             </Card>

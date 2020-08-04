@@ -62,10 +62,8 @@ const UploadFileBlock = ({ setOpenFileUploadModal }) => {
                 variant="caption"
                 color="textSecondary"
             >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat
+                Please supply all the uploading files with appropriate descriptions
+                and hashtags. That will help users to browse and purchase them.
             </Typography>
         </div>
     );

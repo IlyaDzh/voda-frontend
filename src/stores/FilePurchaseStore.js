@@ -5,16 +5,10 @@ import { DataMartApi } from "@/api";
 
 export class FilePurchaseStore {
     @observable
-    pending = false;
-
-    @observable
     error = undefined;
 
     @observable
     response = undefined;
-
-    @observable
-    filePurchaseStatus = undefined;
 
     userStore = undefined;
 
@@ -24,18 +18,19 @@ export class FilePurchaseStore {
 
     @action
     doPurchase = async file => {
-        this.pending = true;
+        file.pending = true;
         this.error = undefined;
         this.response = undefined;
-        this.filePurchaseStatus = undefined;
+        let filePurchaseStatus;
 
-        this.filePurchaseStatus = await this.checkFilePurchaseStatus(
+        filePurchaseStatus = await this.checkFilePurchaseStatus(
             this.userStore.user.ethereumAddress,
             file.id
         );
 
-        if (this.filePurchaseStatus.purchased) {
-            this.pending = false;
+        if (filePurchaseStatus.purchased) {
+            file.pending = false;
+            file.purchased = true;
             return;
         }
 
@@ -47,13 +42,14 @@ export class FilePurchaseStore {
                     downloadFile(response.data, `${file.id}.${file.extension}`)
                 );
 
-                this.filePurchaseStatus = this.checkFilePurchaseStatus(
+                filePurchaseStatus = await this.checkFilePurchaseStatus(
                     this.userStore.user.ethereumAddress,
                     file.id
                 );
+                file.purchased = filePurchaseStatus.purchased;
             })
             .catch(error => (this.error = error))
-            .finally(() => (this.pending = false));
+            .finally(() => (file.pending = false));
     };
 
     checkFilePurchaseStatus = async (dataMartAddress, fileId) => {

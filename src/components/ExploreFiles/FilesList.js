@@ -43,6 +43,8 @@ const FilesList = ({
                       <FileCard
                           key={card.id}
                           card={card}
+                          isPending={card.pending}
+                          isPurchased={card.purchased}
                           purchaseFile={doPurchase}
                           openDetails={setOpenGoodsInfoModal}
                           userIsAuth={isAuth}
