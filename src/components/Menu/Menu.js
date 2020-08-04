@@ -70,7 +70,11 @@ const useStyles = makeStyles(theme => ({
     },
     policy: {
         marginBottom: "8px",
-        color: "#fff"
+        color: "#fff",
+        "& a": {
+            color: "#fff",
+            textDecoration: "none"
+        }
     },
     copyright: {
         fontSize: "10px",
@@ -220,7 +224,13 @@ const Menu = ({
             </div>
             <div className={classes.bottomMenu}>
                 <Typography classes={{ root: classes.policy }}>
-                    Privacy Policy
+                    <a
+                        href="https://voda.global/docs/Privacy_Policy_VODA.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Privacy Policy
+                    </a>
                 </Typography>
                 <Typography classes={{ root: classes.copyright }}>
                     Copyright VODA team (c) 2020

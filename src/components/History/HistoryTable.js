@@ -156,7 +156,7 @@ const HistoryTable = ({
                               <Typography>
                                   {item.createdAt && formatDate(item.createdAt)}
                               </Typography>
-                              <Typography>{item.sum}</Typography>
+                              <Typography>{item.file && item.file.price}</Typography>
                               <Typography>
                                   {item.file &&
                                       item.file.createdAt &&

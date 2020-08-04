@@ -4,13 +4,12 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
-    DialogActions,
     Typography,
     IconButton,
     makeStyles
 } from "@material-ui/core";
 
-import { Button } from "@/components";
+import { Hashtag } from "@/components";
 import { formatDate } from "@/utils";
 import { CloseIcon } from "@/icons";
 
@@ -34,21 +33,14 @@ const useStyles = makeStyles(theme => ({
     },
     dialogTitle: {
         wordBreak: "break-word"
-    },
-    dialogActionsWrapper: {
-        display: "block",
-        padding: "0 24px 24px"
-    },
-    editBtn: {
-        minWidth: "105px"
     }
 }));
 
 const CardInfoDialog = ({
     currentGoodsInfo,
-    goodsInfoModalWithEdit,
     openGoodsInfoModal,
-    setOpenGoodsInfoModal
+    setOpenGoodsInfoModal,
+    setSearchText
 }) => {
     const classes = useStyles();
 
@@ -67,7 +59,7 @@ const CardInfoDialog = ({
                 disableTypography
             >
                 <Typography classes={{ root: classes.dialogTitle }} variant="h2">
-                    {currentGoodsInfo && (currentGoodsInfo.name || currentGoodsInfo.id)}
+                    {currentGoodsInfo && currentGoodsInfo.name}
                 </Typography>
                 <IconButton
                     aria-label="close"
@@ -78,6 +70,12 @@ const CardInfoDialog = ({
                 </IconButton>
             </DialogTitle>
             <DialogContent classes={{ root: classes.dialogContentWrapper }}>
+                <Typography variant="subtitle1" color="textSecondary">
+                    ID:{" "}
+                    <Typography color="textSecondary" display="inline">
+                        {currentGoodsInfo && currentGoodsInfo.id}
+                    </Typography>
+                </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                     AVAILABLE UNTIL:{" "}
                     <Typography color="textSecondary" display="inline">
@@ -97,6 +95,18 @@ const CardInfoDialog = ({
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
+                    EXTENSION:{" "}
+                    <Typography color="textSecondary" display="inline">
+                        {currentGoodsInfo && currentGoodsInfo.extension}
+                    </Typography>
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                    SIZE:{" "}
+                    <Typography color="textSecondary" display="inline">
+                        {currentGoodsInfo && currentGoodsInfo.size} byte
+                    </Typography>
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
                     INFORMATION:{" "}
                     <Typography color="textSecondary" display="inline">
                         {currentGoodsInfo &&
@@ -107,27 +117,45 @@ const CardInfoDialog = ({
                                       "None"))}
                     </Typography>
                 </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                    HASHTAGS:{" "}
+                    <span>
+                        {currentGoodsInfo &&
+                            (currentGoodsInfo.metadata
+                                ? currentGoodsInfo.metadata.hashTags
+                                      .filter(hashtag => hashtag)
+                                      .map(hashtag => (
+                                          <Hashtag
+                                              key={hashtag}
+                                              hashtagName={hashtag}
+                                              hashtagClick={() => {
+                                                  setSearchText(hashtag);
+                                                  handleClose();
+                                              }}
+                                          />
+                                      ))
+                                : currentGoodsInfo.fileMetadata &&
+                                  currentGoodsInfo.fileMetadata.hashTags
+                                      .filter(hashtag => hashtag)
+                                      .map(hashtag => (
+                                          <Hashtag
+                                              key={hashtag}
+                                              hashtagName={hashtag}
+                                              disabled
+                                          />
+                                      )))}
+                    </span>
+                </Typography>
             </DialogContent>
-            {goodsInfoModalWithEdit && (
-                <DialogActions classes={{ root: classes.dialogActionsWrapper }}>
-                    <Button
-                        className={classes.editBtn}
-                        color="secondary"
-                        disableElevation
-                    >
-                        Edit
-                    </Button>
-                </DialogActions>
-            )}
         </Dialog>
     );
 };
 
-const mapMoxToProps = ({ infoModals }) => ({
+const mapMoxToProps = ({ infoModals, files }) => ({
     currentGoodsInfo: infoModals.currentGoodsInfo,
-    goodsInfoModalWithEdit: infoModals.goodsInfoModalWithEdit,
     openGoodsInfoModal: infoModals.openGoodsInfoModal,
-    setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
+    setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal,
+    setSearchText: files.setSearchText
 });
 
 export default inject(mapMoxToProps)(observer(CardInfoDialog));

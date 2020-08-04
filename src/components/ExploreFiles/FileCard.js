@@ -9,7 +9,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button } from "@/components";
+import { Button, Hashtag } from "@/components";
 import { ArrowIcon } from "@/icons";
 
 const useStyles = makeStyles(theme => ({
@@ -35,9 +35,6 @@ const useStyles = makeStyles(theme => ({
     fileCardInfo: {
         margin: "16px 0 24px"
     },
-    infoHashtags: {
-        color: theme.palette.primary.main
-    },
     openDetailsBtn: {
         position: "absolute",
         right: 0,
@@ -51,6 +48,7 @@ const FileCard = ({
     openLoginModal,
     card,
     purchaseFile,
+    setSearchText,
     openDetails
 }) => {
     const classes = useStyles();
@@ -85,12 +83,20 @@ const FileCard = ({
                                 {card.mimeType}
                             </Typography>
                         </Typography>
-                        <Typography className={classes.infoHashtags}>
+                        <div>
                             {card.metadata.hashTags &&
                                 card.metadata.hashTags
                                     .filter(hashtag => hashtag)
-                                    .map(hashtag => `#${hashtag} `)}
-                        </Typography>
+                                    .map(hashtag => (
+                                        <Hashtag
+                                            key={hashtag}
+                                            hashtagName={hashtag}
+                                            hashtagClick={() =>
+                                                setSearchText(hashtag)
+                                            }
+                                        />
+                                    ))}
+                        </div>
                     </div>
                 </CardContent>
                 <CardActions className={classes.fileCardActions}>

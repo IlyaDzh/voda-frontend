@@ -71,7 +71,7 @@ const TransactionInfoDialog = ({
                 <Typography variant="subtitle1" color="textSecondary">
                     VALUE:{" "}
                     <Typography color="textSecondary" display="inline">
-                        {currentTxnInfo && currentTxnInfo.sum}
+                        {currentTxnInfo && currentTxnInfo.file.price}
                     </Typography>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">

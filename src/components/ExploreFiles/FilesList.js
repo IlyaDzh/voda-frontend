@@ -22,8 +22,9 @@ const FilesList = ({
     pending,
     nextPageIsExist,
     fetchExploreFiles,
-    doPurchase,
+    setSearchText,
     resetFiles,
+    doPurchase,
     setOpenGoodsInfoModal
 }) => {
     const classes = useStyles();
@@ -38,13 +39,14 @@ const FilesList = ({
     return (
         <>
             {exploreFiles.length
-                ? exploreFiles.map((card, i) => (
+                ? exploreFiles.map(card => (
                       <FileCard
-                          key={i}
+                          key={card.id}
                           card={card}
                           purchaseFile={doPurchase}
                           openDetails={setOpenGoodsInfoModal}
                           userIsAuth={isAuth}
+                          setSearchText={setSearchText}
                           openLoginModal={setOpenLoginModal}
                       />
                   ))
@@ -99,6 +101,7 @@ const mapMoxToProps = ({ user, login, files, filePurchase, infoModals }) => ({
     nextPageIsExist: files.nextPageIsExist,
     fetchExploreFiles: files.fetchExploreFiles,
     resetFiles: files.resetFiles,
+    setSearchText: files.setSearchText,
     doPurchase: filePurchase.doPurchase,
     setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });

@@ -168,6 +168,7 @@ const FileUploadDialog = ({
                             }
                             error={Boolean(uploadFormErrors.year)}
                             helperText={uploadFormErrors.year}
+                            disabled={pending}
                             fullWidth
                         />
                     </div>
@@ -181,6 +182,7 @@ const FileUploadDialog = ({
                                 setUploadFormValue("month", event.target.value)
                             }
                             variant="outlined"
+                            disabled={pending}
                             select
                             fullWidth
                         >
@@ -218,6 +220,7 @@ const FileUploadDialog = ({
                             }
                             error={Boolean(uploadFormErrors.day)}
                             helperText={uploadFormErrors.day}
+                            disabled={pending}
                             fullWidth
                         />
                     </div>
@@ -239,6 +242,7 @@ const FileUploadDialog = ({
                     }
                     error={Boolean(uploadFormErrors.price)}
                     helperText={uploadFormErrors.price}
+                    disabled={pending}
                     fullWidth
                 />
                 <TextField
@@ -251,6 +255,7 @@ const FileUploadDialog = ({
                     }
                     error={Boolean(uploadFormErrors.name)}
                     helperText={uploadFormErrors.name}
+                    disabled={pending}
                     fullWidth
                 />
                 <TextField
@@ -265,6 +270,7 @@ const FileUploadDialog = ({
                     variant="outlined"
                     error={Boolean(uploadFormErrors.type)}
                     helperText={uploadFormErrors.type}
+                    disabled={pending}
                     select
                     fullWidth
                 >
@@ -289,7 +295,7 @@ const FileUploadDialog = ({
                         !(
                             uploadForm.type &&
                             UPLOAD_SELECTOR_CATEROGY[uploadForm.type]
-                        )
+                        ) || pending
                     }
                     select
                     fullWidth
@@ -320,7 +326,7 @@ const FileUploadDialog = ({
                         !(
                             uploadForm.category &&
                             UPLOAD_SELECTOR_GENRE[uploadForm.category]
-                        )
+                        ) || pending
                     }
                     select
                     fullWidth
@@ -351,6 +357,7 @@ const FileUploadDialog = ({
                     error={Boolean(uploadFormErrors.info)}
                     helperText={uploadFormErrors.info}
                     rows={3}
+                    disabled={pending}
                     multiline
                     fullWidth
                 />
