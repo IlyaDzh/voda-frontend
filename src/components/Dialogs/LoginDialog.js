@@ -39,7 +39,10 @@ const useStyles = makeStyles(theme => ({
     },
     dialogContent: {
         paddingBottom: "32px",
-        overflow: "hidden"
+        overflow: "hidden",
+        [theme.breakpoints.down("xs")]: {
+            paddingBottom: 0,
+        }
     },
     dialogRadioGroup: {
         marginBottom: "15px"
