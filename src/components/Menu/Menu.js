@@ -114,9 +114,12 @@ const Menu = ({
                 </Hidden>
                 <div className={classes.userTypeWrapper}>
                     <Typography classes={{ root: classes.userType }} variant="h3">
-                        {isAuth && userType === "seller"
-                            ? "Data validator client"
-                            : "Data mart client"}
+                        {isAuth &&
+                            (userType === "seller"
+                                ? "Data validator client"
+                                : userType === "purchaser"
+                                ? "Data mart client"
+                                : "")}
                     </Typography>
                 </div>
                 <MenuList typeUser={userType} />
