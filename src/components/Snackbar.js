@@ -3,18 +3,18 @@ import { inject, observer } from "mobx-react";
 import { Snackbar as BaseSnackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-const Snackbar = ({ openSnackbar, setOpenSnackbar }) => {
+const Snackbar = ({ snackbarOpen, snackbarText, setSnackbarOpen }) => {
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;
         }
 
-        setOpenSnackbar(false);
+        setSnackbarOpen(false);
     };
 
     return (
         <BaseSnackbar
-            open={openSnackbar}
+            open={snackbarOpen}
             onClose={handleClose}
             autoHideDuration={3000}
             anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
@@ -25,15 +25,16 @@ const Snackbar = ({ openSnackbar, setOpenSnackbar }) => {
                 elevation={6}
                 variant="filled"
             >
-                Your withdrawal request processed successfully
+                {snackbarText}
             </Alert>
         </BaseSnackbar>
     );
 };
 
-const mapMoxToProps = ({ userBalance }) => ({
-    openSnackbar: userBalance.openSnackbar,
-    setOpenSnackbar: userBalance.setOpenSnackbar
+const mapMoxToProps = ({ snackbar }) => ({
+    snackbarOpen: snackbar.snackbarOpen,
+    snackbarText: snackbar.snackbarText,
+    setSnackbarOpen: snackbar.setSnackbarOpen
 });
 
 export default inject(mapMoxToProps)(observer(Snackbar));

@@ -69,11 +69,13 @@ export class FileUploadStore {
     userStore = undefined;
     digitalGoodsStore = undefined;
     userBalanceStore = undefined;
+    snackbarStore = undefined;
 
-    constructor(userStore, digitalGoodsStore, userBalanceStore) {
+    constructor(userStore, digitalGoodsStore, userBalanceStore, snackbarStore) {
         this.userStore = userStore;
         this.digitalGoodsStore = digitalGoodsStore;
         this.userBalanceStore = userBalanceStore;
+        this.snackbarStore = snackbarStore;
 
         reaction(
             () => this.uploadForm.year,
@@ -167,8 +169,7 @@ export class FileUploadStore {
                 };
             } else if (fileUploadingResponse.fileFullyUploaded) {
                 this.submissionResult = {
-                    status: 200,
-                    message: "You have successfully uploaded the file"
+                    status: 200
                 };
             }
 
@@ -181,7 +182,11 @@ export class FileUploadStore {
             };
         } finally {
             if (this.submissionResult && this.submissionResult.status === 200) {
-                this.resetUploadForm();
+                this.snackbarStore.setSnackbarOpen(
+                    true,
+                    "You have successfully uploaded the file"
+                );
+                this.setOpenFileUploadModal(false);
                 this.digitalGoodsStore.resetUploadedItems();
                 this.digitalGoodsStore.fetchUploadedItems();
                 this.userBalanceStore.fetchUserBalance();

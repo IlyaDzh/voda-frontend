@@ -91,9 +91,6 @@ const useStyles = makeStyles(theme => ({
     uploadResultText: {
         marginBottom: "15px"
     },
-    successUploadResultText: {
-        color: "#09c709"
-    },
     dialogAttachFileButton: {
         marginRight: "24px",
         boxShadow: `
@@ -366,19 +363,7 @@ const FileUploadDialog = ({
                 {pending ? (
                     <Loader mb={25} />
                 ) : (
-                    submissionResult &&
-                    (submissionResult.status === 200 ? (
-                        <Typography
-                            classes={{
-                                root: classes.uploadResultText,
-                                colorPrimary: classes.successUploadResultText
-                            }}
-                            color="primary"
-                            align="center"
-                        >
-                            {submissionResult.message}
-                        </Typography>
-                    ) : (
+                    submissionResult && (
                         <Typography
                             classes={{ root: classes.uploadResultText }}
                             align="center"
@@ -386,7 +371,12 @@ const FileUploadDialog = ({
                         >
                             {submissionResult.message}
                         </Typography>
-                    ))
+                    )
+                )}
+                {attachedFile && (
+                    <Typography align="center" gutterBottom>
+                        Uploaded file: {attachedFile.name}
+                    </Typography>
                 )}
                 {uploadFormErrors && uploadFormErrors.attachedFile && (
                     <Typography

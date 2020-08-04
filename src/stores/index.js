@@ -1,4 +1,5 @@
 import { DrawerStore } from "./DrawerStore";
+import { SnackbarStore } from "./SnackbarStore";
 import { UserStore } from "./UserStore";
 import { UserBalanceStore } from "./UserBalanceStore";
 import { LoginStore } from "./LoginStore";
@@ -12,20 +13,22 @@ import { FilePurchaseStore } from "./FilePurchaseStore";
 import { InfoModalsStore } from "./InfoModalsStore";
 
 const drawer = new DrawerStore();
+const snackbar = new SnackbarStore();
 const user = new UserStore();
-const userBalance = new UserBalanceStore(user);
+const userBalance = new UserBalanceStore(user, snackbar);
 const login = new LoginStore(user, drawer);
 const register = new RegisterStore(user, drawer);
 const files = new FilesStore();
 const digitalGoods = new DigitalGoodsStore(user);
 const salesHistory = new SalesHistoryStore(user);
 const dataPurchases = new DataPurchasesStore(user);
-const fileUpload = new FileUploadStore(user, digitalGoods, userBalance);
+const fileUpload = new FileUploadStore(user, digitalGoods, userBalance, snackbar);
 const filePurchase = new FilePurchaseStore(user);
 const infoModals = new InfoModalsStore();
 
 export const store = {
     drawer,
+    snackbar,
     user,
     userBalance,
     login,
