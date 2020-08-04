@@ -109,10 +109,10 @@ const DigitalGoodsTable = ({
                 <div className={classes.tableHeader}>
                     <Typography>ID</Typography>
                     <Typography>Uploaded</Typography>
-                        <Typography>
-                            <Hidden smDown>Available until</Hidden>
-                            <Hidden mdUp>Available</Hidden>
-                        </Typography>
+                    <Typography>
+                        <Hidden smDown>Available until</Hidden>
+                        <Hidden mdUp>Available</Hidden>
+                    </Typography>
                     <Typography>Price</Typography>
                     <Typography></Typography>
                 </div>
@@ -134,7 +134,7 @@ const DigitalGoodsTable = ({
                               <Button
                                   className={classes.tableItemDetails}
                                   onClick={() =>
-                                      setOpenGoodsInfoModal(true, item.file, true)
+                                      setOpenGoodsInfoModal(true, item.file)
                                   }
                                   color="secondary"
                                   size="small"

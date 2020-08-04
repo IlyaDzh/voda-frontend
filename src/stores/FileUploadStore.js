@@ -68,10 +68,12 @@ export class FileUploadStore {
 
     userStore = undefined;
     digitalGoodsStore = undefined;
+    userBalanceStore = undefined;
 
-    constructor(userStore, digitalGoodsStore) {
+    constructor(userStore, digitalGoodsStore, userBalanceStore) {
         this.userStore = userStore;
         this.digitalGoodsStore = digitalGoodsStore;
+        this.userBalanceStore = userBalanceStore;
 
         reaction(
             () => this.uploadForm.year,
@@ -182,6 +184,7 @@ export class FileUploadStore {
                 this.resetUploadForm();
                 this.digitalGoodsStore.resetUploadedItems();
                 this.digitalGoodsStore.fetchUploadedItems();
+                this.userBalanceStore.fetchUserBalance();
             }
         }
     };

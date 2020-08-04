@@ -20,7 +20,7 @@ const files = new FilesStore();
 const digitalGoods = new DigitalGoodsStore(user);
 const salesHistory = new SalesHistoryStore(user);
 const dataPurchases = new DataPurchasesStore(user);
-const fileUpload = new FileUploadStore(user, digitalGoods);
+const fileUpload = new FileUploadStore(user, digitalGoods, userBalance);
 const filePurchase = new FilePurchaseStore(user);
 const infoModals = new InfoModalsStore();
 
