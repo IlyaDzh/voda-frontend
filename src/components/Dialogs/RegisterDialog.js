@@ -49,7 +49,10 @@ const useStyles = makeStyles(theme => ({
         }
     },
     dialogContent: {
-        paddingBottom: "32px"
+        paddingBottom: "32px",
+        [theme.breakpoints.down("xs")]: {
+            paddingBottom: 0,
+        }
     },
     dialogInput: {
         marginBottom: "16px"
