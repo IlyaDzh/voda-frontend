@@ -65,7 +65,6 @@ const useStyles = makeStyles(theme => ({
     },
     availableCaption: {
         display: "block",
-        fontSize: "10px",
         color: theme.palette.primary.main,
         marginTop: "8px",
         marginBottom: "24px"
@@ -226,8 +225,8 @@ const FileUploadDialog = ({
                     classes={{ root: classes.availableCaption }}
                     variant="caption"
                 >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Please specify the time period within which the file will be
+                    stored in the System.
                 </Typography>
                 <TextField
                     className={classes.dialogInput}
