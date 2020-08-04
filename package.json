@@ -11,12 +11,15 @@
         "@testing-library/user-event": "^7.2.1",
         "axios": "^0.19.2",
         "date-fns": "^2.15.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
         "file-extension": "^4.0.5",
         "js-file-download": "^0.4.12",
         "lodash": "^4.17.19",
         "mobx": "^5.15.4",
         "mobx-react": "^6.2.2",
         "node-sass": "^4.14.1",
+        "path": "^0.12.7",
         "react": "^16.13.1",
         "react-copy-to-clipboard": "^5.0.2",
         "react-dom": "^16.13.1",
@@ -28,7 +31,8 @@
     "scripts": {
         "start": "craco start",
         "build": "craco build",
-        "test": "craco test"
+        "test": "craco test",
+        "production": "npm run build && node server.js"
     },
     "eslintConfig": {
         "extends": "react-app"
