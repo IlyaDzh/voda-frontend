@@ -14,7 +14,7 @@ app.get("/*", (request, response) => {
 
 console.log("Starting express app");
 
-const port = 3001;
+const port = 3010;
 
 app.listen(port);
 
