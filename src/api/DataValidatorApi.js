@@ -2,10 +2,6 @@ import { axiosInstance } from "./axios-instance";
 import { API_BASE_VALIDATOR } from "@/utils";
 
 export class DataValidatorApi {
-    static getLoginUrl() {
-        return `${API_BASE_VALIDATOR}/api/v3/auth/login`;
-    }
-
     static getRegisterUrl() {
         return `${API_BASE_VALIDATOR}/api/v3/accounts`;
     }
@@ -24,6 +20,13 @@ export class DataValidatorApi {
 
     static getBalanceTransactionsUrl() {
         return `${API_BASE_VALIDATOR}/api/v3/accounts/current/lambda-transactions`;
+    }
+
+    static login(postData) {
+        return axiosInstance.post(
+            `${API_BASE_VALIDATOR}/api/v3/auth/login`,
+            postData
+        );
     }
 
     static getTransactionByType(dataValidatorAddress, page, type) {
