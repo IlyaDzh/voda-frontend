@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import { axiosInstance, DataMartApi, DataValidatorApi } from "@/api";
+import { DataMartApi, DataValidatorApi } from "@/api";
 
 const INITIAL_LOGIN_FORM = {
     wallet: "",
