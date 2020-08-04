@@ -1,6 +1,6 @@
-export const API_BASE_VALIDATOR = "http://167.71.76.249:3004";
+export const API_BASE_VALIDATOR = "https://167.71.76.249:3004";
 
-export const API_BASE_MART = "http://134.209.94.143:3005";
+export const API_BASE_MART = "https://134.209.94.143:3005";
 
 export const UNREG_MENU_LIST = ["explore-files"];
 
