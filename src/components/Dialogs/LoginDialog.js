@@ -7,9 +7,6 @@ import {
     DialogTitle,
     Typography,
     IconButton,
-    RadioGroup,
-    FormControlLabel,
-    Radio,
     Link,
     Hidden,
     makeStyles
@@ -41,23 +38,7 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: "32px",
         overflow: "hidden",
         [theme.breakpoints.down("xs")]: {
-            paddingBottom: 0,
-        }
-    },
-    dialogRadioGroup: {
-        marginBottom: "15px"
-    },
-    dialogRadioControl: {
-        width: "50%",
-        marginRight: 0,
-        "&:last-child": {
-            marginLeft: 0,
-            [theme.breakpoints.down(345)]: {
-                width: "40%"
-            }
-        },
-        [theme.breakpoints.down(345)]: {
-            width: "60%"
+            paddingBottom: 0
         }
     },
     dialogInput: {
@@ -137,50 +118,27 @@ const LoginDialog = ({
                 </IconButton>
             </DialogTitle>
             <DialogContent classes={{ root: classes.dialogContent }}>
-                <RadioGroup
-                    classes={{ root: classes.dialogRadioGroup }}
-                    aria-label="type"
-                    name="type"
-                    value={loginForm.type}
-                    onChange={event => setLoginFormValue("type", event.target.value)}
-                    row
-                >
-                    <FormControlLabel
-                        classes={{ root: classes.dialogRadioControl }}
-                        value="purchaser"
-                        control={<Radio color="primary" />}
-                        label="Purchaser"
-                    />
-                    <FormControlLabel
-                        classes={{ root: classes.dialogRadioControl }}
-                        value="seller"
-                        control={<Radio color="primary" />}
-                        label="Seller"
-                    />
-                </RadioGroup>
-                <div>
-                    <TextField
-                        className={classes.dialogInput}
-                        placeholder="Wallet ID"
-                        variant="outlined"
-                        value={loginForm.wallet}
-                        onChange={event =>
-                            setLoginFormValue("wallet", event.target.value)
-                        }
-                        fullWidth
-                    />
-                    <TextField
-                        className={classes.dialogInput}
-                        placeholder="Password"
-                        type="password"
-                        variant="outlined"
-                        value={loginForm.password}
-                        onChange={event =>
-                            setLoginFormValue("password", event.target.value)
-                        }
-                        fullWidth
-                    />
-                </div>
+                <TextField
+                    className={classes.dialogInput}
+                    placeholder="Wallet ID"
+                    variant="outlined"
+                    value={loginForm.wallet}
+                    onChange={event =>
+                        setLoginFormValue("wallet", event.target.value)
+                    }
+                    fullWidth
+                />
+                <TextField
+                    className={classes.dialogInput}
+                    placeholder="Password"
+                    type="password"
+                    variant="outlined"
+                    value={loginForm.password}
+                    onChange={event =>
+                        setLoginFormValue("password", event.target.value)
+                    }
+                    fullWidth
+                />
                 {!pending && <ReCaptcha onChange={setCaptchaToken} />}
             </DialogContent>
             <DialogActions classes={{ root: classes.dialogActions }} disableSpacing>

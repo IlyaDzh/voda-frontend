@@ -2,10 +2,6 @@ import { axiosInstance } from "./axios-instance";
 import { API_BASE_MART } from "@/utils";
 
 export class DataMartApi {
-    static getLoginUrl() {
-        return `${API_BASE_MART}/api/v2/auth/login`;
-    }
-
     static getRegisterUrl() {
         return `${API_BASE_MART}/api/v2/accounts`;
     }
@@ -40,6 +36,10 @@ export class DataMartApi {
 
     static getBalanceTransactionsUrl() {
         return `${API_BASE_MART}/api/v2/accounts/current/lambda-transactions`;
+    }
+
+    static login(postData) {
+        return axiosInstance.post(`${API_BASE_MART}/api/v2/auth/login`, postData);
     }
 
     static getTransactions(dataMartAddress, page) {

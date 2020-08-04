@@ -1,8 +1,7 @@
 import { observable, action } from "mobx";
-import { axiosInstance, DataMartApi, DataValidatorApi } from "@/api";
+import { DataMartApi, DataValidatorApi } from "@/api";
 
 const INITIAL_LOGIN_FORM = {
-    type: "purchaser",
     wallet: "",
     password: ""
 };
@@ -38,34 +37,50 @@ export class LoginStore {
         }
 
         this.pending = true;
-
         this.loginSubmissionError = undefined;
 
-        const url =
-            this.loginForm.type === "purchaser"
-                ? DataMartApi.getLoginUrl()
-                : DataValidatorApi.getLoginUrl();
+        const authData = {
+            username: this.loginForm.wallet.trim(),
+            password: this.loginForm.password.trim()
+        };
 
-        axiosInstance
-            .post(url, {
-                username: this.loginForm.wallet.trim(),
-                password: this.loginForm.password.trim()
-            })
+        DataMartApi.login(authData)
             .then(({ data }) => {
                 localStorage.setItem("accessToken", data.accessToken);
-                localStorage.setItem("userType", this.loginForm.type);
+                localStorage.setItem("userType", "purchaser");
                 this.openLoginModal = false;
                 this.userStore.logoutWithForm = false;
                 this.userStore.authWithForm = true;
-                this.userStore.userType = this.loginForm.type;
+                this.userStore.userType = "purchaser";
                 this.userStore.fetchUser();
                 this.resetLoginForm();
                 this.drawerStore.setMobileOpen(false);
+                this.pending = false;
             })
             .catch(error => {
-                this.loginSubmissionError = error;
-            })
-            .finally(() => (this.pending = false));
+                if (error.response.status === 401) {
+                    DataValidatorApi.login(authData)
+                        .then(({ data }) => {
+                            localStorage.setItem("accessToken", data.accessToken);
+                            localStorage.setItem("userType", "seller");
+                            this.openLoginModal = false;
+                            this.userStore.logoutWithForm = false;
+                            this.userStore.authWithForm = true;
+                            this.userStore.userType = "seller";
+                            this.userStore.fetchUser();
+                            this.resetLoginForm();
+                            this.drawerStore.setMobileOpen(false);
+                            this.pending = false;
+                        })
+                        .catch(error => {
+                            this.loginSubmissionError = error;
+                            this.pending = false;
+                        });
+                } else {
+                    this.loginSubmissionError = error;
+                    this.pending = false;
+                }
+            });
     };
 
     @action
