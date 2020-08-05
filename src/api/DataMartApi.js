@@ -62,6 +62,6 @@ export class DataMartApi {
     }
 
     static downloadFile(fileId) {
-        return axiosInstance.get(`${API_BASE_MART}/api/v2/files/${fileId}`);
+        return axiosInstance.get(`${API_BASE_MART}/api/v2/files/${fileId}`, {responseType: "blob"});
     }
 }
