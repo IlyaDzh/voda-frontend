@@ -16,7 +16,7 @@ import {
     sleep
 } from "@/utils";
 
-const CHUNK_SIZE = 5242878;
+const CHUNK_SIZE = 2000000;
 
 const INITIAL_UPLOAD_FORM = {
     year: getYear(new Date()),
