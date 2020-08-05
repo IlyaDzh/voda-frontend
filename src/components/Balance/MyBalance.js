@@ -133,7 +133,7 @@ const MyBalance = ({ user, balance, pending }) => {
             </div>
             <div className={classes.walletBody}>
                 <div className={classes.disabledField}>
-                    <Typography>{user && user.ethereumAddress}</Typography>
+                    <Typography>{user && user.lambdaAddress}</Typography>
                 </div>
                 <div className={classes.activeField}>
                     <Typography

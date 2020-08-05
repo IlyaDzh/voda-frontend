@@ -119,7 +119,7 @@ const WithdrawDialog = ({
                     max to your registered wallet
                     <Typography>
                         <b style={{ wordBreak: "break-all" }}>
-                            {user && user.ethereumAddress}
+                            {user && user.lambdaAddress}
                         </b>
                     </Typography>
                 </Typography>
