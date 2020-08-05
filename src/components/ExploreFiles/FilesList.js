@@ -24,6 +24,7 @@ const FilesList = ({
     fetchExploreFiles,
     setSearchText,
     resetFiles,
+    currentPurchasingFile,
     doPurchase,
     setOpenGoodsInfoModal
 }) => {
@@ -45,6 +46,7 @@ const FilesList = ({
                           card={card}
                           isPending={card.pending}
                           isPurchased={card.purchased}
+                          currentPurchasingFile={currentPurchasingFile}
                           purchaseFile={doPurchase}
                           openDetails={setOpenGoodsInfoModal}
                           userIsAuth={isAuth}
@@ -104,6 +106,7 @@ const mapMoxToProps = ({ user, login, files, filePurchase, infoModals }) => ({
     fetchExploreFiles: files.fetchExploreFiles,
     resetFiles: files.resetFiles,
     setSearchText: files.setSearchText,
+    currentPurchasingFile: filePurchase.currentPurchasingFile,
     doPurchase: filePurchase.doPurchase,
     setOpenGoodsInfoModal: infoModals.setOpenGoodsInfoModal
 });

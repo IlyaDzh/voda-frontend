@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 import { Snackbar as BaseSnackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-const Snackbar = ({ snackbarOpen, snackbarText, setSnackbarOpen }) => {
+const Snackbar = ({ snackbarOpen, snackbarText, snackbarType, setSnackbarOpen }) => {
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;
@@ -21,11 +21,11 @@ const Snackbar = ({ snackbarOpen, snackbarText, setSnackbarOpen }) => {
         >
             <Alert
                 onClose={handleClose}
-                severity="success"
+                severity={snackbarType}
                 elevation={6}
                 variant="filled"
             >
-                {snackbarText}
+                {snackbarText && snackbarText}
             </Alert>
         </BaseSnackbar>
     );
@@ -34,6 +34,7 @@ const Snackbar = ({ snackbarOpen, snackbarText, setSnackbarOpen }) => {
 const mapMoxToProps = ({ snackbar }) => ({
     snackbarOpen: snackbar.snackbarOpen,
     snackbarText: snackbar.snackbarText,
+    snackbarType: snackbar.snackbarType,
     setSnackbarOpen: snackbar.setSnackbarOpen
 });
 

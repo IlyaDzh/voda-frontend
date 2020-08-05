@@ -23,7 +23,7 @@ const digitalGoods = new DigitalGoodsStore(user);
 const salesHistory = new SalesHistoryStore(user);
 const dataPurchases = new DataPurchasesStore(user);
 const fileUpload = new FileUploadStore(user, digitalGoods, userBalance, snackbar);
-const filePurchase = new FilePurchaseStore(user);
+const filePurchase = new FilePurchaseStore(user, userBalance, snackbar);
 const infoModals = new InfoModalsStore();
 
 export const store = {

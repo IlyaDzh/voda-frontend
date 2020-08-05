@@ -49,6 +49,7 @@ const FileCard = ({
     card,
     isPending,
     isPurchased,
+    currentPurchasingFile,
     purchaseFile,
     setSearchText,
     openDetails
@@ -102,23 +103,29 @@ const FileCard = ({
                     </div>
                 </CardContent>
                 <CardActions className={classes.fileCardActions}>
-                    <Button
-                        color="secondary"
-                        onClick={() =>
-                            userIsAuth ? purchaseFile(card) : openLoginModal(true)
-                        }
-                        disabled={isPending || isPurchased}
-                        fullWidth
-                        disableElevation
-                    >
-                        {isPending ? (
-                            <Loader size={20} />
-                        ) : isPurchased ? (
-                            "Purchased"
-                        ) : (
-                            "Purchase"
-                        )}
-                    </Button>
+                    {!isPending ? (
+                        <Button
+                            color="secondary"
+                            onClick={() =>
+                                userIsAuth
+                                    ? purchaseFile(card)
+                                    : openLoginModal(true)
+                            }
+                            disabled={
+                                isPurchased ||
+                                (currentPurchasingFile &&
+                                    currentPurchasingFile !== card.id)
+                            }
+                            fullWidth
+                            disableElevation
+                        >
+                            {isPurchased ? "Purchased" : "Purchase"}
+                        </Button>
+                    ) : (
+                        <div style={{ margin: "0 auto" }}>
+                            <Loader size={37} />
+                        </div>
+                    )}
                 </CardActions>
             </Card>
         </Grid>

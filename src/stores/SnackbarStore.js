@@ -7,9 +7,15 @@ export class SnackbarStore {
     @observable
     snackbarText = undefined;
 
+    @observable
+    snackbarType = "success";
+
     @action
-    setSnackbarOpen = (snackbarOpen, snackbarText) => {
+    setSnackbarOpen = (snackbarOpen, snackbarText, snackbarType = "success") => {
         this.snackbarOpen = snackbarOpen;
-        this.snackbarText = snackbarText;
+        if (snackbarOpen) {
+            this.snackbarText = snackbarText;
+            this.snackbarType = snackbarType;
+        }
     };
 }
